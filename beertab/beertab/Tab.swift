@@ -14,6 +14,15 @@ struct Tab {
     let postcode:String
     let tabItems:Array<TabItem>
     
+    var text:String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        dateFormatter.locale = Locale(identifier: "en_GB")
+        
+        return "\(name) \(pubName) \(dateFormatter.string(from: createTS))"
+    }
+    
     func add(tabItem:TabItem)->Tab {
         return Tab(name:name, createTS:createTS, pubName:pubName, postcode:postcode, tabItems:tabItems + [tabItem])
     }

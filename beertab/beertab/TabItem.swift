@@ -16,6 +16,10 @@ struct TabItem {
     
     var quantity:Int  {return transactions.filter{$0.transactionType == TransactionType.add}.count - transactions.filter{$0.transactionType == TransactionType.remove}.count}
     
+    var text:String {
+        return "\(brewer) \(name) \(size)"
+    }
+    
     init(brewer:String, name:String, size:String, price:Int, transactions:Array<Transaction>) {
         self.brewer = brewer
         self.name = name

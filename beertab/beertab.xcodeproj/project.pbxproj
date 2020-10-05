@@ -18,6 +18,12 @@
 		FB7787D62529FB2F0088410B /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7787D52529FB2F0088410B /* Tab.swift */; };
 		FB7787DF252A2BF90088410B /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7787DE252A2BF90088410B /* History.swift */; };
 		FB7787E4252A2C0A0088410B /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7787E3252A2C0A0088410B /* TabItem.swift */; };
+		FB7787ED252A314E0088410B /* AbstractTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7787EC252A314E0088410B /* AbstractTableViewController.swift */; };
+		FB7787F2252A32320088410B /* AbstractViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7787F1252A32320088410B /* AbstractViewController.swift */; };
+		FB7787F7252A34990088410B /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7787F6252A34990088410B /* HistoryTableViewController.swift */; };
+		FB7787FF252A3F7E0088410B /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7787FE252A3F7E0088410B /* TabViewController.swift */; };
+		FB77880A252A43B40088410B /* TabItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB778809252A43B40088410B /* TabItemsTableViewController.swift */; };
+		FB778812252B949B0088410B /* TabItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB778811252B949B0088410B /* TabItemViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +61,12 @@
 		FB7787D52529FB2F0088410B /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		FB7787DE252A2BF90088410B /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		FB7787E3252A2C0A0088410B /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem.swift; sourceTree = "<group>"; };
+		FB7787EC252A314E0088410B /* AbstractTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractTableViewController.swift; sourceTree = "<group>"; };
+		FB7787F1252A32320088410B /* AbstractViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractViewController.swift; sourceTree = "<group>"; };
+		FB7787F6252A34990088410B /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
+		FB7787FE252A3F7E0088410B /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
+		FB778809252A43B40088410B /* TabItemsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItemsTableViewController.swift; sourceTree = "<group>"; };
+		FB778811252B949B0088410B /* TabItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItemViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,15 +118,21 @@
 			isa = PBXGroup;
 			children = (
 				FB77879C2529FA900088410B /* AppDelegate.swift */,
+				FB7787EC252A314E0088410B /* AbstractTableViewController.swift */,
+				FB7787F1252A32320088410B /* AbstractViewController.swift */,
 				FB77879E2529FA900088410B /* SceneDelegate.swift */,
 				FB7787A02529FA900088410B /* ViewController.swift */,
-				FB7787A22529FA900088410B /* Main.storyboard */,
 				FB7787A52529FA900088410B /* Assets.xcassets */,
 				FB7787A72529FA900088410B /* LaunchScreen.storyboard */,
 				FB7787AA2529FA900088410B /* Info.plist */,
 				FB7787DE252A2BF90088410B /* History.swift */,
 				FB7787D52529FB2F0088410B /* Tab.swift */,
 				FB7787E3252A2C0A0088410B /* TabItem.swift */,
+				FB7787F6252A34990088410B /* HistoryTableViewController.swift */,
+				FB7787FE252A3F7E0088410B /* TabViewController.swift */,
+				FB778809252A43B40088410B /* TabItemsTableViewController.swift */,
+				FB778811252B949B0088410B /* TabItemViewController.swift */,
+				FB7787A22529FA900088410B /* Main.storyboard */,
 			);
 			path = beertab;
 			sourceTree = "<group>";
@@ -269,9 +287,15 @@
 			files = (
 				FB7787A12529FA900088410B /* ViewController.swift in Sources */,
 				FB77879D2529FA900088410B /* AppDelegate.swift in Sources */,
+				FB7787F2252A32320088410B /* AbstractViewController.swift in Sources */,
+				FB778812252B949B0088410B /* TabItemViewController.swift in Sources */,
+				FB7787ED252A314E0088410B /* AbstractTableViewController.swift in Sources */,
 				FB7787E4252A2C0A0088410B /* TabItem.swift in Sources */,
+				FB7787F7252A34990088410B /* HistoryTableViewController.swift in Sources */,
 				FB77879F2529FA900088410B /* SceneDelegate.swift in Sources */,
 				FB7787D62529FB2F0088410B /* Tab.swift in Sources */,
+				FB77880A252A43B40088410B /* TabItemsTableViewController.swift in Sources */,
+				FB7787FF252A3F7E0088410B /* TabViewController.swift in Sources */,
 				FB7787DF252A2BF90088410B /* History.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
