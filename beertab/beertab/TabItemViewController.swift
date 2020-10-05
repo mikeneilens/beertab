@@ -14,6 +14,7 @@ class TabItemViewController: AbstractViewController, UITextFieldDelegate {
         case readOnly(_ tabItem:TabItem)
     }
     var displayState:DisplayState = .update
+    var tabUpdater:TabUpdater? = nil
     
     @IBOutlet weak var brandLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -45,12 +46,30 @@ class TabItemViewController: AbstractViewController, UITextFieldDelegate {
     }
     
     @IBAction func donePressed(_ sender: Any) {
+        if let tabUpdater = tabUpdater {
+            tabUpdater.addTabItem(tabItem: tabItemFromView() )
+            navigationController?.popViewController(animated:true)
+        }
+    }
+
+    func tabItemFromView() -> TabItem {
+        guard let brewer = brandTextField.text, let name = nameTextField.text, let size = sizeTextField.text, let price = priceTextField.text else {return TabItem(brewer: "", name: "", size: "", price: 0)}
+        
+        return TabItem(brewer: brewer, name: name, size: size, price: Int(100.0 * (Double(price) ?? 0)))
     }
     
     @IBAction func buyPressed(_ sender: Any) {
+        if case .readOnly(let tabItem) = displayState, let tabUpdater = tabUpdater  {
+            tabUpdater.buyTabItem(tabItem: tabItem)
+            navigationController?.popViewController(animated:true)
+        }
     }
     
     @IBAction func deletePressed(_ sender: Any) {
+        if case .readOnly(let tabItem) = displayState, let tabUpdater = tabUpdater  {
+            tabUpdater.deleteTabItem(tabItem:tabItem)
+            navigationController?.popViewController(animated:true)
+        }
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {

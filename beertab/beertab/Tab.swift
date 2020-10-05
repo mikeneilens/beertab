@@ -35,12 +35,12 @@ struct Tab {
     func addTransaction(brewer:String, name:String, size:String) -> Tab {
         let tabItem = TabItem(brewer: brewer, name: name, size: size, price: 0)
         let newTabItems:Array<TabItem> = tabItems.map{if $0 == tabItem {return $0.addTransaction()} else {return $0}}
-        return Tab(name:name, createTS:createTS, pubName:pubName, postcode:postcode, tabItems:newTabItems)
+        return Tab(name:self.name, createTS:self.createTS, pubName:self.pubName, postcode:self.postcode, tabItems:newTabItems)
     }
     func removeTransaction(brewer:String, name:String, size:String) -> Tab {
         let tabItem = TabItem(brewer: brewer, name: name, size: size, price: 0)
         let newTabItems:Array<TabItem> = tabItems.map{if $0 == tabItem {return $0.removeTransaction()} else {return $0}}
-        return Tab(name:name, createTS:createTS, pubName:pubName, postcode:postcode, tabItems:newTabItems)
+        return Tab(name:self.name, createTS:self.createTS, pubName:self.pubName, postcode:self.postcode, tabItems:newTabItems)
     }
     
 }

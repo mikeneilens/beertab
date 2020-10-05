@@ -9,10 +9,12 @@ import UIKit
 
 protocol TabUpdater {
     func addTabItem(tabItem:TabItem)
+    func buyTabItem(tabItem:TabItem)
+    func deleteTabItem(tabItem:TabItem)
 }
 
 class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
-
+    
     var tab = Tab(name: "", createTS: Date(), pubName: "", postcode: "", tabItems: [])
     
     override func viewDidLoad() {
@@ -53,9 +55,18 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
         guard let tabItemViewController =  segue.destination as? TabItemViewController else {return}
         
         switch (segue.identifier) {
-        case "addTabItem": tabItemViewController.displayState = .update
-        default: tabItemViewController.displayState = .readOnly(selectTabItem())
+        case "addTabItem": prepareToUpdate(tabItemViewController)
+        default: prepareToRead(tabItemViewController)
         }
+    }
+    func prepareToUpdate(_ tabItemViewController:TabItemViewController) {
+        tabItemViewController.displayState = .update
+        tabItemViewController.tabUpdater = self
+    }
+    
+    func prepareToRead(_ tabItemViewController:TabItemViewController) {
+        tabItemViewController.displayState = .readOnly(selectTabItem())
+        tabItemViewController.tabUpdater = self
     }
     
     func selectTabItem() -> TabItem {
@@ -68,6 +79,17 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
     func addTabItem(tabItem: TabItem) {
         tab = tab.add(tabItem: tabItem)
+        history = history.update(tab: tab)
+    }
+    
+    func buyTabItem(tabItem: TabItem) {
+        tab = tab.addTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
+        history = history.update(tab: tab)
+    }
+    
+    func deleteTabItem(tabItem: TabItem) {
+        tab = tab.removeTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
+        history = history.update(tab: tab)
     }
     /*
     // Override to support conditional editing of the table view.
