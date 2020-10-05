@@ -58,14 +58,17 @@ class TabItemViewController: AbstractViewController, UITextFieldDelegate {
     }
     
     func displayForReadOnly() {
+        setDisplay(state: false)
         if case .readOnly(let tabItem) = displayState {
             brandTextField.text = tabItem.brewer
             nameTextField.text = tabItem.name
             sizeTextField.text = tabItem.size
             priceTextField.text = String(tabItem.price)
             qtyTextField.text = String(tabItem.quantity)
+            if tabItem.quantity == 0 {
+                deleteButton.isHidden = true
+            }
         }
-        setDisplay(state: false)
     }
     func displayForEdit() {
         setDisplay(state: true)
