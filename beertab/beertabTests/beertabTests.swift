@@ -46,14 +46,14 @@ class beertabTests: XCTestCase {
     }
     
     func testAddTabItemToEmptyTab() {
-        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", postcode: "test postcode", tabItems: [])
+        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
         let newTabItem = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
         let newTab = tab.add(tabItem: newTabItem)
         XCTAssertEqual(1,newTab.tabItems.count)
     }
     func testAddTabItemToTabContainingOneItem() {
         let tabItem = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
-        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", postcode: "test postcode", tabItems: [tabItem])
+        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id", tabItems: [tabItem])
         let newTabItem = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
         let newTab = tab.add(tabItem: newTabItem)
         XCTAssertEqual(2,newTab.tabItems.count)
@@ -61,7 +61,7 @@ class beertabTests: XCTestCase {
     func testRemoveTabItemFromTabContainingTwoItems() {
         let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
         let tabItem2 = TabItem(brewer: "brewer2", name: "name1", size: "pint", price: 440)
-        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", postcode: "test postcode", tabItems: [tabItem1, tabItem2])
+        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id", tabItems: [tabItem1, tabItem2])
         let newTab = tab.remove(tabItem: tabItem1)
         XCTAssertEqual(1,newTab.tabItems.count)
         XCTAssertTrue(newTab.tabItems[0] == tabItem2)
@@ -106,7 +106,7 @@ class beertabTests: XCTestCase {
     func testAddingATransactionForABeerToTheTab() {
         let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
         let tabItem2 = TabItem(brewer: "brewer1", name: "name2", size: "pint", price: 430)
-        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", postcode: "test postcode", tabItems: [tabItem1, tabItem2])
+        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id", tabItems: [tabItem1, tabItem2])
         
         let newTab = tab.addTransaction(brewer: "brewer1", name: "name2", size: "pint")
         XCTAssertEqual(1, newTab.tabItems[1].quantity)
@@ -114,7 +114,7 @@ class beertabTests: XCTestCase {
     func testAddingSeveralTransactionsForABeerToTheTab() {
         let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
         let tabItem2 = TabItem(brewer: "brewer1", name: "name2", size: "pint", price: 430)
-        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", postcode: "test postcode", tabItems: [tabItem1, tabItem2])
+        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id", tabItems: [tabItem1, tabItem2])
         
         let newTab = tab.addTransaction(brewer: "brewer1", name: "name2", size: "pint")
                         .addTransaction(brewer: "brewer1", name: "name2", size: "pint")
@@ -126,7 +126,7 @@ class beertabTests: XCTestCase {
     func testAddingAndRemovingSeveralTransactionsForABeerToTheTab() {
         let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
         let tabItem2 = TabItem(brewer: "brewer1", name: "name2", size: "pint", price: 430)
-        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", postcode: "test postcode", tabItems: [tabItem1, tabItem2])
+        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id", tabItems: [tabItem1, tabItem2])
         
         let newTab = tab.addTransaction(brewer: "brewer1", name: "name2", size: "pint")
                         .addTransaction(brewer: "brewer1", name: "name2", size: "pint")
@@ -137,9 +137,9 @@ class beertabTests: XCTestCase {
         XCTAssertEqual(2, newTab.tabItems[1].quantity)
     }
     func testHistoryReturnsTabsInDescendingDateOrder() {
-        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test pub", postcode: "test postcode", tabItems: [])
-        let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", postcode: "test postcode", tabItems: [])
-        let tab3 = Tab(name: "test tab3", createTS: Date(), pubName: "test pub", postcode: "test postcode", tabItems: [])
+        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
+        let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
+        let tab3 = Tab(name: "test tab3", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
         
         let history = History(allTabs:[tab1,tab2,tab3])
         
@@ -153,7 +153,7 @@ class beertabTests: XCTestCase {
     }
     func testAddingATabToAnEmptyHistory() {
         let history = History(allTabs: [])
-        let newTab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", postcode: "", tabItems: [])
+        let newTab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "test br", id: "test id", tabItems: [])
         let newHistory = history.add(tab: newTab)
         
         XCTAssertEqual(1, newHistory.tabs.count)
@@ -161,12 +161,12 @@ class beertabTests: XCTestCase {
     }
     func testAddingATabToAHistoryContainingTabs() {
         
-        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test pub", postcode: "test postcode", tabItems: [])
-        let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", postcode: "test postcode", tabItems: [])
+        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
+        let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
         
         let history = History(allTabs:[tab1,tab2])
 
-        let newTab = Tab(name: "test tab3", createTS: Date(), pubName: "pub1", postcode: "", tabItems: [])
+        let newTab = Tab(name: "test tab3", createTS: Date(), pubName: "pub1", branch: "test br", id: "test id", tabItems: [])
         let newHistory = history.add(tab: newTab)
         
         XCTAssertEqual(3, newHistory.tabs.count)
@@ -175,22 +175,62 @@ class beertabTests: XCTestCase {
     }
     func testupdatingATabInAHistoryContainingTabs() {
         
-        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test pub", postcode: "test postcode", tabItems: [])
-        let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", postcode: "test postcode", tabItems: [])
-        let tab3 = Tab(name: "test tab3", createTS: Date(), pubName: "pub1", postcode: "", tabItems: [])
+        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
+        let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
+        let tab3 = Tab(name: "test tab3", createTS: Date(), pubName: "pub1", branch: "test br", id: "test id", tabItems: [])
         let history = History(allTabs:[tab1,tab2,tab3])
 
         let tabItem = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
-        let updatedTab2 = Tab(name: "new name", createTS: tab2.createTS, pubName: "new pub", postcode: "new postcode", tabItems: [tabItem])
+        let updatedTab2 = Tab(name: "new name", createTS: tab2.createTS, pubName: "new pub", branch: "new br", id: "new id", tabItems: [tabItem])
         
         let newHistory = history.update(tab: updatedTab2)
         
         XCTAssertEqual(3, newHistory.tabs.count)
         XCTAssertEqual("new name", newHistory.allTabs[1].name)
         XCTAssertEqual("new pub", newHistory.allTabs[1].pubName)
-        XCTAssertEqual("new postcode", newHistory.allTabs[1].postcode)
+        XCTAssertEqual("new br", newHistory.allTabs[1].branch)
+        XCTAssertEqual("new id", newHistory.allTabs[1].id)
         XCTAssertEqual(1, newHistory.allTabs[1].tabItems.count)
     }
+    
+    func testEncodingHistory() {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let tab1 = Tab(name: "test tab1", createTS: Date(timeIntervalSince1970: 623704840), pubName: "test pub1", branch: "test br1", id: "test id1", tabItems: [])
+        let tab2 = Tab(name: "test tab2", createTS: Date(timeIntervalSince1970: 623704840), pubName: "test pub2", branch: "test br2", id: "test id2", tabItems: [])
+        let tab3 = Tab(name: "test tab3", createTS: Date(timeIntervalSince1970: 623704840), pubName: "test pub3", branch: "test br3", id: "test id3", tabItems: [])
+        let history = History(allTabs:[tab1,tab2,tab3])
+        do { let json = try encoder.encode(history)
+            print(String(data: json, encoding: .utf8)!)
+        } catch {
+            print("encoding failed")
+            XCTAssertFalse(true)
+        }
+    }
+    
+    func testDecodingHistory() {
+        let decoder = JSONDecoder()
+        let historyJson = """
+        {"allTabs" : [
+        {"pubName" : "test pub1","createTS" : -354602360,"id" : "test id1","name" : "test tab1","branch" : "test br1","tabItems" : []},
+        {"pubName" : "test pub2","createTS" : -354602360,"id" : "test id2","name" : "test tab2","branch" : "test br2","tabItems" : []},
+        {"pubName" : "test pub3","createTS" : -354602360,"id" : "test id3","name" : "test tab3","branch" : "test br3","tabItems" : []}]}
+        """.data(using: .utf8)!
+        
+        do { let newHistory = try decoder.decode(History.self, from: historyJson)
+            XCTAssertEqual(3, newHistory.tabs.count)
+            XCTAssertEqual("test tab2", newHistory.allTabs[1].name)
+            XCTAssertEqual("test pub2", newHistory.allTabs[1].pubName)
+            XCTAssertEqual("test br2", newHistory.allTabs[1].branch)
+            XCTAssertEqual("test id2", newHistory.allTabs[1].id)
+            XCTAssertEqual(0, newHistory.allTabs[1].tabItems.count)
+        } catch {
+            print("decoding failed")
+            XCTAssertFalse(true)
+        }
+    }
+    
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {

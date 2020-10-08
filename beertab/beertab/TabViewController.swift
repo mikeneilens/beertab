@@ -35,11 +35,15 @@ class TabViewController: AbstractViewController, UITextFieldDelegate {
     }
     
     @IBAction func donePressed(_ sender: Any) {
-        let tab = Tab(name: (name.text ?? "" ), createTS: Date(), pubName: (pubName.text ?? ""), postcode: "", tabItems: [])
+        let tab = Tab(name: (name.text ?? "" ), createTS: Date(), pubName: (pubName.text ?? ""), branch:"", id: "", tabItems: [])
         history = history.add(tab: tab)
+        history.save(errorResponse: errorWritingHistory(history:message:))
         self.navigationController?.popViewController(animated: true)
     }
     
+    func errorWritingHistory(history:History, message:String) {
+        print("error writing history: \(message)")
+    }
     /*
     // MARK: - Navigation
 

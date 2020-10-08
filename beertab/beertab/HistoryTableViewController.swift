@@ -8,21 +8,23 @@
 import UIKit
 
 var history = History(allTabs: [])
+var userId = UId()
 
 class HistoryTableViewController: AbstractTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        userId.refreshUId()
+        HistoryArchive().read(historyResponse: historyRead(newHistory:), errorResponse: errorReadingHistory(message:))
+    }
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        if history.tabs.isEmpty {
-            let tabItem = TabItem(brewer: "Tetley", name: "Mild", size: "half", price: 140)
-            history = History(allTabs: [Tab(name: "Mike", createTS: Date() - 1, pubName: "Dodo", postcode: "", tabItems: [tabItem])])
-        }
+    func historyRead(newHistory:History) {
+        history = newHistory
+        tableView.reloadData()
+    }
+    func errorReadingHistory(message:String) {
+        print("error reading history: \(message)")
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -42,11 +44,40 @@ class HistoryTableViewController: AbstractTableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "historyTableViewCell", for: indexPath)
+        let tab = history.tabs[indexPath.row]
         
-        cell.textLabel?.text = history.tabs[indexPath.row].text
+        if tab.name.isEmpty || tab.pubName.isEmpty {
+            return setupSingleLabelCell(indexPath: indexPath, tab: tab)
+            
+        } else {
+            return setupTwoLabelCell(indexPath: indexPath, tab: tab)
+        }
+    }
+    
+    func setupSingleLabelCell(indexPath: IndexPath, tab:Tab) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tab1Cell", for: indexPath)
         
-        // Configure the cell...
+        if let tabTableViewCell = cell as? Tab1TableViewCell {
+            if tab.name.isEmpty {
+                tabTableViewCell.name.text = tab.pubName
+            } else {
+                tabTableViewCell.name.text = tab.name
+            }
+            tabTableViewCell.date.text = tab.dateString
+        }
+        cell.accessoryType = .disclosureIndicator
+        return cell
+    }
+
+    func setupTwoLabelCell(indexPath: IndexPath, tab:Tab) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tab2Cell", for: indexPath)
+        
+        if let tabTableViewCell = cell as? Tab2TableViewCell {
+            tabTableViewCell.name.text = tab.name
+            tabTableViewCell.pubName.text = tab.pubName
+            tabTableViewCell.date.text = tab.dateString
+        }
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     

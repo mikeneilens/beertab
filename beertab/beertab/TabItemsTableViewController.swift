@@ -10,17 +10,21 @@ import UIKit
 protocol TabUpdater {
     func addTabItem(tabItem:TabItem)
     func buyTabItem(tabItem:TabItem)
+    func returnTabItem(tabItem:TabItem)
     func deleteTabItem(tabItem:TabItem)
 }
 
 class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
-    var tab = Tab(name: "", createTS: Date(), pubName: "", postcode: "", tabItems: [])
+    var tab = Tab(name: "", createTS: Date(), pubName: "", branch: "", id: "", tabItems: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.navigationItem.title = tab.text
+        if !tab.pubName.isEmpty {
+            self.navigationItem.title = tab.pubName
+        } else {
+            self.navigationItem.title = tab.name
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -35,37 +39,65 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        if tab.tabItems.isEmpty {
+            return 1
+        } else {
+            return 2
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return tab.tabItems.count
+        if tab.tabItems.isEmpty {
+            return 0
+        } else {
+            if section == 0 { return tab.tabItems.count } else {return 1}
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tabItemCell", for: indexPath)
-        cell.textLabel?.text = tab.tabItems[indexPath.row].text
+        if let tabItemCell = cell as? TabItemTableViewCell {
+            if indexPath.section == 0 {
+                tabItemCell.brewer.text = tab.tabItems[indexPath.row].brewer
+                tabItemCell.name.text = tab.tabItems[indexPath.row].name
+                tabItemCell.size.text = "\(tab.tabItems[indexPath.row].size) £\(tab.tabItems[indexPath.row].priceGBP)"
+                tabItemCell.quantity.text = String(tab.tabItems[indexPath.row].quantity)
+                tabItemCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+            } else {
+                tabItemCell.brewer.isHidden = true
+                tabItemCell.name.isHidden = true
+                tabItemCell.quantity.isHidden = true
+                tabItemCell.size.text = "£ \(tab.totalValue)"
+                tabItemCell.isUserInteractionEnabled = false
+            }
+        }
         // Configure the cell...
 
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {return "Items"}
+        else {return "Your Total Bill"}
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let tabItemViewController =  segue.destination as? TabItemViewController else {return}
+        let viewController =  segue.destination
         
         switch (segue.identifier) {
-        case "addTabItem": prepareToUpdate(tabItemViewController)
-        default: prepareToRead(tabItemViewController)
+        case "addTabItem": prepareToAdd(viewController)
+        default: prepareToUpdate(viewController)
         }
     }
-    func prepareToUpdate(_ tabItemViewController:TabItemViewController) {
-        tabItemViewController.displayState = .update
+    func prepareToAdd(_ viewController:UIViewController) {
+        guard let tabItemViewController =  viewController as? TabItemAddViewController else {return}
         tabItemViewController.tabUpdater = self
     }
     
-    func prepareToRead(_ tabItemViewController:TabItemViewController) {
-        tabItemViewController.displayState = .readOnly(selectTabItem())
+    func prepareToUpdate(_ viewController:UIViewController) {
+        guard let tabItemViewController =  viewController as? TabItemUpdateViewController else {return}
+        tabItemViewController.tabItem = selectTabItem()
         tabItemViewController.tabUpdater = self
     }
     
@@ -80,17 +112,30 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     func addTabItem(tabItem: TabItem) {
         tab = tab.add(tabItem: tabItem)
         history = history.update(tab: tab)
+        history.save(errorResponse: errorWritingHistory(history:message:))
     }
     
     func buyTabItem(tabItem: TabItem) {
         tab = tab.addTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
         history = history.update(tab: tab)
+        history.save(errorResponse: errorWritingHistory(history:message:))
     }
     
-    func deleteTabItem(tabItem: TabItem) {
+    func returnTabItem(tabItem: TabItem) {
         tab = tab.removeTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
         history = history.update(tab: tab)
+        history.save(errorResponse: errorWritingHistory(history:message:))
     }
+    func deleteTabItem(tabItem: TabItem) {
+        tab = tab.remove(tabItem: tabItem)
+        history = history.update(tab: tab)
+        history.save(errorResponse: errorWritingHistory(history:message:))
+    }
+    
+    func errorWritingHistory(history:History, message:String) {
+        print("error writing history: \(message)")
+    }
+
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

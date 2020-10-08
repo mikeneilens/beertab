@@ -7,8 +7,10 @@
 
 import Foundation
 
-struct History {
+struct History:Codable {
+    
     let allTabs:Array<Tab>
+    
     var tabs:Array<Tab> {
         return allTabs.sorted{$0.createTS > $1.createTS}
     }
@@ -20,5 +22,8 @@ struct History {
     func update(tab:Tab) -> History {
         let newTabs:Array<Tab> =  allTabs.map{if $0.createTS == tab.createTS {return tab} else {return $0}}
         return History(allTabs:newTabs)
+    }
+    func save(errorResponse: (History,String) -> ()) {
+        HistoryArchive().write(history: self, errorResponse: errorResponse)
     }
 }

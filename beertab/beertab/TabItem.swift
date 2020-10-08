@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TabItem {
+struct TabItem:Codable {
     let brewer:String
     let name:String
     let size:String
@@ -16,8 +16,8 @@ struct TabItem {
     
     var quantity:Int  {return transactions.filter{$0.transactionType == TransactionType.add}.count - transactions.filter{$0.transactionType == TransactionType.remove}.count}
     
-    var text:String {
-        return "\(brewer) \(name) \(size)"
+    var priceGBP:String {
+        return price.priceGBP
     }
     
     init(brewer:String, name:String, size:String, price:Int, transactions:Array<Transaction>) {
@@ -52,12 +52,21 @@ func != (lhs: TabItem, rhs: TabItem) -> Bool {
     return !(lhs == rhs)
 }
 
-enum TransactionType{
-    case add
-    case remove
+enum TransactionType:String, Codable{
+    case add = "add"
+    case remove = "remove"
 }
 
-struct Transaction {
+struct Transaction:Codable {
     let transactionType:TransactionType
-    let createTS = Date()
+    var createTS = Date()
+}
+
+extension Int {
+    var priceGBP:String {
+        let pounds = self/100
+        let decimal = self % 100 / 10
+        let penny = self % 10
+        return "\(pounds).\(decimal)\(penny)"
+    }
 }
