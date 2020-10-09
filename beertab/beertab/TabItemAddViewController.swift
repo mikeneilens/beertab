@@ -33,27 +33,25 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
         brandTextField.delegate = self
         nameTextField.delegate = self
     
-        setDoneButtonState()
+        doneButton.isEnabled = getDoneButtonState()
     }
     
     @IBAction func donePressed(_ sender: Any) {
         if let tabUpdater = tabUpdater {
-            if pintPriceText.inPence() == 0 && halfPriceText.inPence() == 0 && thirdPriceText.inPence() == 0 && twoThirdPriceText.inPence() == 0 && otherPrice.inPence() == 0 {
-                tabUpdater.addTabItem(tabItem: tabItemFromView(size:"Any", price:0) )
-            } else {
-                createTabItemForEachPrice()
-            }
+            createTabItems(tabUpdater)
             navigationController?.popViewController(animated:true)
         }
     }
-
-    func tabItemFromView(size:String, price:Int) -> TabItem {
-        guard let brewer = brandTextField.text, let name = nameTextField.text else {return TabItem(brewer: "", name: "", size: "", price: 0)}
-        
-        return TabItem(brewer: brewer, name: name, size: size, price: price)
+    
+    func createTabItems(_ tabUpdater: TabUpdater) {
+        if pintPriceText.inPence() == 0 && halfPriceText.inPence() == 0 && thirdPriceText.inPence() == 0 && twoThirdPriceText.inPence() == 0 && otherPrice.inPence() == 0 {
+            tabUpdater.addTabItem(tabItem: tabItemFromView(size:"Any", price:0) )
+        } else {
+            createTabItemForEachPrice(tabUpdater:tabUpdater)
+        }
     }
-    func createTabItemForEachPrice() {
-        guard let tabUpdater = tabUpdater else {return}
+    
+    func createTabItemForEachPrice(tabUpdater:TabUpdater) {
         let prices = [(size:"Pint", price:pintPriceText.inPence()),
                       (size:"Half", price:halfPriceText.inPence()),
                       (size:"1/3", price:thirdPriceText.inPence()),
@@ -64,6 +62,11 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
                 tabUpdater.addTabItem(tabItem: tabItemFromView(size:$0.size, price:$0.price))
             }
         }
+    }
+
+    func tabItemFromView(size:String, price:Int) -> TabItem {
+        guard let brewer = brandTextField.text, let name = nameTextField.text else {return TabItem(brewer: "", name: "", size: "", price: 0)}
+        return TabItem(brewer: brewer, name: name, size: size, price: price)
     }
     
     func deleteTabItem(tabItem:TabItem) {
@@ -79,25 +82,16 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
         present(deleteAlert, animated: true, completion: nil)
     }
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        setDoneButtonState()
+        doneButton.isEnabled = getDoneButtonState()
     }
         
-    func setDoneButtonState() {
+    func getDoneButtonState() -> Bool {
         if (brandTextField.text == "" && nameTextField.text == "")  {
-            doneButton.isEnabled = false
+            return false
         } else {
-            doneButton.isEnabled = true
+            return true
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
