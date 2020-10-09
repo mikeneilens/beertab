@@ -18,7 +18,10 @@ struct History:Codable {
     func add(tab:Tab) -> History {
         return History(allTabs: allTabs + [tab])
     }
-    
+    func remove(tab:Tab)->History {
+        let filteredTabs = allTabs.filter{$0 != tab}
+        return History(allTabs: filteredTabs)
+    }
     func update(tab:Tab) -> History {
         let newTabs:Array<Tab> =  allTabs.map{if $0.createTS == tab.createTS {return tab} else {return $0}}
         return History(allTabs:newTabs)

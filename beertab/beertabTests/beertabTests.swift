@@ -173,6 +173,20 @@ class beertabTests: XCTestCase {
         XCTAssertEqual("test tab3", newHistory.tabs[0].name)
         XCTAssertEqual("test tab3", newHistory.allTabs[2].name)
     }
+    func testRemovingATabFromAHistoryContainingTabs() {
+        
+        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
+        let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
+        let tab3 = Tab(name: "test tab3", createTS: Date() - 3, pubName: "pub1", branch: "test br", id: "test id", tabItems: [])
+        
+        let history = History(allTabs:[tab1,tab2, tab3])
+
+        let newHistory = history.remove(tab: tab2)
+        
+        XCTAssertEqual(2, newHistory.tabs.count)
+        XCTAssertEqual("test tab1", newHistory.allTabs[0].name)
+        XCTAssertEqual("test tab3", newHistory.allTabs[1].name)
+    }
     func testupdatingATabInAHistoryContainingTabs() {
         
         let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])

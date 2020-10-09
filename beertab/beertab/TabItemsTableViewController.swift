@@ -56,57 +56,89 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "tabItemCell", for: indexPath)
-        if let tabItemCell = cell as? TabItemTableViewCell {
-            if indexPath.section == 0 {
-                tabItemCell.brewer.text = tab.tabItems[indexPath.row].brewer
-                tabItemCell.name.text = tab.tabItems[indexPath.row].name
-                tabItemCell.size.text = "\(tab.tabItems[indexPath.row].size) £\(tab.tabItems[indexPath.row].priceGBP)"
-                tabItemCell.quantity.text = String(tab.tabItems[indexPath.row].quantity)
-                tabItemCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-            } else {
-                tabItemCell.brewer.isHidden = true
-                tabItemCell.name.isHidden = true
-                tabItemCell.quantity.isHidden = true
-                tabItemCell.size.text = "£ \(tab.totalValue)"
-                tabItemCell.isUserInteractionEnabled = false
-            }
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "tabItemCell", for: indexPath)
+            configureTabItemCell(cell, indexPath)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "tabTotalCell", for: indexPath)
+            configureSummaryCell(cell)
+            return cell
         }
-        // Configure the cell...
-
-        return cell
     }
     
+    func configureTabItemCell(_ cell: UITableViewCell, _ indexPath: IndexPath) {
+        if let tabItemCell = cell as? TabItemTableViewCell {
+            tabItemCell.brewer.text = tab.tabItems[indexPath.row].brewer
+            tabItemCell.name.text = tab.tabItems[indexPath.row].name
+            tabItemCell.size.text = "\(tab.tabItems[indexPath.row].size) £\(tab.tabItems[indexPath.row].priceGBP)"
+            tabItemCell.quantity.text = String(tab.tabItems[indexPath.row].quantity)
+            tabItemCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+        }
+    }
+    
+    func configureSummaryCell(_ cell: UITableViewCell) {
+          if let tabTotalCell = cell as? TabTotalTableViewCell {
+              tabTotalCell.totalValue.text = "£\(tab.totalValue)"
+              tabTotalCell.isUserInteractionEnabled = false
+          }
+    }
+      
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {return "Items"}
         else {return "Your Total Bill"}
     }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let viewController =  segue.destination
-        
-        switch (segue.identifier) {
-        case "addTabItem": prepareToAdd(viewController)
-        default: prepareToUpdate(viewController)
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            deleteTabItem(indexPath: indexPath)
         }
     }
-    func prepareToAdd(_ viewController:UIViewController) {
-        guard let tabItemViewController =  viewController as? TabItemAddViewController else {return}
-        tabItemViewController.tabUpdater = self
+    
+    func deleteTabItem(indexPath:IndexPath) {
+        let tabItem = tab.tabItems[indexPath.row]
+        
+        let deleteAlert = UIAlertController(title: "Are You Sure", message: "Do you want to delete \(tabItem.brewer) \(tabItem.name) (\(tabItem.size))", preferredStyle: UIAlertController.Style.alert)
+
+        deleteAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+            self.deleteTabItem(tabItem: tabItem)
+            self.tableView.deleteRows(at:[indexPath], with: .fade)
+        }))
+
+        deleteAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler:nil))
+
+        present(deleteAlert, animated: true, completion: nil)
+    }
+        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let selectedRow = tableView.indexPathForSelectedRow?.row
+        prepareDestination(segue.destination, row:selectedRow)
     }
     
-    func prepareToUpdate(_ viewController:UIViewController) {
-        guard let tabItemViewController =  viewController as? TabItemUpdateViewController else {return}
-        tabItemViewController.tabItem = selectTabItem()
-        tabItemViewController.tabUpdater = self
+    func prepareDestination(_ destination: UIViewController, row:Int?) {
+        switch destination {
+        case let tabItemAddViewController as TabItemAddViewController : prepare(tabItemAddViewController)
+        case let tabItemUpdateViewController as TabItemUpdateViewController : prepare(tabItemUpdateViewController, row:row)
+        default: break
+        }
+    }
+
+    func prepare(_ tabItemAddViewController:TabItemAddViewController) {
+        tabItemAddViewController.tabUpdater = self
     }
     
-    func selectTabItem() -> TabItem {
-        if let selectedRow = tableView.indexPathForSelectedRow?.row {
+    func prepare(_ tabItemUpdateViewController:TabItemUpdateViewController, row:Int?) {
+        tabItemUpdateViewController.tabItem = selectTabItem(row:row)
+        tabItemUpdateViewController.tabUpdater = self
+    }
+    
+    func selectTabItem(row:Int?) -> TabItem {
+        if let selectedRow = row {
             return tab.tabItems[selectedRow]
         }
         else {
-            return TabItem(brewer: "", name: "", size: "", price: 0)}
+            return TabItem(brewer: "", name: "", size: "", price: 0)
+        }
     }
     
     func addTabItem(tabItem: TabItem) {

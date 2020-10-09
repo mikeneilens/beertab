@@ -273,6 +273,29 @@
                                     <segue destination="6g1-AD-kq1" kind="show" identifier="updateTabItem" id="ale-sZ-L5K"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tabTotalCell" id="PbZ-Vk-I6g" customClass="TabTotalTableViewCell" customModule="beertab" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="115" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PbZ-Vk-I6g" id="v3A-bw-hJg">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£15.40" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B8t-yN-1ey">
+                                            <rect key="frame" x="181" y="11.5" width="52.5" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="B8t-yN-1ey" firstAttribute="centerY" secondItem="v3A-bw-hJg" secondAttribute="centerY" id="Gt0-zX-cak"/>
+                                        <constraint firstItem="B8t-yN-1ey" firstAttribute="centerX" secondItem="v3A-bw-hJg" secondAttribute="centerX" id="ozQ-qu-qHl"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="totalValue" destination="B8t-yN-1ey" id="qeq-na-z10"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="uFE-62-4TJ" id="7PF-lA-KeF"/>

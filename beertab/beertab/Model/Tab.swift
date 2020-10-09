@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct Tab:Codable {
+struct Tab:Codable, Equatable {
+    static func == (lhs: Tab, rhs: Tab) -> Bool {
+        return lhs.name == rhs.name && lhs.pubName == rhs.pubName && lhs.createTS == lhs.createTS
+    }
+    
     let name:String
     let createTS:Date
     let pubName:String

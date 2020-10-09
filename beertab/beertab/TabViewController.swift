@@ -17,28 +17,32 @@ class TabViewController: AbstractViewController, UITextFieldDelegate {
         name.delegate = self
         pubName.delegate = self
         super.viewDidLoad()
-        setDoneButtonState()
+        doneButton.isEnabled = getDoneButtonState()
         // Do any additional setup after loading the view.
     }
 
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        setDoneButtonState()
+        doneButton.isEnabled = getDoneButtonState()
     }
     
-    func setDoneButtonState() {
+    func getDoneButtonState() -> Bool {
         if name.text == "" && pubName.text == "" {
-            doneButton.isEnabled = false
+            return false
         } else {
-            doneButton.isEnabled = true
+            return true
         }
     }
     
     @IBAction func donePressed(_ sender: Any) {
+        createTabAndAddToHistory()
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func createTabAndAddToHistory() {
         let tab = Tab(name: (name.text ?? "" ), createTS: Date(), pubName: (pubName.text ?? ""), branch:"", id: "", tabItems: [])
         history = history.add(tab: tab)
         history.save(errorResponse: errorWritingHistory(history:message:))
-        self.navigationController?.popViewController(animated: true)
     }
     
     func errorWritingHistory(history:History, message:String) {
