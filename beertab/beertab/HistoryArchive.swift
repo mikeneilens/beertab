@@ -13,12 +13,12 @@ protocol HistoryArchiver {
 }
 
 struct HistoryArchive:HistoryArchiver {
-
+    let key:String
     func write(history: History, errorResponse: (History, String) -> ()) {
         let encoder = JSONEncoder()
         do {let encoded = try encoder.encode(history)
             let defaults = UserDefaults.standard
-            defaults.set(encoded, forKey: "history")
+            defaults.set(encoded, forKey: key)
         } catch {
             errorResponse(history,"error encoding History")
         }
@@ -26,7 +26,7 @@ struct HistoryArchive:HistoryArchiver {
     func read(historyResponse: (History) -> (),  errorResponse: (String) -> ())  {
         let defaults = UserDefaults.standard
         
-        if let savedHistory = defaults.object(forKey: "history") as? Data {
+        if let savedHistory = defaults.object(forKey: key) as? Data {
             let decoder = JSONDecoder()
             do { let history = try decoder.decode(History.self, from: savedHistory)
                 historyResponse(history)

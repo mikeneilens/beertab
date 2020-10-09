@@ -42,7 +42,7 @@ class TabViewController: AbstractViewController, UITextFieldDelegate {
     func createTabAndAddToHistory() {
         let tab = Tab(name: (name.text ?? "" ), createTS: Date(), pubName: (pubName.text ?? ""), branch:"", id: "", tabItems: [])
         history = history.add(tab: tab)
-        history.save(errorResponse: errorWritingHistory(history:message:))
+        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
     }
     
     func errorWritingHistory(history:History, message:String) {

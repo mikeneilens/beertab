@@ -144,24 +144,24 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     func addTabItem(tabItem: TabItem) {
         tab = tab.add(tabItem: tabItem)
         history = history.update(tab: tab)
-        history.save(errorResponse: errorWritingHistory(history:message:))
+        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
     }
     
     func buyTabItem(tabItem: TabItem) {
         tab = tab.addTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
         history = history.update(tab: tab)
-        history.save(errorResponse: errorWritingHistory(history:message:))
+        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
     }
     
     func returnTabItem(tabItem: TabItem) {
         tab = tab.removeTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
         history = history.update(tab: tab)
-        history.save(errorResponse: errorWritingHistory(history:message:))
+        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
     }
     func deleteTabItem(tabItem: TabItem) {
         tab = tab.remove(tabItem: tabItem)
         history = history.update(tab: tab)
-        history.save(errorResponse: errorWritingHistory(history:message:))
+        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
     }
     
     func errorWritingHistory(history:History, message:String) {

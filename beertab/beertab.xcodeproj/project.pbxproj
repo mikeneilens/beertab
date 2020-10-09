@@ -10,6 +10,7 @@
 		FB1CC8CD2530CF1E003AA02E /* TabViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC8CC2530CF1E003AA02E /* TabViewControllerTests.swift */; };
 		FB1CC8D52530DA5A003AA02E /* TabItemsTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC8D42530DA5A003AA02E /* TabItemsTableViewControllerTests.swift */; };
 		FB1CC8DD2530F180003AA02E /* TabItemAddViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC8DC2530F180003AA02E /* TabItemAddViewControllerTests.swift */; };
+		FB1CC8E525310905003AA02E /* TabItemsUpdateViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC8E425310905003AA02E /* TabItemsUpdateViewControllerTests.swift */; };
 		FB77879D2529FA900088410B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77879C2529FA900088410B /* AppDelegate.swift */; };
 		FB77879F2529FA900088410B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77879E2529FA900088410B /* SceneDelegate.swift */; };
 		FB7787A12529FA900088410B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7787A02529FA900088410B /* ViewController.swift */; };
@@ -58,6 +59,7 @@
 		FB1CC8CC2530CF1E003AA02E /* TabViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerTests.swift; sourceTree = "<group>"; };
 		FB1CC8D42530DA5A003AA02E /* TabItemsTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItemsTableViewControllerTests.swift; sourceTree = "<group>"; };
 		FB1CC8DC2530F180003AA02E /* TabItemAddViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItemAddViewControllerTests.swift; sourceTree = "<group>"; };
+		FB1CC8E425310905003AA02E /* TabItemsUpdateViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItemsUpdateViewControllerTests.swift; sourceTree = "<group>"; };
 		FB7787992529FA900088410B /* beertab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = beertab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB77879C2529FA900088410B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB77879E2529FA900088410B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				FB1CC8CC2530CF1E003AA02E /* TabViewControllerTests.swift */,
 				FB1CC8D42530DA5A003AA02E /* TabItemsTableViewControllerTests.swift */,
 				FB1CC8DC2530F180003AA02E /* TabItemAddViewControllerTests.swift */,
+				FB1CC8E425310905003AA02E /* TabItemsUpdateViewControllerTests.swift */,
 				FB7787B52529FA910088410B /* Info.plist */,
 			);
 			path = beertabTests;
@@ -352,6 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB1CC8E525310905003AA02E /* TabItemsUpdateViewControllerTests.swift in Sources */,
 				FB1CC8D52530DA5A003AA02E /* TabItemsTableViewControllerTests.swift in Sources */,
 				FB1CC8CD2530CF1E003AA02E /* TabViewControllerTests.swift in Sources */,
 				FB778856252FA1040088410B /* HistoryTableViewControllerTests.swift in Sources */,

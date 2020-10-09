@@ -9,6 +9,7 @@ import UIKit
 
 var history = History(allTabs: [])
 var userId = UId()
+var archiveKey = "history"
 
 class HistoryTableViewController: AbstractTableViewController {
 
@@ -16,7 +17,7 @@ class HistoryTableViewController: AbstractTableViewController {
         super.viewDidLoad()
 
         userId.refreshUId()
-        HistoryArchive().read(historyResponse: historyRead(newHistory:), errorResponse: errorReadingHistory(message:))
+        HistoryArchive(key:archiveKey).read(historyResponse: historyRead(newHistory:), errorResponse: errorReadingHistory(message:))
     }
 
     func historyRead(newHistory:History) {
@@ -49,7 +50,7 @@ class HistoryTableViewController: AbstractTableViewController {
             return setupSingleLabelCell(tab: tab, cell:tableView.dequeueReusableCell(withIdentifier: "tab1Cell", for: indexPath))
             
         } else {
-            return setupTwoLabelCell(tab: tab, cell:tableView.dequeueReusableCell(withIdentifier: "tab1Cell", for: indexPath))
+            return setupTwoLabelCell(tab: tab, cell:tableView.dequeueReusableCell(withIdentifier: "tab2Cell", for: indexPath))
         }
     }
     
@@ -110,7 +111,7 @@ class HistoryTableViewController: AbstractTableViewController {
     
     func deleteTab(tab: Tab) {
         history = history.remove(tab: tab)
-        history.save(errorResponse: errorWritingHistory(history:message:))
+        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
     }
     
     func errorWritingHistory(history:History, message:String) {

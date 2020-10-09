@@ -9,7 +9,7 @@ import Foundation
 
 struct Tab:Codable, Equatable {
     static func == (lhs: Tab, rhs: Tab) -> Bool {
-        return lhs.name == rhs.name && lhs.pubName == rhs.pubName && lhs.createTS == lhs.createTS
+        return lhs.name == rhs.name && lhs.pubName == rhs.pubName && lhs.createTS == rhs.createTS
     }
     
     let name:String

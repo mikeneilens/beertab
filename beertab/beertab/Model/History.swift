@@ -26,7 +26,7 @@ struct History:Codable {
         let newTabs:Array<Tab> =  allTabs.map{if $0.createTS == tab.createTS {return tab} else {return $0}}
         return History(allTabs:newTabs)
     }
-    func save(errorResponse: (History,String) -> ()) {
-        HistoryArchive().write(history: self, errorResponse: errorResponse)
+    func save(key:String, errorResponse: (History,String) -> ()) {
+        HistoryArchive(key:key).write(history: self, errorResponse: errorResponse)
     }
 }
