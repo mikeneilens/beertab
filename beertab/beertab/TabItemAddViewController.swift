@@ -26,17 +26,17 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
     @IBOutlet weak var otherPrice: UITextField!
     
     
-    @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         brandTextField.delegate = self
         nameTextField.delegate = self
     
-        doneButton.isEnabled = shouldDoneButtonBeEnabled()
+        saveButton.isEnabled = shouldDoneButtonBeEnabled()
     }
     
-    @IBAction func donePressed(_ sender: Any) {
+    @IBAction func savePressed(_ sender: Any) {
         if let tabUpdater = tabUpdater {
             createTabItems(tabUpdater)
             navigationController?.popViewController(animated:true)
@@ -82,7 +82,7 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
         present(deleteAlert, animated: true, completion: nil)
     }
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        doneButton.isEnabled = shouldDoneButtonBeEnabled()
+        saveButton.isEnabled = shouldDoneButtonBeEnabled()
     }
         
     func shouldDoneButtonBeEnabled() -> Bool {

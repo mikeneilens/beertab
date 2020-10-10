@@ -80,8 +80,11 @@ class TabItemsTableViewControllerTests: XCTestCase {
     
     func testHeadingForSection() throws {
         let viewController = TabItemsTableViewController()
-        XCTAssertEqual("Items", viewController.tableView(UITableView(), titleForHeaderInSection: 0))
+        XCTAssertEqual("You have no items on your tab", viewController.tableView(UITableView(), titleForHeaderInSection: 0))
         XCTAssertEqual("Your Total Bill", viewController.tableView(UITableView(), titleForHeaderInSection: 1))
+        
+        viewController.tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "", tabItems: [tabItem1,tabItem2])
+        XCTAssertEqual("Items", viewController.tableView(UITableView(), titleForHeaderInSection: 0))
     }
 
     func testPreparingWhenDestinationIsAddTabItem() throws {
@@ -115,6 +118,7 @@ class TabItemsTableViewControllerTests: XCTestCase {
         let viewController = TabItemsTableViewController()
         let tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "", tabItems: [tabItem1,tabItem2])
         viewController.tab = tab
+        archiveKey = "test"
         history = History(allTabs: [tab])
         
         let newTabItem = TabItem(brewer: "brewer3", name: "name3", size: "other", price: 100)

@@ -94,7 +94,7 @@ class HistoryTableViewController: AbstractTableViewController {
     }
         
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let selectedRow = tableView.indexPathForSelectedRow?.row else {return}
+        let selectedRow = tableView.indexPathForSelectedRow?.row ?? 0
         setPropertiesOf(segue.destination, row:selectedRow)
     }
     

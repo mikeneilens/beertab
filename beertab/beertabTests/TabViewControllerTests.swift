@@ -33,7 +33,7 @@ class TabViewControllerTests: XCTestCase {
         testData.forEach{ (name, pubName, expectedState ) in
             viewController.name.text = name
             viewController.pubName.text = pubName
-            XCTAssertEqual( expectedState, viewController.ShouldDoneButtonBeEnabled())
+            XCTAssertEqual( expectedState, viewController.shouldSaveButtonBeEnabled())
         }
     }
     func testCreatingTab() throws {

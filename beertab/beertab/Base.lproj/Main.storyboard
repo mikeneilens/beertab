@@ -187,16 +187,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Enter tab details" id="hbN-OV-h4h">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="u6P-I7-6KP">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="u6P-I7-6KP">
                             <connections>
-                                <action selector="donePressed:" destination="L6F-2t-3Vx" id="gMc-NB-oU0"/>
+                                <action selector="savePressed:" destination="L6F-2t-3Vx" id="gMc-NB-oU0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="doneButton" destination="u6P-I7-6KP" id="MuD-GW-rca"/>
                         <outlet property="name" destination="hxe-Eq-9tc" id="SqH-KJ-seQ"/>
                         <outlet property="pubName" destination="hhl-CJ-mMn" id="4xr-EQ-ku7"/>
+                        <outlet property="saveButton" destination="u6P-I7-6KP" id="MuD-GW-rca"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lH0-8z-uq0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -234,7 +234,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pint" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fwD-r8-hlX">
-                                            <rect key="frame" x="192.5" y="11.5" width="29.5" height="21"/>
+                                            <rect key="frame" x="232.5" y="11.5" width="29.5" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -253,7 +253,7 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="fwD-r8-hlX" firstAttribute="centerX" secondItem="Mbc-pe-JuT" secondAttribute="centerX" id="8Ii-p2-3Yh"/>
+                                        <constraint firstItem="fwD-r8-hlX" firstAttribute="centerX" secondItem="Mbc-pe-JuT" secondAttribute="centerX" constant="40" id="8Ii-p2-3Yh"/>
                                         <constraint firstItem="Iir-dP-R5H" firstAttribute="centerX" secondItem="Mbc-pe-JuT" secondAttribute="centerX" constant="150" id="949-3g-sKx"/>
                                         <constraint firstItem="boO-Ia-Tes" firstAttribute="leading" secondItem="FH1-L7-g6J" secondAttribute="leading" id="HAP-gE-ObO"/>
                                         <constraint firstItem="fwD-r8-hlX" firstAttribute="centerY" secondItem="Mbc-pe-JuT" secondAttribute="centerY" id="Nm9-C7-1tE"/>
@@ -314,7 +314,7 @@
             </objects>
             <point key="canvasLocation" x="-988.40579710144937" y="367.63392857142856"/>
         </scene>
-        <!--Tab Item-->
+        <!--New item-->
         <scene sceneID="7Uq-hO-qah">
             <objects>
                 <viewController id="3Jp-AP-sPE" customClass="TabItemAddViewController" customModule="beertab" customModuleProvider="target" sceneMemberID="viewController">
@@ -444,20 +444,20 @@
                             <constraint firstItem="aLb-C7-6zq" firstAttribute="centerY" secondItem="hGs-Ag-1Ve" secondAttribute="centerY" id="y88-IJ-RHc"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Tab Item" id="S2L-lA-feo">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="voV-Cv-LRB">
+                    <navigationItem key="navigationItem" title="New item" id="S2L-lA-feo">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="voV-Cv-LRB">
                             <connections>
-                                <action selector="donePressed:" destination="3Jp-AP-sPE" id="uhG-pQ-hMj"/>
+                                <action selector="savePressed:" destination="3Jp-AP-sPE" id="uhG-pQ-hMj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="brandTextField" destination="aLb-C7-6zq" id="axl-zR-LMu"/>
-                        <outlet property="doneButton" destination="voV-Cv-LRB" id="Xux-za-edg"/>
                         <outlet property="halfPriceText" destination="RCp-2S-Cut" id="MWO-y8-60m"/>
                         <outlet property="nameTextField" destination="H5O-sz-eMs" id="KWK-zq-r33"/>
                         <outlet property="otherPrice" destination="zCR-nv-2hg" id="CQp-GM-jNX"/>
                         <outlet property="pintPriceText" destination="OAE-CG-QYv" id="AEG-wo-3ij"/>
+                        <outlet property="saveButton" destination="voV-Cv-LRB" id="Xux-za-edg"/>
                         <outlet property="thirdPriceText" destination="yG4-He-SCL" id="TzC-LF-iDY"/>
                         <outlet property="twoThirdPriceText" destination="sA8-ZA-IQd" id="mIV-MJ-3eI"/>
                     </connections>

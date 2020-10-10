@@ -85,7 +85,13 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
       
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {return "Items"}
+        if section == 0 {
+            if tab.tabItems.count > 0 {
+                return "Items"
+            } else {
+                return "You have no items on your tab"
+            }
+        }
         else {return "Your Total Bill"}
     }
     

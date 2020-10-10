@@ -88,11 +88,11 @@ class AbstractViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.cancel, handler: nil))
         self.present(alert, animated: false, completion: nil)
     }
-    /*
+    
     func requestFailed(error:JSONError, errorText:String, errorTitle:String)
     {
         self.stopActivityIndicator(withMessage: errorText, withTitle:errorTitle)
     }
-    */
+    
 }
 
