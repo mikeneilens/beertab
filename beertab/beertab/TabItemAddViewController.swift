@@ -33,7 +33,7 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
         brandTextField.delegate = self
         nameTextField.delegate = self
     
-        doneButton.isEnabled = getDoneButtonState()
+        doneButton.isEnabled = shouldDoneButtonBeEnabled()
     }
     
     @IBAction func donePressed(_ sender: Any) {
@@ -82,15 +82,11 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
         present(deleteAlert, animated: true, completion: nil)
     }
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        doneButton.isEnabled = getDoneButtonState()
+        doneButton.isEnabled = shouldDoneButtonBeEnabled()
     }
         
-    func getDoneButtonState() -> Bool {
-        if (brandTextField.text == "" && nameTextField.text == "")  {
-            return false
-        } else {
-            return true
-        }
+    func shouldDoneButtonBeEnabled() -> Bool {
+        return (brandTextField.text != "" || nameTextField.text != "")
     }
 
 }

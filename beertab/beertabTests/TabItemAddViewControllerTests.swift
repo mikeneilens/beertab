@@ -128,7 +128,7 @@ class TabItemAddViewControllerTests: XCTestCase {
         testData.forEach{ (brandText, nameText, expectedResult ) in
             viewController.brandTextField.text = brandText
             viewController.nameTextField.text = nameText
-            XCTAssertEqual(expectedResult, viewController.getDoneButtonState())
+            XCTAssertEqual(expectedResult, viewController.shouldDoneButtonBeEnabled())
         }
     }
 

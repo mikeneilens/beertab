@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 var history = History(allTabs: [])
 var userId = UId()
@@ -13,13 +14,28 @@ var archiveKey = "history"
 
 class HistoryTableViewController: AbstractTableViewController {
 
+    let locationManager = CLLocationManager()
+    var currentLocation = LocationStatus.NotSet
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        checkLocationServicesPermissions()
+        locationManager.delegate = self
         userId.refreshUId()
         HistoryArchive(key:archiveKey).read(historyResponse: historyRead(newHistory:), errorResponse: errorReadingHistory(message:))
     }
-
+    
+    func checkLocationServicesPermissions() {
+        if CLLocationManager.locationServicesEnabled() {
+            let authorisationStatus = CLLocationManager.authorizationStatus()
+            if authorisationStatus == .authorizedAlways || authorisationStatus == .authorizedWhenInUse {
+                locationManager.startUpdatingLocation()
+            } else {
+                self.locationManager.requestWhenInUseAuthorization()
+            }
+        }
+    }
     func historyRead(newHistory:History) {
         history = newHistory
     }
@@ -83,8 +99,10 @@ class HistoryTableViewController: AbstractTableViewController {
     }
     
     func setPropertiesOf(_ destination: UIViewController, row: Int) {
-        if let tabItemsTableViewController = destination as? TabItemsTableViewController {
-            tabItemsTableViewController.tab = history.tabs[row]
+        switch destination {
+            case let tabItemsTableViewController as TabItemsTableViewController: tabItemsTableViewController.tab = history.tabs[row]
+            case let tabViewController as TabViewController: tabViewController.locationStatus = currentLocation
+            default: break
         }
     }
 
@@ -117,49 +135,19 @@ class HistoryTableViewController: AbstractTableViewController {
     func errorWritingHistory(history:History, message:String) {
         print("error writing history: \(message)")
     }
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+}
+
+extension HistoryTableViewController: CLLocationManagerDelegate { //delegat methods for CLLoctaionManager
+    
+    func locationManager(_ manager:CLLocationManager, didChangeAuthorization status:CLAuthorizationStatus) {
+        if ((status == .authorizedAlways) || (status == .authorizedWhenInUse)) {
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            self.locationManager.startUpdatingLocation()
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        self.currentLocation = .Set(location:  Location(fromCoordinate:locValue))
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

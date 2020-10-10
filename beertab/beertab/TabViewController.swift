@@ -13,25 +13,23 @@ class TabViewController: AbstractViewController, UITextFieldDelegate {
     @IBOutlet weak var pubName: UITextField!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
+    var locationStatus = LocationStatus.NotSet
+    
     override func viewDidLoad() {
         name.delegate = self
         pubName.delegate = self
         super.viewDidLoad()
-        doneButton.isEnabled = getDoneButtonState()
+        doneButton.isEnabled = ShouldDoneButtonBeEnabled()
         // Do any additional setup after loading the view.
     }
 
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        doneButton.isEnabled = getDoneButtonState()
+        doneButton.isEnabled = ShouldDoneButtonBeEnabled()
     }
     
-    func getDoneButtonState() -> Bool {
-        if name.text == "" && pubName.text == "" {
-            return false
-        } else {
-            return true
-        }
+    func ShouldDoneButtonBeEnabled() -> Bool {
+        return (name.text != "" || pubName.text != "")
     }
     
     @IBAction func donePressed(_ sender: Any) {

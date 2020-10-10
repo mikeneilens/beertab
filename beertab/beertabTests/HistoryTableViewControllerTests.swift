@@ -91,6 +91,15 @@ class HistoryTableViewControllerTests: XCTestCase {
         XCTAssertEqual(history.tabs[0], destination.tab)
     }
     
+    func testPropertiesOfTabVCAreSetCorrectly() {
+        let viewController = HistoryTableViewController()
+        viewController.currentLocation = .Set(location: Location(lng:1,lat:2))
+        let destination = TabViewController()
+        viewController.setPropertiesOf(destination,row:0)
+        
+        XCTAssertEqual(LocationStatus.Set(location: Location(lng: 1, lat: 2)) , destination.locationStatus)
+    }
+    
     func testDeleteTab() {
         let viewController = HistoryTableViewController()
         history = History(allTabs:[tab1,tab2,tab3])

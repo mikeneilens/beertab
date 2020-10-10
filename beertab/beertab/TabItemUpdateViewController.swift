@@ -37,11 +37,12 @@ class TabItemUpdateViewController: UIViewController, UITextFieldDelegate {
         sizeTextField.text = tabItem.size
         priceTextField.text = tabItem.priceGBP
         qtyTextField.text = String(tabItem.quantity)
-
-        if tabItem.quantity == 0 {
-            deleteButton.setTitle("Delete Item", for: .normal)
-            deleteButton.setTitleColor(UIColor.red, for: .normal)
-        }
+        
+        deleteButton.isEnabled = shouldDeleteButtonBeEnabled()
+    }
+    
+    func shouldDeleteButtonBeEnabled() -> Bool {
+        return (tabItem.quantity > 0)
     }
     
     @IBAction func buyPressed(_ sender: Any) {
@@ -53,46 +54,17 @@ class TabItemUpdateViewController: UIViewController, UITextFieldDelegate {
         tabUpdater.buyTabItem(tabItem: tabItem)
         completion()
     }
+        
+    @IBAction func deletePressed(_ sender: Any) {
+        guard let tabUpdater = tabUpdater else {return}
+        returnTabItem(tabUpdater: tabUpdater, {self.navigationController?.popViewController(animated:true)})
+    }
     
     func returnTabItem(tabUpdater:TabUpdater, _ completion:()->()) {
         tabUpdater.returnTabItem(tabItem: tabItem)
         completion()
     }
-    
-    func deleteTabItem(tabUpdater:TabUpdater, _ completion:()->()) {
-        tabUpdater.deleteTabItem(tabItem: tabItem)
-        completion()
-    }
-    
-    @IBAction func deletePressed(_ sender: Any) {
-        guard let tabUpdater = tabUpdater else {return}
-        let returner = { self.returnTabItem(tabUpdater: tabUpdater, {self.navigationController?.popViewController(animated:true)}) }
-        let deleter = { self.deleteTabItem(tabUpdater: tabUpdater, {self.navigationController?.popViewController(animated:true)}) }
-        let warnAndDeleter = {self.warnAndDeleteTabItem(tabUpdater: tabUpdater, deleter: deleter)}
-        
-        returnOrDeleteTabItem(tabUpdater:tabUpdater, returner: returner, warnAndDeleter: warnAndDeleter)
-    }
 
-    func returnOrDeleteTabItem(tabUpdater: TabUpdater, returner:()->(),warnAndDeleter:()->()) {
-        if tabItem.quantity > 0 {
-            returner()
-        } else {
-            warnAndDeleter()
-        }
-    }
-    
-    func warnAndDeleteTabItem(tabUpdater:TabUpdater,  deleter:@escaping ()->()) {
-        let deleteAlert = UIAlertController(title: "Are You Sure", message: "Do you want to delete \(tabItem.brewer) \(tabItem.name) (\(tabItem.size))", preferredStyle: UIAlertController.Style.alert)
-
-        deleteAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-            deleter()
-        }))
-
-        deleteAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler:nil))
-
-        present(deleteAlert, animated: true, completion: nil)
-    }
-    
     /*
     // MARK: - Navigation
 

@@ -85,59 +85,16 @@ class TabItemsUpdateViewControllerTests: XCTestCase {
         XCTAssertEqual(tabItem1.size, mockUpdater.listOfReturnedTabItems[0].size)
         XCTAssertEqual(tabItem1.price, mockUpdater.listOfReturnedTabItems[0].price)
     }
-    func testDeleteTabItem() throws {
-        let viewController = TabItemUpdateViewController()
-        setUp(viewController: viewController)
-        viewController.tabItem = tabItem1
-        
-        let mockUpdater = MockUpdater()
-        
-        var completions = 0
-        let completer = {completions += 1}
-        viewController.deleteTabItem(tabUpdater:mockUpdater, completer)
-        
-        XCTAssertEqual(1, mockUpdater.listOfDeletedTabItems.count)
-        XCTAssertEqual(1, completions)
-        XCTAssertEqual(tabItem1.brewer, mockUpdater.listOfDeletedTabItems[0].brewer)
-        XCTAssertEqual(tabItem1.name, mockUpdater.listOfDeletedTabItems[0].name)
-        XCTAssertEqual(tabItem1.size, mockUpdater.listOfDeletedTabItems[0].size)
-        XCTAssertEqual(tabItem1.price, mockUpdater.listOfDeletedTabItems[0].price)
-    }
     
-    func testReturningOrDeletingTabItemWhenTabItemQuantityZero() throws {
+    func testGetDeleteButtonState() {
         let viewController = TabItemUpdateViewController()
-        setUp(viewController: viewController)
         viewController.tabItem = tabItem1
         
-        let mockUpdater = MockUpdater()
+        XCTAssertFalse( viewController.shouldDeleteButtonBeEnabled() )
         
-        var returns = 0
-        let returner = {returns += 1}
-        var deletions = 0
-        let deleter = {deletions += 1}
-
-        viewController.returnOrDeleteTabItem(tabUpdater:mockUpdater, returner: returner, warnAndDeleter: deleter)
-        
-        XCTAssertEqual(1, deletions)
-        XCTAssertEqual(0, returns)
-    }
-
-    func testReturningOrDeletingTabItemWhenTabItemQuantityIsOne() throws {
-        let viewController = TabItemUpdateViewController()
-        setUp(viewController: viewController)
         viewController.tabItem = tabItem1.addTransaction()
         
-        let mockUpdater = MockUpdater()
-        
-        var returns = 0
-        let returner = {returns += 1}
-        var deletions = 0
-        let deleter = {deletions += 1}
-
-        viewController.returnOrDeleteTabItem(tabUpdater:mockUpdater, returner: returner, warnAndDeleter: deleter)
-        
-        XCTAssertEqual(0, deletions)
-        XCTAssertEqual(1, returns)
+        XCTAssertTrue( viewController.shouldDeleteButtonBeEnabled() )
     }
     
     func testPerformanceExample() throws {
