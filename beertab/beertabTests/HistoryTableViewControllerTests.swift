@@ -53,16 +53,19 @@ class HistoryTableViewControllerTests: XCTestCase {
         let dateLabel = UILabel()
         bareCell.name = nameLabel
         bareCell.date = dateLabel
+       
+        let october_10_2020 = Date(timeIntervalSinceReferenceDate: 624056329.985)
+        let october_11_2020 = Date(timeIntervalSinceReferenceDate: 624142723.985)
         
-        let tabNoPub = Tab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id", tabItems: [])
+        let tabNoPub = Tab(name: "test tab1", createTS: october_11_2020, pubName: "", branch: "test br", id: "test id", tabItems: [])
         let _ = viewController.setupSingleLabelCell(tab: tabNoPub, cell: bareCell)
         XCTAssertEqual(Optional("test tab1"), nameLabel.text)
-        XCTAssertEqual(Optional(tabNoPub.dateString), dateLabel.text)
+        XCTAssertEqual(Optional("11 Oct 2020"), dateLabel.text)
         
-        let tabNoName = Tab(name: "", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
+        let tabNoName = Tab(name: "", createTS: october_10_2020, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
         let _ = viewController.setupSingleLabelCell(tab: tabNoName, cell: bareCell)
         XCTAssertEqual(Optional("test pub"), nameLabel.text)
-        XCTAssertEqual(Optional(tabNoName.dateString), dateLabel.text)
+        XCTAssertEqual(Optional("10 Oct 2020"), dateLabel.text)
     }
     
     func testCellForARowIsTabWithTwoDescriptionIfTabHasNameAndPubName() {

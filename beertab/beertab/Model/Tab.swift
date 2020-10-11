@@ -20,15 +20,11 @@ struct Tab:Codable, Equatable {
     let tabItems:Array<TabItem>
     
     var dateString:String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        dateFormatter.locale = Locale(identifier: "en_GB")        
-        return dateFormatter.string(from: createTS)
+        return createTS.asDateString
     }
     
     var totalValue:String {
-        return tabItems.map{$0.price * $0.quantity}.reduce(0){$0 + $1}.priceGBP
+        return "£" + tabItems.map{$0.price * $0.quantity}.reduce(0){$0 + $1}.priceGBP
     }
     func add(tabItem:TabItem)->Tab {
         return Tab(name:name, createTS:createTS, pubName:pubName, branch:branch, id:id, tabItems:tabItems + [tabItem])
@@ -50,6 +46,51 @@ struct Tab:Codable, Equatable {
         return Tab(name:self.name, createTS:self.createTS, pubName:self.pubName, branch:branch, id:id, tabItems:newTabItems)
     }
     
+    func transactionsReport() -> String {
+        return "Your receipt for \(name) \(pubName): \n\n" +
+                tabItems.flatMap{ tabItem in tabItem.transactions.map{transaction in ReceiptItem(tabItem, transaction) } }
+                        .sortbyCreateTS()
+                        .map{"\($0)"}
+                        .joined(separator: "\n") +
+                "\n \nTotal: \(totalValue)"
+    }
 }
 
+struct ReceiptItem:CustomStringConvertible{
+    var description: String {return "\(createTS.asTimeString) \(brewer) \(name) \(size) \(sign)£\(price) "}
+    let brewer:String, name:String, size:String, price:String, createTS:Date, sign:String
+    init(_ tabItem:TabItem,_ transaction:Transaction) {
+        brewer = tabItem.brewer; name = tabItem.name; size = tabItem.size; price = tabItem.priceGBP; createTS = transaction.createTS
+        sign = "\( transaction.transactionType == .add ? "+" : "-")"
+    }
+    init(_ brewer:String, _ name:String, _ size:String, _ price:String, _ createTS:Date, _ sign:String) {
+        self.brewer = brewer;self.name = name; self.size = size; self.price = price; self.createTS = createTS; self.sign = sign
+    }
+}
+extension Array where Element == ReceiptItem {
+    func sortbyCreateTS()-> Array<ReceiptItem> { self.sorted{$0.createTS < $1.createTS}}
+}
 
+extension Date {
+    var asDateString:String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        dateFormatter.locale = Locale(identifier: "en_GB")
+        return dateFormatter.string(from: self)
+    }
+    var asTimeString:String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .none
+        dateFormatter.timeStyle = .short
+        dateFormatter.locale = Locale(identifier: "en_GB")
+        return dateFormatter.string(from: self)
+    }
+    var asDateAndTimeString:String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        dateFormatter.locale = Locale(identifier: "en_GB")
+        return dateFormatter.string(from: self)
+    }
+}

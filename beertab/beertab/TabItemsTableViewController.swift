@@ -34,6 +34,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
 
     override func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
+        print(tab.transactionsReport())
     }
     // MARK: - Table view data source
 
@@ -79,8 +80,8 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
     func configureSummaryCell(_ cell: UITableViewCell) {
           if let tabTotalCell = cell as? TabTotalTableViewCell {
-              tabTotalCell.totalValue.text = "£\(tab.totalValue)"
-              tabTotalCell.isUserInteractionEnabled = false
+              tabTotalCell.totalValue.text = tab.totalValue
+              tabTotalCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
           }
     }
       
@@ -125,6 +126,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
         switch destination {
         case let tabItemAddViewController as TabItemAddViewController : prepare(tabItemAddViewController)
         case let tabItemUpdateViewController as TabItemUpdateViewController : prepare(tabItemUpdateViewController, row:row)
+        case let receiptViewController as ReceiptViewController : prepare(receiptViewController)
         default: break
         }
     }
@@ -138,6 +140,9 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
         tabItemUpdateViewController.tabUpdater = self
     }
     
+    func prepare(_ receiptViewController:ReceiptViewController) {
+        receiptViewController.tab = tab
+    }
     func selectTabItem(row:Int?) -> TabItem {
         if let selectedRow = row {
             return tab.tabItems[selectedRow]

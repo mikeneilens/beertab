@@ -294,6 +294,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="totalValue" destination="B8t-yN-1ey" id="qeq-na-z10"/>
+                                    <segue destination="Ow8-XX-MrA" kind="show" id="Eo7-6m-h2a"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -602,11 +603,52 @@
             </objects>
             <point key="canvasLocation" x="401" y="368"/>
         </scene>
+        <!--Receipt-->
+        <scene sceneID="EC1-PI-OeM">
+            <objects>
+                <viewController id="Ow8-XX-MrA" customClass="ReceiptViewController" customModule="beertab" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CgI-rM-jjX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="u7p-j9-CP4">
+                                <rect key="frame" x="10" y="98" width="394" height="754"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                </accessibility>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dYN-k5-REp"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="u7p-j9-CP4" firstAttribute="top" secondItem="dYN-k5-REp" secondAttribute="top" constant="10" id="8lM-Rn-p9y"/>
+                            <constraint firstItem="dYN-k5-REp" firstAttribute="trailing" secondItem="u7p-j9-CP4" secondAttribute="trailing" constant="10" id="R9m-RN-edB"/>
+                            <constraint firstItem="dYN-k5-REp" firstAttribute="bottom" secondItem="u7p-j9-CP4" secondAttribute="bottom" constant="10" id="XFT-Q5-1Jk"/>
+                            <constraint firstItem="u7p-j9-CP4" firstAttribute="leading" secondItem="dYN-k5-REp" secondAttribute="leading" constant="10" id="j78-AS-UJd"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Receipt" id="Uof-de-JR7"/>
+                    <connections>
+                        <outlet property="receiptTextView" destination="u7p-j9-CP4" id="KQ7-2T-zqw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dAU-XC-fGf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1095.6521739130435" y="367.63392857142856"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="qcE-zJ-nxu"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

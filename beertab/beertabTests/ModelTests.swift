@@ -8,7 +8,7 @@
 import XCTest
 @testable import beertab
 
-class beertabTests: XCTestCase {
+class ModelTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -221,44 +221,64 @@ class beertabTests: XCTestCase {
         XCTAssertEqual("new id", newHistory.allTabs[1].id)
         XCTAssertEqual(1, newHistory.allTabs[1].tabItems.count)
     }
-    
-    func testEncodingHistory() {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        let tab1 = Tab(name: "test tab1", createTS: Date(timeIntervalSince1970: 623704840), pubName: "test pub1", branch: "test br1", id: "test id1", tabItems: [])
-        let tab2 = Tab(name: "test tab2", createTS: Date(timeIntervalSince1970: 623704840), pubName: "test pub2", branch: "test br2", id: "test id2", tabItems: [])
-        let tab3 = Tab(name: "test tab3", createTS: Date(timeIntervalSince1970: 623704840), pubName: "test pub3", branch: "test br3", id: "test id3", tabItems: [])
-        let history = History(allTabs:[tab1,tab2,tab3])
-        do { let json = try encoder.encode(history)
-            print(String(data: json, encoding: .utf8)!)
-        } catch {
-            print("encoding failed")
-            XCTAssertFalse(true)
-        }
-    }
-    
-    func testDecodingHistory() {
-        let decoder = JSONDecoder()
-        let historyJson = """
-        {"allTabs" : [
-        {"pubName" : "test pub1","createTS" : -354602360,"id" : "test id1","name" : "test tab1","branch" : "test br1","tabItems" : []},
-        {"pubName" : "test pub2","createTS" : -354602360,"id" : "test id2","name" : "test tab2","branch" : "test br2","tabItems" : []},
-        {"pubName" : "test pub3","createTS" : -354602360,"id" : "test id3","name" : "test tab3","branch" : "test br3","tabItems" : []}]}
-        """.data(using: .utf8)!
+    func testTotalValue() {
+        let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440).addTransaction()
+        let tabItem2 = TabItem(brewer: "brewer2", name: "name2", size: "half", price: 240).removeTransaction()
+       
+        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test_pub", branch: "test_br", id: "test_id", tabItems: [tabItem1, tabItem2])
         
-        do { let newHistory = try decoder.decode(History.self, from: historyJson)
-            XCTAssertEqual(3, newHistory.tabs.count)
-            XCTAssertEqual("test tab2", newHistory.allTabs[1].name)
-            XCTAssertEqual("test pub2", newHistory.allTabs[1].pubName)
-            XCTAssertEqual("test br2", newHistory.allTabs[1].branch)
-            XCTAssertEqual("test id2", newHistory.allTabs[1].id)
-            XCTAssertEqual(0, newHistory.allTabs[1].tabItems.count)
-        } catch {
-            print("decoding failed")
-            XCTAssertFalse(true)
-        }
+        XCTAssertEqual("£2.00", tab1.totalValue)
     }
     
+    func testCreatingAReceiptItemWithAnAddTransaction() throws {
+        let tabItem = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
+        let transaction = Transaction(transactionType: .add)
+        let receiptItem = ReceiptItem(tabItem, transaction)
+        XCTAssertEqual("name1",receiptItem.name)
+        XCTAssertEqual("brewer1",receiptItem.brewer)
+        XCTAssertEqual("pint",receiptItem.size)
+        XCTAssertEqual("4.40",receiptItem.price)
+        XCTAssertEqual("+",receiptItem.sign)
+        XCTAssertEqual(transaction.createTS,receiptItem.createTS)
+    }
+    func testCreatingAReceiptItemWithARemoveTransaction() throws {
+        let tabItem = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
+        let transaction = Transaction(transactionType: .remove)
+        let receiptItem = ReceiptItem(tabItem, transaction)
+        XCTAssertEqual("name1",receiptItem.name)
+        XCTAssertEqual("brewer1",receiptItem.brewer)
+        XCTAssertEqual("pint",receiptItem.size)
+        XCTAssertEqual("4.40",receiptItem.price)
+        XCTAssertEqual("-",receiptItem.sign)
+        XCTAssertEqual(transaction.createTS,receiptItem.createTS)
+    }
+    func testDecriptionOfAReceiptItem() throws {
+        let date = Date()
+        let receiptItem = ReceiptItem("brewer", "beer name", "pint", "5.50", date, "+")
+        let descriptionWithoutTime = receiptItem.description.split(separator: " ").dropFirst().joined(separator: " ")
+        let descriptionTime = String(receiptItem.description.split(separator: " ").first ?? "")
+        XCTAssertEqual("brewer beer name pint +£5.50",  descriptionWithoutTime)
+        XCTAssertEqual(date.asTimeString,  descriptionTime)
+    }
+    
+    func testTransactionReport() throws {
+        let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440).addTransaction()
+        let tabItem2 = TabItem(brewer: "brewer2", name: "name2", size: "half", price: 240).removeTransaction()
+       
+        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test_pub", branch: "test_br", id: "test_id", tabItems: [tabItem1, tabItem2])
+        
+        let reportLines = tab1.transactionsReport().split(separator: "\n").map{String($0)}
+        
+        let reportLine1WithoutTime = reportLines[1].split(separator: " ").dropFirst().joined(separator: " ")
+        let reportLine2WithoutTime = reportLines[2].split(separator: " ").dropFirst().joined(separator: " ")
+        
+        XCTAssertEqual("Your receipt for test tab1 test_pub: ", reportLines[0])
+        XCTAssertEqual("brewer1 name1 pint +£4.40", reportLine1WithoutTime)
+        XCTAssertEqual("brewer2 name2 half -£2.40", reportLine2WithoutTime)
+        XCTAssertEqual(" ", reportLines[3])
+        XCTAssertEqual("Total: £2.00", reportLines[4])
+        
+    }
     
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
