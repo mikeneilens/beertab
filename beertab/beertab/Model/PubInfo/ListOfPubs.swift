@@ -48,7 +48,7 @@ struct ListOfPubsCreator: WebServiceCallerType {
     
     func createList(usingSearchString search:String, location:Location)
     {
-        let urlPath = "\(K.URL.pubListURL)search=nearby&page=1&lat=51.5335538044874&lng=-0.325115913909807"
+        let urlPath = "\(K.URL.pubListURL)search=nearby&page=1&lat=\(location.lat)&lng=\(location.lng)"
         self.requestList(usingURLString:urlPath)
     }
     

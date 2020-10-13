@@ -69,17 +69,18 @@ extension TabViewController:ListOfPubsCreatorDelegate {
     }
     
     func suggestPub(pub:PubHeader) {
-        let deleteAlert = UIAlertController(title: "Pub Found", message: "Would you like to create a tab for \(pub.name) ?", preferredStyle: UIAlertController.Style.alert)
+        let createTabAlert = UIAlertController(title: "Pub Found", message: "Would you like to create a tab for \(pub.name) ?", preferredStyle: UIAlertController.Style.alert)
 
-        deleteAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+        createTabAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
             self.pubName.text = pub.name
             self.branch = pub.branch
             self.id = pub.id
             self.saveButton.isEnabled = self.shouldSaveButtonBeEnabled()
         }))
 
-        deleteAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler:nil))
+        createTabAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler:nil))
 
-        present(deleteAlert, animated: true, completion: nil)
+        present(createTabAlert, animated: true, completion: nil)
     }
 }
+

@@ -279,6 +279,20 @@ class ModelTests: XCTestCase {
         XCTAssertEqual("Total: £2.00", reportLines[4])
         
     }
+    func testEncodedTab() throws {
+        let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440).addTransaction()
+        let tabItem2 = TabItem(brewer: "brewer2", name: "name2", size: "half", price: 240).removeTransaction()
+        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test_pub", branch: "test_br", id: "test_id", tabItems: [tabItem1, tabItem2])
+        
+        let encoder = JSONEncoder()
+        
+        do {let json = try encoder.encode(tab1)
+            print(String(data:json,encoding: .utf8)! )
+        } catch {
+            print("error decoding tab")
+        }
+        let x = "" 
+    }
     
     func testPerformanceExample() throws {
         // This is an example of a performance test case.

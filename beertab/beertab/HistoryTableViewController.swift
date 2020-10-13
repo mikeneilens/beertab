@@ -13,7 +13,7 @@ var userId = UId()
 var archiveKey = "history"
 
 class HistoryTableViewController: AbstractTableViewController {
-
+    
     let locationManager = CLLocationManager()
     var currentLocation = LocationStatus.NotSet
     

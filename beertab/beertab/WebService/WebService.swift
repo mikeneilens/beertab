@@ -73,6 +73,7 @@ public struct WebService:MNWebService {
             delegate.failedGettingJson(error:error)
         }
     }
+    
 }
 
 extension URLRequest {

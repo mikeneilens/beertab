@@ -33,6 +33,10 @@ extension WebServiceCallerType {
         let request = Request(urlString: url)
         defaultWebService.getJson(forRequest:request, delegate:delegate)
     }
+    func post(withDelegate delegate:JSONResponseDelegate, url:String, httpHeaders:[String:String]?) {
+        let request = Request(urlString: url, requestMethod: .Post, httpHeaders: httpHeaders, httpBody: nil)
+        defaultWebService.getJson(forRequest:request, delegate:delegate)
+    }
     func failedGettingJson(error:Error) {
         errorDelegate.requestFailed(error:JSONError.ConversionFailed, errorText:"Error connecting to internet", errorTitle:"Could not " + serviceName)
     }
