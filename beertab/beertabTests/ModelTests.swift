@@ -291,7 +291,6 @@ class ModelTests: XCTestCase {
         } catch {
             print("error decoding tab")
         }
-        let x = "" 
     }
     
     func testPerformanceExample() throws {

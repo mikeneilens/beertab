@@ -8,7 +8,7 @@
 import UIKit
 
 protocol TabUpdater {
-    func addTabItem(tabItem:TabItem)
+    func addTabItems(tabItems:Array<TabItem>)
     func buyTabItem(tabItem:TabItem)
     func returnTabItem(tabItem:TabItem)
     func deleteTabItem(tabItem:TabItem)
@@ -148,15 +148,19 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
         }
     }
     
-    func addTabItem(tabItem: TabItem) {
-        addTabItemToTab(tabItem: tabItem)
-        TabWriter(delegate: self, errorDelegate: self).post(tab: tab)
-
-    }
-    func addTabItemToTab(tabItem:TabItem)  {
-        tab = tab.add(tabItem: tabItem)
-        history = history.update(tab: tab)
+    func addTabItems(tabItems:Array<TabItem>)  {
+        tabItems.forEach{ tabItem in
+            tab = tab.add(tabItem: tabItem)
+            history = history.update(tab: tab)
+        }
         history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
+        writeTabToRepository(tab: tab)
+    }
+    
+    func writeTabToRepository(tab:Tab) {
+        if tab.branch != "" && tab.id != "" {
+            TabWriter(delegate: self, errorDelegate: self).post(tab: tab)
+        }
     }
     
     func buyTabItem(tabItem: TabItem) {
@@ -202,9 +206,7 @@ extension TabItemsTableViewController:TabRepositoryDelegate {
     }
     
     func updateTab(tabItems:Array<TabItem>) {
-        for tabItem in tabItems {
-            self.addTabItemToTab(tabItem: tabItem)
-        }
+        self.addTabItems(tabItems: tabItems)
         self.tableView.reloadData()
     }
     

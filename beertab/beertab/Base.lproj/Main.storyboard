@@ -25,7 +25,7 @@
             </objects>
             <point key="canvasLocation" x="-1681" y="-350"/>
         </scene>
-        <!--Your Tabs-->
+        <!--Your Visits-->
         <scene sceneID="9wI-g8-BbP">
             <objects>
                 <tableViewController id="Pve-FX-bLJ" customClass="HistoryTableViewController" customModule="beertab" customModuleProvider="target" sceneMemberID="viewController">
@@ -124,7 +124,7 @@
                             <outlet property="delegate" destination="Pve-FX-bLJ" id="OQf-Y2-N1D"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Your Tabs" id="Jf5-RT-P4p">
+                    <navigationItem key="navigationItem" title="Your Visits" id="Jf5-RT-P4p">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="f9d-Bx-Yau">
                             <connections>
                                 <segue destination="L6F-2t-3Vx" kind="show" id="b0A-p6-qwY"/>
@@ -136,7 +136,7 @@
             </objects>
             <point key="canvasLocation" x="-986.95652173913049" y="-350.22321428571428"/>
         </scene>
-        <!--Enter tab details-->
+        <!--Enter visit details-->
         <scene sceneID="8Ag-dW-1It">
             <objects>
                 <viewController id="L6F-2t-3Vx" customClass="TabViewController" customModule="beertab" customModuleProvider="target" sceneMemberID="viewController">
@@ -186,7 +186,7 @@
                             <constraint firstItem="4Y8-IZ-gCX" firstAttribute="leading" secondItem="Wkg-72-HYJ" secondAttribute="leading" constant="20" id="gbX-Yi-MMA"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Enter tab details" id="hbN-OV-h4h">
+                    <navigationItem key="navigationItem" title="Enter visit details" id="hbN-OV-h4h">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="u6P-I7-6KP">
                             <connections>
                                 <action selector="savePressed:" destination="L6F-2t-3Vx" id="gMc-NB-oU0"/>

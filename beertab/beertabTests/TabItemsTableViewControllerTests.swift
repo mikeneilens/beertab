@@ -122,7 +122,7 @@ class TabItemsTableViewControllerTests: XCTestCase {
         history = History(allTabs: [tab])
         
         let newTabItem = TabItem(brewer: "brewer3", name: "name3", size: "other", price: 100)
-        viewController.addTabItem(tabItem: newTabItem)
+        viewController.addTabItems(tabItems: [newTabItem])
         
         XCTAssertEqual("brewer3", viewController.tab.tabItems.last?.brewer )
         XCTAssertEqual("name3", viewController.tab.tabItems.last?.name )

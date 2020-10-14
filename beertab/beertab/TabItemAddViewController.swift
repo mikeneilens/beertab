@@ -45,7 +45,7 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
     
     func createTabItems(_ tabUpdater: TabUpdater) {
         if pintPriceText.inPence() == 0 && halfPriceText.inPence() == 0 && thirdPriceText.inPence() == 0 && twoThirdPriceText.inPence() == 0 && otherPrice.inPence() == 0 {
-            tabUpdater.addTabItem(tabItem: tabItemFromView(size:"Any", price:0) )
+            tabUpdater.addTabItems(tabItems: [tabItemFromView(size:"Any", price:0)] )
         } else {
             createTabItemForEachPrice(tabUpdater:tabUpdater)
         }
@@ -57,11 +57,8 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
                       (size:"1/3", price:thirdPriceText.inPence()),
                       (size:"2/3", price:twoThirdPriceText.inPence()),
                       (size:"Other", price:otherPrice.inPence())]
-        prices.forEach{
-            if $0.price != 0 {
-                tabUpdater.addTabItem(tabItem: tabItemFromView(size:$0.size, price:$0.price))
-            }
-        }
+        let tabItems = prices.map{tabItemFromView(size:$0.size, price:$0.price) }.filter{$0.price != 0}
+        tabUpdater.addTabItems(tabItems: tabItems)
     }
 
     func tabItemFromView(size:String, price:Int) -> TabItem {

@@ -20,8 +20,8 @@ class TabItemAddViewControllerTests: XCTestCase {
     
     class MockUpdater:TabUpdater {
         var listOfTabItems:Array<TabItem> = []
-        func addTabItem(tabItem: TabItem) {
-            listOfTabItems.append(tabItem)
+        func addTabItems(tabItems: [TabItem]) {
+            listOfTabItems += tabItems
         }
         func buyTabItem(tabItem: TabItem) {
         }

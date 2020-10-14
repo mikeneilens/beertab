@@ -19,7 +19,7 @@ struct TabReader:WebServiceCallerType {
     let serviceName = "obtain TabItems"
     
     func getLatest(id:String, branch:String) {
-        self.call(withDelegate: self, url: "https://pubcrawlapi.appspot.com/tab/?branch=\(branch)&id=\(id)")
+        self.call(withDelegate: self, url: "https://pubcrawlapi.appspot.com/tab/\(branch)/\(id)/")
     }
     
     func finishedGetting(json: [String : Any]) {
@@ -51,7 +51,7 @@ struct TabWriter:WebServiceCallerType {
         let encoder = JSONEncoder()
         do {let encoded = try encoder.encode(tab)
             let data = String(data: encoded, encoding: .utf8)!
-            self.post(withDelegate: self, url: "https://pubcrawlapi.appspot.com/tab/", httpHeaders: ["tab":data])
+            self.post(withDelegate: self, url: "https://pubcrawlapi.appspot.com/tab/\(tab.branch)/\(tab.id)/", httpHeaders: ["tab":data])
         } catch {
             print("couldn't encode tab \(tab)")
         }

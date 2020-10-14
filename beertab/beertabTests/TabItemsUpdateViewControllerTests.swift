@@ -16,13 +16,14 @@ class TabItemsUpdateViewControllerTests: XCTestCase {
     let priceTextField = UITextField()
 
     class MockUpdater:TabUpdater {
+        
         var listOfAddedTabItems:Array<TabItem> = []
         var listOfBoughtTabItems:Array<TabItem> = []
         var listOfReturnedTabItems:Array<TabItem> = []
         var listOfDeletedTabItems:Array<TabItem> = []
         
-        func addTabItem(tabItem: TabItem) {
-            listOfAddedTabItems.append(tabItem)
+        func addTabItems(tabItems: [TabItem]) {
+            listOfAddedTabItems += tabItems
         }
         func buyTabItem(tabItem: TabItem) {
             listOfBoughtTabItems.append(tabItem)
