@@ -35,6 +35,19 @@ struct Tab:Codable, Equatable {
         return Tab(name:name, createTS:createTS, pubName:pubName, branch:branch, id:id, tabItems:filteredTabItems)
     }
     
+    func replace(position:Int, newTabItem:TabItem ) -> Tab {
+        var  newTabItems:Array<TabItem> = []
+        for (index,tabItem) in tabItems.enumerated() {
+            if index == position {
+                let replacementTabItem = TabItem(brewer: newTabItem.brewer, name: newTabItem.name, size: newTabItem.size, price: newTabItem.price, transactions:tabItem.transactions)
+                newTabItems.append(replacementTabItem)
+            } else {
+                newTabItems.append(tabItem)
+            }
+        }
+        return Tab(name:name, createTS:createTS, pubName:pubName, branch:branch, id:id, tabItems:newTabItems)
+    }
+    
     func addTransaction(brewer:String, name:String, size:String) -> Tab {
         let tabItem = TabItem(brewer: brewer, name: name, size: size, price: 0)
         let newTabItems:Array<TabItem> = tabItems.map{if $0 == tabItem {return $0.addTransaction()} else {return $0}}

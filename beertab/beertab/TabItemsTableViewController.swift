@@ -12,6 +12,7 @@ protocol TabUpdater {
     func buyTabItem(tabItem:TabItem)
     func returnTabItem(tabItem:TabItem)
     func deleteTabItem(tabItem:TabItem)
+    func replaceTabItem(position:Int, newTabItem:TabItem)
 }
 
 class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
@@ -26,8 +27,12 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
             self.navigationItem.title = tab.name
         }
         
-        if !tab.branch.isEmpty && !tab.id.isEmpty && tab.tabItems.count == 0 {
-            TabReader(delegate: self, errorDelegate: self).getLatest(id: tab.id, branch: tab.branch)
+        if (tab.tabItems.count == 0) {
+            if !tab.branch.isEmpty && !tab.id.isEmpty  {
+                TabReader(delegate: self, errorDelegate: self).getLatest(id: tab.id, branch: tab.branch)
+            } else {
+                showInstructions()
+            }
         }
     }
 
@@ -70,14 +75,14 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
             tabItemCell.name.text = tab.tabItems[indexPath.row].name
             tabItemCell.size.text = "\(tab.tabItems[indexPath.row].size) £\(tab.tabItems[indexPath.row].priceGBP)"
             tabItemCell.quantity.text = String(tab.tabItems[indexPath.row].quantity)
-            tabItemCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+            //tabItemCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         }
     }
     
     func configureSummaryCell(_ cell: UITableViewCell) {
           if let tabTotalCell = cell as? TabTotalTableViewCell {
               tabTotalCell.totalValue.text = tab.totalValue
-              tabTotalCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+              //tabTotalCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
           }
     }
       
@@ -133,6 +138,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
     func prepare(_ tabItemUpdateViewController:TabItemUpdateViewController, row:Int?) {
         tabItemUpdateViewController.tabItem = selectTabItem(row:row)
+        tabItemUpdateViewController.position = (row ?? 0)
         tabItemUpdateViewController.tabUpdater = self
     }
     
@@ -179,9 +185,25 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
         history = history.update(tab: tab)
         history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
     }
-    
+    func replaceTabItem(position:Int, newTabItem:TabItem) {
+        tab = tab.replace(position: position, newTabItem: newTabItem)
+        history = history.update(tab: tab)
+        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
+        writeTabToRepository(tab: tab)
+    }
     func errorWritingHistory(history:History, message:String) {
         print("error writing history: \(message)")
+    }
+    
+    func showInstructions() {
+        let alert = UIAlertController(title: "", message: "You don't seem to have added any items to the tab for this visit. To create a new item press the + button in the top right hand corner. ", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+        NSLog("The \"OK\" alert occured.")
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+
     }
 }
 
@@ -190,11 +212,13 @@ extension TabItemsTableViewController:TabRepositoryDelegate {
     func finishedGetting(tabItems: Array<TabItem>) {
         if tabItems.count > 0 {
             suggestTabItems(tabItems: tabItems)
+        } else {
+            showInstructions()
         }
     }
     
     func suggestTabItems(tabItems:Array<TabItem>) {
-        let createTabItemsAlert = UIAlertController(title: "Items Found", message: "Would you like to automatically add some items ?", preferredStyle: UIAlertController.Style.alert)
+        let createTabItemsAlert = UIAlertController(title: "Items Found for \(tab.pubName).", message: "Would you like to automatically add some items ?", preferredStyle: UIAlertController.Style.alert)
 
         createTabItemsAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
             self.updateTab(tabItems: tabItems)

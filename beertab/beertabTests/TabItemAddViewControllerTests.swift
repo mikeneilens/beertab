@@ -29,6 +29,8 @@ class TabItemAddViewControllerTests: XCTestCase {
         }
         func deleteTabItem(tabItem: TabItem) {
         }
+        func replaceTabItem(position:Int, newTabItem: TabItem) {
+        }
     }
     
     override func setUpWithError() throws {
@@ -132,6 +134,34 @@ class TabItemAddViewControllerTests: XCTestCase {
         }
     }
 
+    func testConvertingATextFieldToPence() {
+        let textField = UITextField()
+        
+        textField.text = ""
+        XCTAssertEqual(0, textField.inPence())
+        textField.text = "one"
+        XCTAssertEqual(0, textField.inPence())
+        textField.text = "4"
+        XCTAssertEqual(400, textField.inPence())
+        textField.text = "4.2"
+        XCTAssertEqual(420, textField.inPence())
+        textField.text = "4.25"
+        XCTAssertEqual(425, textField.inPence())
+        textField.text = "4.254"
+        XCTAssertEqual(425, textField.inPence())
+        textField.text = "4.255"
+        XCTAssertEqual(426, textField.inPence())
+        textField.text = "-4.255"
+        XCTAssertEqual(-426, textField.inPence())
+        textField.text = "4.60"
+        XCTAssertEqual(460, textField.inPence())
+        textField.text = "-4.60"
+        XCTAssertEqual(-460, textField.inPence())
+        
+        textField.text = " -4. 60"
+        XCTAssertEqual(-460, textField.inPence())
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {

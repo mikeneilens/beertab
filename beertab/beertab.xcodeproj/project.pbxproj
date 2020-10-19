@@ -47,6 +47,10 @@
 		FB77884D252F80540088410B /* TabTotalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77884C252F80540088410B /* TabTotalTableViewCell.swift */; };
 		FB778856252FA1040088410B /* HistoryTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB778855252FA1040088410B /* HistoryTableViewControllerTests.swift */; };
 		FB910C1E253630FF001DF227 /* TabRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB910C1D253630FF001DF227 /* TabRepository.swift */; };
+		FB910C2425377652001DF227 /* drinking.png in Resources */ = {isa = PBXBuildFile; fileRef = FB910C2325377652001DF227 /* drinking.png */; };
+		FB910C29253778DD001DF227 /* receipt.png in Resources */ = {isa = PBXBuildFile; fileRef = FB910C28253778DD001DF227 /* receipt.png */; };
+		FB910C3625379192001DF227 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = FB910C3525379192001DF227 /* edit.png */; };
+		FBA9D60D253D9FB800D3A643 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA9D60C253D9FB800D3A643 /* Currency.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +117,10 @@
 		FB77884C252F80540088410B /* TabTotalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabTotalTableViewCell.swift; sourceTree = "<group>"; };
 		FB778855252FA1040088410B /* HistoryTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewControllerTests.swift; sourceTree = "<group>"; };
 		FB910C1D253630FF001DF227 /* TabRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRepository.swift; sourceTree = "<group>"; };
+		FB910C2325377652001DF227 /* drinking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drinking.png; sourceTree = "<group>"; };
+		FB910C28253778DD001DF227 /* receipt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = receipt.png; sourceTree = "<group>"; };
+		FB910C3525379192001DF227 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
+		FBA9D60C253D9FB800D3A643 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +202,9 @@
 		FB77879B2529FA900088410B /* beertab */ = {
 			isa = PBXGroup;
 			children = (
+				FB910C3525379192001DF227 /* edit.png */,
+				FB910C28253778DD001DF227 /* receipt.png */,
+				FB910C2325377652001DF227 /* drinking.png */,
 				FB77879C2529FA900088410B /* AppDelegate.swift */,
 				FB7787EC252A314E0088410B /* AbstractTableViewController.swift */,
 				FB7787F1252A32320088410B /* AbstractViewController.swift */,
@@ -253,6 +264,7 @@
 				FB7787E3252A2C0A0088410B /* TabItem.swift */,
 				FB1CC8EF2531CA21003AA02E /* Location.swift */,
 				FB910C1D253630FF001DF227 /* TabRepository.swift */,
+				FBA9D60C253D9FB800D3A643 /* Currency.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -361,8 +373,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB7787A92529FA900088410B /* LaunchScreen.storyboard in Resources */,
+				FB910C29253778DD001DF227 /* receipt.png in Resources */,
+				FB910C2425377652001DF227 /* drinking.png in Resources */,
 				FB7787A62529FA900088410B /* Assets.xcassets in Resources */,
 				FB7787A42529FA900088410B /* Main.storyboard in Resources */,
+				FB910C3625379192001DF227 /* edit.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +408,7 @@
 				FB7787F2252A32320088410B /* AbstractViewController.swift in Sources */,
 				FB778837252D0F520088410B /* HistoryArchive.swift in Sources */,
 				FB1CC9112531D1DA003AA02E /* Pub.swift in Sources */,
+				FBA9D60D253D9FB800D3A643 /* Currency.swift in Sources */,
 				FB778812252B949B0088410B /* TabItemAddViewController.swift in Sources */,
 				FB1CC9012531D026003AA02E /* Request.swift in Sources */,
 				FB7787ED252A314E0088410B /* AbstractTableViewController.swift in Sources */,

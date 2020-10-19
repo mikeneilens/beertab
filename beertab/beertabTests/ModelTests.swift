@@ -66,6 +66,24 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(1,newTab.tabItems.count)
         XCTAssertTrue(newTab.tabItems[0] == tabItem2)
     }
+    func testReplaceTabItemInTabContainingThreeItems() {
+        let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint1", price: 440)
+        let tabItem2 = TabItem(brewer: "brewer2", name: "name2", size: "pint2", price: 450).addTransaction().addTransaction()
+        let tabItem3 = TabItem(brewer: "brewer3", name: "name3", size: "pint3", price: 460)
+        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id", tabItems: [tabItem1, tabItem2, tabItem3])
+        
+        let newTabItem = TabItem(brewer: "brewer4", name: "name4", size: "pint4", price: 470)
+        let newTab = tab.replace(position:1, newTabItem:newTabItem)
+        XCTAssertEqual("test tab", newTab.name)
+        XCTAssertEqual("test pub", newTab.pubName)
+        XCTAssertEqual("test br", newTab.branch)
+        XCTAssertEqual("test id", newTab.id)
+        XCTAssertEqual("name1", newTab.tabItems[0].name)
+        XCTAssertEqual("name3", newTab.tabItems[2].name)
+        XCTAssertEqual("name4", newTab.tabItems[1].name)
+        XCTAssertEqual(470, newTab.tabItems[1].price)
+        XCTAssertEqual(2, newTab.tabItems[1].transactions.count)
+    }
     func testAddFirstTransactionToEmptyTabItem() {
         let tabItem = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
         let updatedTabItem = tabItem.addTransaction()
@@ -279,6 +297,49 @@ class ModelTests: XCTestCase {
         XCTAssertEqual("Total: £2.00", reportLines[4])
         
     }
+    
+    func testCurrencyParsing() throws {
+        let empty = try createCurrency(string: "").inPence()
+        XCTAssertEqual(0, empty)
+        let integerNoSign = try createCurrency(string: "123").inPence()
+        XCTAssertEqual(12300, integerNoSign)
+        let integerPositiveSign = try createCurrency(string: "+1234").inPence()
+        XCTAssertEqual(123400, integerPositiveSign)
+        let integerNegativeSign = try createCurrency(string: "-123").inPence()
+        XCTAssertEqual(-12300, integerNegativeSign)
+        let valueWithOneDecimalPlace = try createCurrency(string: "123.4").inPence()
+        XCTAssertEqual(12340, valueWithOneDecimalPlace)
+        let valueWithTwoDecimalPlace = try createCurrency(string: "123.45").inPence()
+        XCTAssertEqual(12345, valueWithTwoDecimalPlace)
+        let valueWithThreeDecimalPlaceRoundDown = try createCurrency(string: "123.454").inPence()
+        XCTAssertEqual(12345, valueWithThreeDecimalPlaceRoundDown)
+        let valueWithThreeDecimalPlaceRoundUp = try createCurrency(string: "123.455").inPence()
+        XCTAssertEqual(12346, valueWithThreeDecimalPlaceRoundUp)
+        do {let _ = try createCurrency(string: "+").inPence()
+            XCTAssertFalse(true,"should throw if sign is not followed by something")
+        } catch ParseError.badData(let char) {XCTAssertEqual(nil,char) }
+        do {let _ = try createCurrency(string: "+£").inPence()
+            XCTAssertFalse(true,"should throw if sign is not followed by a numerical digit")
+        } catch ParseError.badData(let char) {XCTAssertEqual("£",char) }
+        do {let _ = try createCurrency(string: "1.").inPence()
+            XCTAssertFalse(true,"should throw if decimal is not followed by something")
+        } catch ParseError.badData(let char) {XCTAssertEqual(nil,char) }
+        do {let _ = try createCurrency(string: "1.x").inPence()
+            XCTAssertFalse(true,"should throw if decimal is not followed by a numerical digit")
+        } catch ParseError.badData(let char) {XCTAssertEqual("x",char) }
+        do {let _ = try createCurrency(string: "x").inPence()
+            XCTAssertFalse(true,"should throw if first character is not a sign or a digit")
+        } catch ParseError.badData(let char) {XCTAssertEqual("x",char) }
+        do {let _ = try createCurrency(string: "1z").inPence()
+            XCTAssertFalse(true,"should throw if digit is not followed by a digit or decimal")
+        } catch ParseError.badData(let char) {XCTAssertEqual("z",char) }
+        do {let _ = try createCurrency(string: "1.3y").inPence()
+            XCTAssertFalse(true,"should throw if a lower digit is not followed by a lower digit")
+        } catch ParseError.badData(let char) {XCTAssertEqual("y",char) }
+
+    }
+    
+    
     func testEncodedTab() throws {
         let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440).addTransaction()
         let tabItem2 = TabItem(brewer: "brewer2", name: "name2", size: "half", price: 240).removeTransaction()

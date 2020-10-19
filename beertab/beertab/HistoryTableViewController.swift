@@ -38,6 +38,9 @@ class HistoryTableViewController: AbstractTableViewController {
     }
     func historyRead(newHistory:History) {
         history = newHistory
+        if history.allTabs.isEmpty {
+            showInstructions()
+        }
     }
     func errorReadingHistory(message:String) {
         print("error reading history: \(message)")
@@ -134,6 +137,17 @@ class HistoryTableViewController: AbstractTableViewController {
     
     func errorWritingHistory(history:History, message:String) {
         print("error writing history: \(message)")
+    }
+    
+    func showInstructions() {
+        let alert = UIAlertController(title: "", message: "You don't seem to have created any visits. Press the + button in the top right hand corner to create a visit. If you have allowed this application to use your location the nearest bar will be automatically located.", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+        NSLog("The \"OK\" alert occured.")
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+
     }
 }
 

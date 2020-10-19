@@ -44,7 +44,7 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
     }
     
     func createTabItems(_ tabUpdater: TabUpdater) {
-        if pintPriceText.inPence() == 0 && halfPriceText.inPence() == 0 && thirdPriceText.inPence() == 0 && twoThirdPriceText.inPence() == 0 && otherPrice.inPence() == 0 {
+        if pintPriceText?.inPence() == 0 && halfPriceText?.inPence() == 0 && thirdPriceText?.inPence() == 0 && twoThirdPriceText?.inPence() == 0 && otherPrice?.inPence() == 0 {
             tabUpdater.addTabItems(tabItems: [tabItemFromView(size:"Any", price:0)] )
         } else {
             createTabItemForEachPrice(tabUpdater:tabUpdater)
@@ -52,12 +52,12 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
     }
     
     func createTabItemForEachPrice(tabUpdater:TabUpdater) {
-        let prices = [(size:"Pint", price:pintPriceText.inPence()),
-                      (size:"Half", price:halfPriceText.inPence()),
-                      (size:"1/3", price:thirdPriceText.inPence()),
-                      (size:"2/3", price:twoThirdPriceText.inPence()),
-                      (size:"Other", price:otherPrice.inPence())]
-        let tabItems = prices.map{tabItemFromView(size:$0.size, price:$0.price) }.filter{$0.price != 0}
+        let prices = [(size:"Pint", price:pintPriceText?.inPence() ?? 0 ),
+                      (size:"Half", price:halfPriceText?.inPence() ?? 0),
+                      (size:"1/3", price:thirdPriceText?.inPence() ?? 0),
+                      (size:"2/3", price:twoThirdPriceText?.inPence() ?? 0),
+                      (size:"Other", price:otherPrice?.inPence() ?? 0)]
+        let tabItems = prices.map{tabItemFromView(size:$0.size, price:($0.price)) }.filter{$0.price != 0}
         tabUpdater.addTabItems(tabItems: tabItems)
     }
 
@@ -90,7 +90,10 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
 
 extension UITextField {
     func inPence() -> Int {
-        guard let text = self.text else {return 0}
-        return Int((Double(text) ?? 0) * 100) 
+        guard let text = self.text?.split(separator:" ").joined() else {return 0}
+        do { return try createCurrency(string: text).inPence()
+        } catch   {
+            return 0
+        }
     }
 }

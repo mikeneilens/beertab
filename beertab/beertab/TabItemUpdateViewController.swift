@@ -11,6 +11,7 @@ class TabItemUpdateViewController: UIViewController, UITextFieldDelegate {
 
     var tabUpdater:TabUpdater? = nil
     var tabItem = TabItem(brewer: "", name: "", size: "", price: 0)
+    var position = 0
     
     @IBOutlet weak var brandLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -64,7 +65,55 @@ class TabItemUpdateViewController: UIViewController, UITextFieldDelegate {
         tabUpdater.returnTabItem(tabItem: tabItem)
         completion()
     }
+    
+    @IBAction func editBrandButtonPressed(_ sender: Any) {
+        setTextFieldToEdit(textField: brandTextField)
+    }
+    @IBAction func editNameButtonPressed(_ sender: Any) {
+        setTextFieldToEdit(textField: nameTextField)
+    }
+    @IBAction func editPriceButtonPressed(_ sender: Any) {
+        setTextFieldToEdit(textField: priceTextField)
+    }
+    
+    func setTextFieldToEdit(textField:UITextField ) {
+        textField.delegate = self
+        textField.isEnabled = true
+        textField.isUserInteractionEnabled = true
+        textField.becomeFirstResponder()
+    }
+    func setAllTextFieldsNotToEdit() {
+        [brandTextField, nameTextField, priceTextField].forEach{textfield in setTextFieldToNotEdit(textField: textfield)}
+    }
+    func setTextFieldToNotEdit(textField:UITextField ) {
+        textField.delegate = nil
+        textField.isEnabled = false
+        textField.isUserInteractionEnabled = false
+        textField.resignFirstResponder()
+    }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        setAllTextFieldsNotToEdit()
+        if textHasChanged() {
+            replaceTabItem()
+        }
+        return true
+    }
+    
+    func textHasChanged() -> Bool {
+        return tabItem.brewer != brandTextField.text || tabItem.name != nameTextField.text || tabItem.size != sizeTextField.text || tabItem.price.priceGBP != priceTextField.text
+    }
+    
+    func replaceTabItem() {
+        tabItem = tabItemFromView()
+        self.tabUpdater?.replaceTabItem(position: position, newTabItem: tabItem)
+    }
+    
+    func tabItemFromView() -> TabItem {
+        guard let brewer = brandTextField?.text, let name = nameTextField?.text, let size = sizeTextField?.text, let price = priceTextField?.inPence() else {return TabItem(brewer: "", name: "", size: "", price: 0)}
+        return TabItem(brewer: brewer, name: name, size: size, price: price, transactions: tabItem.transactions)
+    }
+    
     /*
     // MARK: - Navigation
 

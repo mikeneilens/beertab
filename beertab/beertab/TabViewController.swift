@@ -69,7 +69,7 @@ extension TabViewController:ListOfPubsCreatorDelegate {
     }
     
     func suggestPub(pub:PubHeader) {
-        let createTabAlert = UIAlertController(title: "Pub Found", message: "Would you like to create a tab for \(pub.name) ?", preferredStyle: UIAlertController.Style.alert)
+        let createTabAlert = UIAlertController(title: "Pub Found", message: "Would you like a tab for \(pub.name) ?", preferredStyle: UIAlertController.Style.alert)
 
         createTabAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
             self.pubName.text = pub.name
