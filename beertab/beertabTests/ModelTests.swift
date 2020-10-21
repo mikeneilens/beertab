@@ -336,7 +336,13 @@ class ModelTests: XCTestCase {
         do {let _ = try createCurrency(string: "1.3y").inPence()
             XCTAssertFalse(true,"should throw if a lower digit is not followed by a lower digit")
         } catch ParseError.badData(let char) {XCTAssertEqual("y",char) }
-
+    }
+    func testCurrencyValidation() throws {
+        XCTAssertTrue(isValidCurrency(string: "1.23"))
+        XCTAssertTrue(isValidCurrency(string: "-1.23"))
+        XCTAssertTrue(isValidCurrency(string: ""))
+        XCTAssertFalse(isValidCurrency(string: "+"))
+        XCTAssertFalse(isValidCurrency(string: "1."))
     }
     
     

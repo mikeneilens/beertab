@@ -112,3 +112,11 @@ func createLowerDigit(data:Array<String>) throws -> LowerDigit {
         return LowerDigit.HasMore(value: first, more: try createLowerDigit(data: remainingLowerDigits))
     }
 }
+
+func isValidCurrency(string:String) -> Bool {
+    do { _ = try createCurrency(string:string)
+        return true
+    } catch {
+        return false
+    }
+}
