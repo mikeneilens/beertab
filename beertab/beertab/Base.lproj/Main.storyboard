@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -664,7 +664,7 @@
             </objects>
             <point key="canvasLocation" x="400.00000000000006" y="367.63392857142856"/>
         </scene>
-        <!--Receipt-->
+        <!--Your bill-->
         <scene sceneID="EC1-PI-OeM">
             <objects>
                 <viewController id="Ow8-XX-MrA" customClass="ReceiptViewController" customModule="beertab" customModuleProvider="target" sceneMemberID="viewController">
@@ -680,7 +680,7 @@
                                 </accessibility>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
@@ -693,7 +693,7 @@
                             <constraint firstItem="u7p-j9-CP4" firstAttribute="leading" secondItem="dYN-k5-REp" secondAttribute="leading" constant="10" id="j78-AS-UJd"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Receipt" id="Uof-de-JR7"/>
+                    <navigationItem key="navigationItem" title="Your bill" id="Uof-de-JR7"/>
                     <connections>
                         <outlet property="receiptTextView" destination="u7p-j9-CP4" id="KQ7-2T-zqw"/>
                     </connections>

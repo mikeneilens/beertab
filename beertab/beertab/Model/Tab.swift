@@ -60,7 +60,8 @@ struct Tab:Codable, Equatable {
     }
     
     func transactionsReport() -> String {
-        return "Your receipt for \(name) \(pubName): \n\n" +
+        let visit = (name.isEmpty) ? "" : "\(name) at "
+        return "Your bill for \(visit)\(pubName): \n\n" +
                 tabItems.flatMap{ tabItem in tabItem.transactions.map{transaction in ReceiptItem(tabItem, transaction) } }
                         .sortbyCreateTS()
                         .map{"\($0)"}
