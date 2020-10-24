@@ -31,11 +31,16 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
             if !tab.branch.isEmpty && !tab.id.isEmpty  {
                 TabReader(delegate: self, errorDelegate: self).getLatest(id: tab.id, branch: tab.branch)
             } else {
-                showInstructions()
+                showInsructionsIfRequired() 
             }
         }
     }
 
+    func instructionsShouldBePresented()-> Bool {
+        if let _ = UserDefaults.standard.object(forKey: "TabItemHelp") {return false}
+        else {return true}
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
     }
@@ -195,14 +200,24 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
         print("error writing history: \(message)")
     }
     
+    func showInsructionsIfRequired() {
+        if instructionsShouldBePresented() {
+            showInstructions()
+        }
+    }
+
     func showInstructions() {
         let alert = UIAlertController(title: "", message: "You don't seem to have added any items to the tab for this visit. To create a new item press the + button in the top right hand corner. ", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Don't show again", comment: "Default action"), style: .default, handler: {_ in
+            UserDefaults.standard.set("No", forKey: "TabItemHelp")
+        }))
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
         NSLog("The \"OK\" alert occured.")
         }))
         
-        self.present(alert, animated: true, completion: nil)
+        self.navigationController?.present(alert, animated: true, completion: nil)
 
     }
 }
@@ -213,7 +228,7 @@ extension TabItemsTableViewController:TabRepositoryDelegate {
         if tabItems.count > 0 {
             suggestTabItems(tabItems: tabItems)
         } else {
-            showInstructions()
+            showInsructionsIfRequired()
         }
     }
     
