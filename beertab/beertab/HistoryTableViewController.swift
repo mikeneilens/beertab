@@ -38,11 +38,12 @@ class HistoryTableViewController: AbstractTableViewController {
     }
     func historyRead(newHistory:History) {
         history = newHistory
-        if history.allTabs.isEmpty && showHistoryHelp() {
+        if history.allTabs.isEmpty && instructionsShouldBePresented() {
             showInstructions()
         }
     }
-    func showHistoryHelp()-> Bool {
+    
+    func instructionsShouldBePresented()-> Bool {
         if let _ = UserDefaults.standard.object(forKey: "HistoryHelp") {return false}
         else {return true}
     }
@@ -146,9 +147,8 @@ class HistoryTableViewController: AbstractTableViewController {
     func showInstructions() {
         let alert = UIAlertController(title: "", message: "You don't seem to have created any visits. Press the + button in the top right hand corner to create a visit. If you have allowed this application to use your location the nearest bar will be automatically located.", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Don't show again", comment: "Default action"), style: .default, handler: {_ in
-            UserDefaults.standard.set("No", forKey: "HistoryHelp")
-        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Don't show again", comment: "Default action"), style: .default, handler: disableInstructions
+        ))
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
         NSLog("The \"OK\" alert occured.")
@@ -156,6 +156,10 @@ class HistoryTableViewController: AbstractTableViewController {
         
         self.navigationController?.present(alert, animated: true, completion: nil)
 
+    }
+    
+    func disableInstructions(_: UIAlertAction) {
+        UserDefaults.standard.set("No", forKey: "HistoryHelp")
     }
 }
 

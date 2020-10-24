@@ -118,6 +118,25 @@ class HistoryTableViewControllerTests: XCTestCase {
         HistoryArchive(key:archiveKey).read(historyResponse: checkHistoryIsArchived, errorResponse: errorResponse(message:) )
     }
     
+    func testWhetherInstructionsShouldBePresented() {
+        let viewController = HistoryTableViewController()
+        UserDefaults.standard.removeObject(forKey: "HistoryHelp")
+        XCTAssertTrue(viewController.instructionsShouldBePresented())
+        
+        UserDefaults.standard.set("No", forKey: "HistoryHelp")
+        XCTAssertFalse(viewController.instructionsShouldBePresented())
+    }
+    
+    func testDisablingInstructions() {
+        let viewController = HistoryTableViewController()
+        UserDefaults.standard.removeObject(forKey: "HistoryHelp")
+        viewController.disableInstructions(UIAlertAction())
+        let historyHelpDisabled:Any? = UserDefaults.standard.object(forKey: "HistoryHelp")
+        XCTAssertNotNil(historyHelpDisabled)
+        
+        UserDefaults.standard.removeObject(forKey: "HistoryHelp")
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {

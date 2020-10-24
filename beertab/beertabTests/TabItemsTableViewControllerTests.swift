@@ -191,6 +191,25 @@ class TabItemsTableViewControllerTests: XCTestCase {
         XCTAssertEqual(1, history.allTabs[0].tabItems[1].quantity )
     }
     
+    func testWhetherInstructionsShouldBePresented() {
+        let viewController = TabItemsTableViewController()
+        UserDefaults.standard.removeObject(forKey: "TabItemHelp")
+        XCTAssertTrue(viewController.instructionsShouldBePresented())
+        
+        UserDefaults.standard.set("No", forKey: "TabItemHelp")
+        XCTAssertFalse(viewController.instructionsShouldBePresented())
+    }
+    
+    func testDisablingInstructions() {
+        let viewController = TabItemsTableViewController()
+        UserDefaults.standard.removeObject(forKey: "TabItemHelp")
+        
+        viewController.disableInstructions(UIAlertAction())
+        let historyHelpDisabled:Any? = UserDefaults.standard.object(forKey: "TabItemHelp")
+        XCTAssertNotNil(historyHelpDisabled)
+        UserDefaults.standard.removeObject(forKey: "TabItemHelp")
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {

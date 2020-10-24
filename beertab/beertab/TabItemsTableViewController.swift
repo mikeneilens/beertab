@@ -209,9 +209,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     func showInstructions() {
         let alert = UIAlertController(title: "", message: "You don't seem to have added any items to the tab for this visit. To create a new item press the + button in the top right hand corner. ", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Don't show again", comment: "Default action"), style: .default, handler: {_ in
-            UserDefaults.standard.set("No", forKey: "TabItemHelp")
-        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Don't show again", comment: "Default action"), style: .default, handler: disableInstructions(_:)))
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
         NSLog("The \"OK\" alert occured.")
@@ -219,6 +217,10 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
         
         self.navigationController?.present(alert, animated: true, completion: nil)
 
+    }
+    
+    func disableInstructions(_: UIAlertAction) {
+        UserDefaults.standard.set("No", forKey: "TabItemHelp")
     }
 }
 
@@ -239,9 +241,9 @@ extension TabItemsTableViewController:TabRepositoryDelegate {
             self.updateTab(tabItems: tabItems)
         }))
 
-        createTabItemsAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler:nil))
+        createTabItemsAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler:{_ in self.showInsructionsIfRequired()}))
 
-        present(createTabItemsAlert, animated: true, completion: nil)
+        self.navigationController?.present(createTabItemsAlert, animated: true, completion: nil)
     }
     
     func updateTab(tabItems:Array<TabItem>) {
