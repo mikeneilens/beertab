@@ -26,6 +26,11 @@ class HistoryTableViewController: AbstractTableViewController {
         HistoryArchive(key:archiveKey).read(historyResponse: historyRead(newHistory:), errorResponse: errorReadingHistory(message:))
     }
     
+    func tabFor(indexPath:IndexPath) -> Tab {
+        let tabByDate = history.tabsByDate()[indexPath.section]
+        return tabByDate.tabs[indexPath.row]
+    }
+    
     func checkLocationServicesPermissions() {
         if CLLocationManager.locationServicesEnabled() {
             let authorisationStatus = CLLocationManager.authorizationStatus()
@@ -58,18 +63,26 @@ class HistoryTableViewController: AbstractTableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return history.tabsByDate().count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return history.tabs.count
+        if history.tabsByDate()[section].tabs.count > 1 {
+            return history.tabsByDate()[section].tabs.count + 1
+        } else {
+            return history.tabsByDate()[section].tabs.count
+        }
     }
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return history.tabsByDate()[section].date
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tab = history.tabs[indexPath.row]
-        
+        if indexPath.row >= history.tabsByDate()[indexPath.section].tabs.count {
+            return setupHistoryTotalCell(section:indexPath.section, cell:tableView.dequeueReusableCell(withIdentifier: "totalCell", for: indexPath))
+        }
+        let tab = tabFor(indexPath: indexPath)
         if tab.name.isEmpty || tab.pubName.isEmpty {
             return setupSingleLabelCell(tab: tab, cell:tableView.dequeueReusableCell(withIdentifier: "tab1Cell", for: indexPath))
             
@@ -85,7 +98,7 @@ class HistoryTableViewController: AbstractTableViewController {
             } else {
                 tabTableViewCell.name.text = tab.name
             }
-            tabTableViewCell.date.text = tab.dateString
+            tabTableViewCell.total.text = tab.totalValue
         }
         cell.accessoryType = .disclosureIndicator
         return cell
@@ -95,20 +108,28 @@ class HistoryTableViewController: AbstractTableViewController {
         if let tabTableViewCell = cell as? Tab2TableViewCell {
             tabTableViewCell.name.text = tab.name
             tabTableViewCell.pubName.text = tab.pubName
-            tabTableViewCell.date.text = tab.dateString
+            tabTableViewCell.total.text = tab.totalValue
         }
         cell.accessoryType = .disclosureIndicator
         return cell
     }
+    
+    func setupHistoryTotalCell(section:Int, cell:UITableViewCell) -> UITableViewCell {
+        if let totalTableViewCell = cell as? HistoryTotalTableViewCell {
+            let total = history.tabsByDate()[section].tabs.map{$0.totalPence}.reduce(0){$0 + $1}.priceGBP
+            totalTableViewCell.totalLabel.text = "Total £\(total)"
+        }
+        return cell
+    }
         
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let selectedRow = tableView.indexPathForSelectedRow?.row ?? 0
-        setPropertiesOf(segue.destination, row:selectedRow)
+        let indexPath = tableView.indexPathForSelectedRow ?? IndexPath(row: 0, section: 0)
+        setPropertiesOf(segue.destination, indexPath: indexPath)
     }
     
-    func setPropertiesOf(_ destination: UIViewController, row: Int) {
+    func setPropertiesOf(_ destination: UIViewController, indexPath: IndexPath) {
         switch destination {
-            case let tabItemsTableViewController as TabItemsTableViewController: tabItemsTableViewController.tab = history.tabs[row]
+            case let tabItemsTableViewController as TabItemsTableViewController: tabItemsTableViewController.tab = tabFor(indexPath: indexPath)
             case let tabViewController as TabViewController: tabViewController.locationStatus = currentLocation
             default: break
         }
@@ -121,13 +142,13 @@ class HistoryTableViewController: AbstractTableViewController {
     }
     
     func deleteTab(indexPath:IndexPath) {
-        let tab = history.tabs[indexPath.row]
+        let tab = tabFor(indexPath: indexPath)
         
         let deleteAlert = UIAlertController(title: "Are You Sure", message: "Do you want to delete \(tab.name) \(tab.pubName) (\(tab.dateString))", preferredStyle: UIAlertController.Style.alert)
 
         deleteAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
             self.deleteTab(tab: tab)
-            self.tableView.deleteRows(at:[indexPath], with: .fade)
+            self.tableView.reloadData()
         }))
 
         deleteAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler:nil))

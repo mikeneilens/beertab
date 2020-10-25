@@ -1,17 +1,15 @@
 //
-//  Tab2TableViewCell.swift
+//  HistoryTotalTableViewCell.swift
 //  beertab
 //
-//  Created by Michael Neilens on 06/10/2020.
+//  Created by Michael Neilens on 25/10/2020.
 //
 
 import UIKit
 
-class Tab1TableViewCell: UITableViewCell {
+class HistoryTotalTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var total: UILabel!
-    
+    @IBOutlet weak var totalLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

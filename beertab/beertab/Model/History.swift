@@ -15,6 +15,28 @@ struct History:Codable {
         return allTabs.sorted{$0.createTS > $1.createTS}
     }
     
+    func tabsByDate() -> Array<(date:String, tabs:Array<Tab>)> {
+        var result:Array<(date:String, tabs:Array<Tab>)> = []
+        for tab in tabs {
+            if result.isEmpty {
+                result.append((tab.dateString, [tab] ) )
+            } else {
+                result = addTabToResult(tab: tab, result: result)
+            }
+        }
+        return result
+    }
+    
+    func addTabToResult(tab:Tab, result:Array<(date:String, tabs:Array<Tab>)> ) -> Array<(date:String, tabs:Array<Tab>)> {
+        var newResult = result
+        if result.last?.date == tab.dateString {
+            newResult[result.count - 1] = (tab.dateString, result[result.count - 1].tabs + [tab])
+        } else {
+            newResult.append((tab.dateString, [tab] ) )
+        }
+        return newResult
+    }
+    
     func add(tab:Tab) -> History {
         return History(allTabs: allTabs + [tab])
     }

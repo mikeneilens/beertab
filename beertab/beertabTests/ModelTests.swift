@@ -290,7 +290,7 @@ class ModelTests: XCTestCase {
         let reportLine1WithoutTime = reportLines[1].split(separator: " ").dropFirst().joined(separator: " ")
         let reportLine2WithoutTime = reportLines[2].split(separator: " ").dropFirst().joined(separator: " ")
         
-        XCTAssertEqual("Your receipt for test tab1 test_pub: ", reportLines[0])
+        XCTAssertEqual("Your bill for test tab1 at test_pub: ", reportLines[0])
         XCTAssertEqual("brewer1 name1 pint +£4.40", reportLine1WithoutTime)
         XCTAssertEqual("brewer2 name2 half -£2.40", reportLine2WithoutTime)
         XCTAssertEqual(" ", reportLines[3])
@@ -358,6 +358,35 @@ class ModelTests: XCTestCase {
         } catch {
             print("error decoding tab")
         }
+    }
+    func testTabsByDate() throws {
+        let emptyHistory = History(allTabs: [])
+        XCTAssertEqual(0, emptyHistory.tabsByDate().count)
+        
+        let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440).addTransaction()
+        let tabItem2 = TabItem(brewer: "brewer2", name: "name2", size: "half", price: 240).removeTransaction()
+        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test_pub", branch: "test_br", id: "test_id", tabItems: [tabItem1, tabItem2])
+        
+        let historyWithOneTab = History(allTabs: [tab1])
+        XCTAssertEqual(1, historyWithOneTab.tabsByDate().count)
+        XCTAssertEqual(tab1, historyWithOneTab.tabsByDate()[0].tabs[0])
+        XCTAssertEqual(tab1.dateString, historyWithOneTab.tabsByDate()[0].date)
+
+        let tab2 = Tab(name: "test tab2", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id", tabItems: [tabItem1, tabItem2])
+        let historyWithTwoTabsSameDate = History(allTabs: [tab1, tab2])
+        XCTAssertEqual(1, historyWithTwoTabsSameDate.tabsByDate().count)
+        XCTAssertEqual(tab2, historyWithTwoTabsSameDate.tabsByDate()[0].tabs[0])
+        XCTAssertEqual(tab1, historyWithTwoTabsSameDate.tabsByDate()[0].tabs[1])
+        XCTAssertEqual(tab1.dateString, historyWithTwoTabsSameDate.tabsByDate()[0].date)
+
+        let tab3 = Tab(name: "test tab2", createTS: Date() - 86400, pubName: "test_pub", branch: "test_br", id: "test_id", tabItems: [tabItem1, tabItem2])
+        let historyWithTwoTabsSameDateAndOneTabOlder = History(allTabs: [tab1, tab2, tab3])
+        XCTAssertEqual(2, historyWithTwoTabsSameDateAndOneTabOlder.tabsByDate().count)
+        XCTAssertEqual(tab2, historyWithTwoTabsSameDateAndOneTabOlder.tabsByDate()[0].tabs[0])
+        XCTAssertEqual(tab1, historyWithTwoTabsSameDateAndOneTabOlder.tabsByDate()[0].tabs[1])
+        XCTAssertEqual(tab1.dateString, historyWithTwoTabsSameDateAndOneTabOlder.tabsByDate()[0].date)
+        XCTAssertEqual(tab3, historyWithTwoTabsSameDateAndOneTabOlder.tabsByDate()[1].tabs[0])
+        XCTAssertEqual(tab3.dateString, historyWithTwoTabsSameDateAndOneTabOlder.tabsByDate()[1].date)
     }
     
     func testPerformanceExample() throws {

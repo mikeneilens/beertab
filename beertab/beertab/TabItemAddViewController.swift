@@ -90,7 +90,9 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
 
 extension UITextField {
     func inPence() -> Int {
-        guard let text = self.text?.split(separator:" ").joined() else {return 0}
+        guard let text = self.text?
+                .split(separator:" ").joined()
+                .split(separator:"£").joined() else {return 0}
         do { return try createCurrency(string: text).inPence()
         } catch   {
             return 0

@@ -26,6 +26,9 @@ struct Tab:Codable, Equatable {
     var totalValue:String {
         return "£" + tabItems.map{$0.price * $0.quantity}.reduce(0){$0 + $1}.priceGBP
     }
+    var totalPence:Int {
+        return tabItems.map{$0.price * $0.quantity}.reduce(0){$0 + $1}
+    }
     func add(tabItem:TabItem)->Tab {
         return Tab(name:name, createTS:createTS, pubName:pubName, branch:branch, id:id, tabItems:tabItems + [tabItem])
     }

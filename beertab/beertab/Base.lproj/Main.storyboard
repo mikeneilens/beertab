@@ -79,9 +79,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="date" destination="IBG-cD-iDd" id="5vK-jc-0QK"/>
                                     <outlet property="name" destination="CiO-Rq-szn" id="dxR-HC-Uxy"/>
                                     <outlet property="pubName" destination="Bhy-ev-X9g" id="ZoU-Gb-bph"/>
+                                    <outlet property="total" destination="IBG-cD-iDd" id="5vK-jc-0QK"/>
                                     <segue destination="uFE-62-4TJ" kind="show" id="qcE-zJ-nxu"/>
                                 </connections>
                             </tableViewCell>
@@ -113,9 +113,32 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="date" destination="1Ys-xk-lBH" id="Txl-ix-QRw"/>
                                     <outlet property="name" destination="O6e-Lf-z6H" id="5de-fX-uWS"/>
+                                    <outlet property="total" destination="1Ys-xk-lBH" id="Txl-ix-QRw"/>
                                     <segue destination="uFE-62-4TJ" kind="show" id="sba-O8-Tel"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="totalCell" id="6Ss-ZA-tEp" customClass="HistoryTotalTableViewCell" customModule="beertab" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="158.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6Ss-ZA-tEp" id="aje-ss-h3V">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ml6-UD-aAs">
+                                            <rect key="frame" x="186" y="11.5" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ml6-UD-aAs" firstAttribute="centerY" secondItem="aje-ss-h3V" secondAttribute="centerY" id="gPr-4O-tJl"/>
+                                        <constraint firstItem="ml6-UD-aAs" firstAttribute="centerX" secondItem="aje-ss-h3V" secondAttribute="centerX" id="qty-If-Y0w"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="totalLabel" destination="ml6-UD-aAs" id="8TI-Dt-ZFa"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -572,7 +595,7 @@
                                     <constraint firstAttribute="height" constant="25" id="1Oc-2q-wEK"/>
                                     <constraint firstAttribute="width" constant="25" id="un6-HZ-43v"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="edit.png"/>
+                                <state key="normal" title="Button" image="edit"/>
                                 <connections>
                                     <action selector="editBrandButtonPressed:" destination="6g1-AD-kq1" eventType="touchUpInside" id="hdf-xS-rku"/>
                                 </connections>
@@ -708,6 +731,7 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="drinking.png" width="64" height="64"/>
+        <image name="edit" width="240" height="240"/>
         <image name="edit.png" width="180" height="180"/>
         <image name="receipt.png" width="409.60000610351562" height="409.60000610351562"/>
         <systemColor name="labelColor">

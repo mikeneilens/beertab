@@ -42,7 +42,7 @@ class HistoryTableViewControllerTests: XCTestCase {
     func testNumberOfRowsInFirstSectionIsSameAsNoOfTabsInHistory() throws {
         let viewController = HistoryTableViewController()
         history = History(allTabs:[tab1,tab2,tab3])
-        XCTAssertEqual(3, viewController.tableView(UITableView(), numberOfRowsInSection: 0))
+        XCTAssertEqual(4, viewController.tableView(UITableView(), numberOfRowsInSection: 0))
     }
     
     func testCellForARowIsTabWithOneDescriptionIfTabHasOnlyANameOrOnlyAPub() {
@@ -52,7 +52,7 @@ class HistoryTableViewControllerTests: XCTestCase {
         let nameLabel = UILabel()
         let dateLabel = UILabel()
         bareCell.name = nameLabel
-        bareCell.date = dateLabel
+        bareCell.total = dateLabel
        
         let october_10_2020 = Date(timeIntervalSinceReferenceDate: 624056329.985)
         let october_11_2020 = Date(timeIntervalSinceReferenceDate: 624142723.985)
@@ -60,12 +60,12 @@ class HistoryTableViewControllerTests: XCTestCase {
         let tabNoPub = Tab(name: "test tab1", createTS: october_11_2020, pubName: "", branch: "test br", id: "test id", tabItems: [])
         let _ = viewController.setupSingleLabelCell(tab: tabNoPub, cell: bareCell)
         XCTAssertEqual(Optional("test tab1"), nameLabel.text)
-        XCTAssertEqual(Optional("11 Oct 2020"), dateLabel.text)
+        XCTAssertEqual(Optional("£0.00"), dateLabel.text)
         
         let tabNoName = Tab(name: "", createTS: october_10_2020, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
         let _ = viewController.setupSingleLabelCell(tab: tabNoName, cell: bareCell)
         XCTAssertEqual(Optional("test pub"), nameLabel.text)
-        XCTAssertEqual(Optional("10 Oct 2020"), dateLabel.text)
+        XCTAssertEqual(Optional("£0.00"), dateLabel.text)
     }
     
     func testCellForARowIsTabWithTwoDescriptionIfTabHasNameAndPubName() {
@@ -77,20 +77,19 @@ class HistoryTableViewControllerTests: XCTestCase {
         let dateLabel = UILabel()
         bareCell.name = nameLabel
         bareCell.pubName = pubLabel
-        bareCell.date = dateLabel
+        bareCell.total = dateLabel
         
         let _ = viewController.setupTwoLabelCell(tab: tab2, cell: bareCell)
         XCTAssertEqual(Optional("test tab2"), nameLabel.text)
         XCTAssertEqual(Optional("test pub"), pubLabel.text)
-        XCTAssertEqual(Optional(tab2.dateString), dateLabel.text)        
+        XCTAssertEqual(Optional("£0.00"), dateLabel.text)        
     }
 
     func testPropertiesOfTabItemsTVCAreSetCorrectly() {
         let viewController = HistoryTableViewController()
         let destination = TabItemsTableViewController()
         history = History(allTabs:[tab1,tab2,tab3])
-        viewController.setPropertiesOf(destination,row:0)
-        
+        viewController.setPropertiesOf(destination,indexPath:IndexPath(row: 0, section: 0))
         XCTAssertEqual(history.tabs[0], destination.tab)
     }
     
@@ -98,7 +97,7 @@ class HistoryTableViewControllerTests: XCTestCase {
         let viewController = HistoryTableViewController()
         viewController.currentLocation = .Set(location: Location(lng:1,lat:2))
         let destination = TabViewController()
-        viewController.setPropertiesOf(destination,row:0)
+        viewController.setPropertiesOf(destination,indexPath:IndexPath(row: 0, section: 0))
         
         XCTAssertEqual(LocationStatus.Set(location: Location(lng: 1, lat: 2)) , destination.locationStatus)
     }

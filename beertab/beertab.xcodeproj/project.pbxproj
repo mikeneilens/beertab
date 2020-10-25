@@ -68,6 +68,10 @@
 		FB910C29253778DD001DF227 /* receipt.png in Resources */ = {isa = PBXBuildFile; fileRef = FB910C28253778DD001DF227 /* receipt.png */; };
 		FB910C3625379192001DF227 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = FB910C3525379192001DF227 /* edit.png */; };
 		FBA9D60D253D9FB800D3A643 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA9D60C253D9FB800D3A643 /* Currency.swift */; };
+		FBF1E4DC25459A96002FC4D2 /* editDark.png in Resources */ = {isa = PBXBuildFile; fileRef = FBF1E4D925459A95002FC4D2 /* editDark.png */; };
+		FBF1E4DD25459A96002FC4D2 /* receiptDark.png in Resources */ = {isa = PBXBuildFile; fileRef = FBF1E4DA25459A95002FC4D2 /* receiptDark.png */; };
+		FBF1E4DE25459A96002FC4D2 /* drinkingDark.png in Resources */ = {isa = PBXBuildFile; fileRef = FBF1E4DB25459A95002FC4D2 /* drinkingDark.png */; };
+		FBF1E4E62545F66B002FC4D2 /* HistoryTotalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF1E4E52545F66B002FC4D2 /* HistoryTotalTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +159,10 @@
 		FB910C28253778DD001DF227 /* receipt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = receipt.png; sourceTree = "<group>"; };
 		FB910C3525379192001DF227 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 		FBA9D60C253D9FB800D3A643 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		FBF1E4D925459A95002FC4D2 /* editDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editDark.png; sourceTree = "<group>"; };
+		FBF1E4DA25459A95002FC4D2 /* receiptDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = receiptDark.png; sourceTree = "<group>"; };
+		FBF1E4DB25459A95002FC4D2 /* drinkingDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drinkingDark.png; sourceTree = "<group>"; };
+		FBF1E4E52545F66B002FC4D2 /* HistoryTotalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTotalTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,8 +246,11 @@
 			children = (
 				FB882745253F878600F10FB2 /* appicons */,
 				FB910C3525379192001DF227 /* edit.png */,
+				FBF1E4D925459A95002FC4D2 /* editDark.png */,
 				FB910C28253778DD001DF227 /* receipt.png */,
+				FBF1E4DA25459A95002FC4D2 /* receiptDark.png */,
 				FB910C2325377652001DF227 /* drinking.png */,
+				FBF1E4DB25459A95002FC4D2 /* drinkingDark.png */,
 				FB77879C2529FA900088410B /* AppDelegate.swift */,
 				FB7787EC252A314E0088410B /* AbstractTableViewController.swift */,
 				FB7787F1252A32320088410B /* AbstractViewController.swift */,
@@ -248,6 +259,7 @@
 				FB7787A72529FA900088410B /* LaunchScreen.storyboard */,
 				FB7787AA2529FA900088410B /* Info.plist */,
 				FB7787F6252A34990088410B /* HistoryTableViewController.swift */,
+				FBF1E4E52545F66B002FC4D2 /* HistoryTotalTableViewCell.swift */,
 				FB778821252CEB740088410B /* Tab2TableViewCell.swift */,
 				FB778829252CEFFC0088410B /* Tab1TableViewCell.swift */,
 				FB7787FE252A3F7E0088410B /* TabViewController.swift */,
@@ -446,6 +458,7 @@
 				FB882732253F868400F10FB2 /* iTunesArtwork@2x 2.png in Resources */,
 				FB882730253F868400F10FB2 /* Icon-App-20x20@3x.png in Resources */,
 				FB882735253F868400F10FB2 /* Icon-App-29x29@2x.png in Resources */,
+				FBF1E4DC25459A96002FC4D2 /* editDark.png in Resources */,
 				FB882734253F868400F10FB2 /* ItunesArtwork@2x.png in Resources */,
 				FB910C29253778DD001DF227 /* receipt.png in Resources */,
 				FB882738253F868400F10FB2 /* Icon-App-60x60@3x.png in Resources */,
@@ -456,12 +469,14 @@
 				FB88271D253F867300F10FB2 /* Icon-App-20x20@2x.png in Resources */,
 				FB88273C253F868400F10FB2 /* Icon-App-29x29@3x.png in Resources */,
 				FB88273A253F868400F10FB2 /* Icon-App-83.5x83.5@2x.png in Resources */,
+				FBF1E4DD25459A96002FC4D2 /* receiptDark.png in Resources */,
 				FB88273E253F868400F10FB2 /* Icon-App-60x60@2x.png in Resources */,
 				FB7787A62529FA900088410B /* Assets.xcassets in Resources */,
 				FB882737253F868400F10FB2 /* Icon-App-40x40@3x.png in Resources */,
 				FB7787A42529FA900088410B /* Main.storyboard in Resources */,
 				FB882733253F868400F10FB2 /* Icon-App-76x76@2x.png in Resources */,
 				FB910C3625379192001DF227 /* edit.png in Resources */,
+				FBF1E4DE25459A96002FC4D2 /* drinkingDark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,6 +521,7 @@
 				FB7787D62529FB2F0088410B /* Tab.swift in Sources */,
 				FB1CC90B2531D06B003AA02E /* JSONError.swift in Sources */,
 				FB77884D252F80540088410B /* TabTotalTableViewCell.swift in Sources */,
+				FBF1E4E62545F66B002FC4D2 /* HistoryTotalTableViewCell.swift in Sources */,
 				FB77880A252A43B40088410B /* TabItemsTableViewController.swift in Sources */,
 				FB1CC8F02531CA21003AA02E /* Location.swift in Sources */,
 				FB1CC9062531D052003AA02E /* RequestMethod.swift in Sources */,
@@ -697,7 +713,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.01;
+				CURRENT_PROJECT_VERSION = 1.02;
 				DEVELOPMENT_TEAM = QK48V24G7M;
 				INFOPLIST_FILE = beertab/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -705,7 +721,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.02;
 				PRODUCT_BUNDLE_IDENTIFIER = com.neilens.beertab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -719,7 +735,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.01;
+				CURRENT_PROJECT_VERSION = 1.02;
 				DEVELOPMENT_TEAM = QK48V24G7M;
 				INFOPLIST_FILE = beertab/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -727,7 +743,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.02;
 				PRODUCT_BUNDLE_IDENTIFIER = com.neilens.beertab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

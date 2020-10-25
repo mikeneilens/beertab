@@ -53,6 +53,15 @@ class TabViewControllerTests: XCTestCase {
         XCTAssertEqual("a pub", history.allTabs.last?.pubName)
     }
     
+    func testPrefixNoMoreThan() throws {
+        let emptyArray:Array<Int> = []
+        XCTAssertEqual(0, emptyArray.prefixNoMoreThan(3).count)
+        let arrayWith5Elements:Array<Int> = [1,2,3,4,5]
+        XCTAssertEqual(3, arrayWith5Elements.prefixNoMoreThan(3).count)
+        XCTAssertEqual([1,2,3], arrayWith5Elements.prefixNoMoreThan(3))
+        XCTAssertEqual([1,2,3,4,5], arrayWith5Elements.prefixNoMoreThan(10))
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
