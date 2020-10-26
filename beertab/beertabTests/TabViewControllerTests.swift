@@ -62,6 +62,24 @@ class TabViewControllerTests: XCTestCase {
         XCTAssertEqual([1,2,3,4,5], arrayWith5Elements.prefixNoMoreThan(10))
     }
     
+    func testCreatingSuggestedPubAlert() throws {
+        let viewController = TabViewController()
+        let pubs = ListOfPubs(fromJson:[K.PubListJsonName.pubs:[
+                    [K.PubListJsonName.name:"Pub1",K.PubListJsonName.id:"id1",K.PubListJsonName.branch:"branch1"],
+                    [K.PubListJsonName.name:"Pub2",K.PubListJsonName.id:"id2",K.PubListJsonName.branch:"branch3"],
+                    [K.PubListJsonName.name:"Pub3",K.PubListJsonName.id:"id3",K.PubListJsonName.branch:"branch3"]]])
+        let suggestionsAlert = viewController.createSugegstionAlert(pubs: pubs)
+        
+        XCTAssertEqual("Pub1", suggestionsAlert.actions[0].title)
+        XCTAssertEqual(.default, suggestionsAlert.actions[0].style)
+        XCTAssertEqual("Pub2", suggestionsAlert.actions[1].title)
+        XCTAssertEqual(.default, suggestionsAlert.actions[1].style)
+        XCTAssertEqual("Pub3", suggestionsAlert.actions[2].title)
+        XCTAssertEqual(.default, suggestionsAlert.actions[2].style)
+        XCTAssertEqual("No thanks", suggestionsAlert.actions[3].title)
+        XCTAssertEqual(.cancel, suggestionsAlert.actions[3].style)
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {

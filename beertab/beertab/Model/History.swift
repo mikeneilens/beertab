@@ -16,25 +16,8 @@ struct History:Codable {
     }
     
     func tabsByDate() -> Array<(date:String, tabs:Array<Tab>)> {
-        var result:Array<(date:String, tabs:Array<Tab>)> = []
-        for tab in tabs {
-            if result.isEmpty {
-                result.append((tab.dateString, [tab] ) )
-            } else {
-                result = addTabToResult(tab: tab, result: result)
-            }
-        }
-        return result
-    }
-    
-    func addTabToResult(tab:Tab, result:Array<(date:String, tabs:Array<Tab>)> ) -> Array<(date:String, tabs:Array<Tab>)> {
-        var newResult = result
-        if result.last?.date == tab.dateString {
-            newResult[result.count - 1] = (tab.dateString, result[result.count - 1].tabs + [tab])
-        } else {
-            newResult.append((tab.dateString, [tab] ) )
-        }
-        return newResult
+        let dates = tabs.map{$0.dateString}.unique{$0 == $1}
+        return dates.map{date in return (date, tabs.filter{$0.dateString == date})}
     }
     
     func add(tab:Tab) -> History {
@@ -50,5 +33,17 @@ struct History:Codable {
     }
     func save(key:String, errorResponse: (History,String) -> ()) {
         HistoryArchive(key:key).write(history: self, errorResponse: errorResponse)
+    }
+}
+
+extension Array {
+    func unique(selector:(Element,Element)->Bool) -> Array<Element> {
+        return reduce(Array<Element>()){
+            if let last = $0.last {
+                return selector(last,$1) ? $0 : $0 + [$1]
+            } else {
+                return [$1]
+            }
+        }
     }
 }

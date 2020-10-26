@@ -64,25 +64,27 @@ extension TabViewController:ListOfPubsCreatorDelegate {
     
     func finishedCreating(listOfPubHeaders: ListOfPubs) {
         if listOfPubHeaders.pubHeaders.count > 0 {
-            suggest(pubs: listOfPubHeaders)
+            present(createSugegstionAlert(pubs:listOfPubHeaders), animated: true, completion: nil)
         }
     }
     
-    func suggest(pubs: ListOfPubs) {
-        let createTabAlert = UIAlertController(title: "Pubs Found", message: "Would you like a tab for any of these premises?", preferredStyle: UIAlertController.Style.alert)
+    func createSugegstionAlert(pubs: ListOfPubs) -> UIAlertController {
+        let pubSuggestionAlert = UIAlertController(title: "Pubs Found", message: "Would you like a tab for any of these premises?", preferredStyle: UIAlertController.Style.alert)
 
         pubs.pubHeaders.prefixNoMoreThan(3).forEach{ pub in
-            createTabAlert.addAction(UIAlertAction(title: "\(pub.name)", style: .default, handler: { (action: UIAlertAction!) in
-                self.pubName.text = pub.name
-                self.branch = pub.branch
-                self.id = pub.id
-                self.saveButton.isEnabled = self.shouldSaveButtonBeEnabled()
+            pubSuggestionAlert.addAction(UIAlertAction(title: "\(pub.name)", style: .default, handler: { (action: UIAlertAction!) in
+                self.updatePubDetails(pub: pub)
             }))
         }
-
-        createTabAlert.addAction(UIAlertAction(title: "No thanks", style: .cancel, handler:nil))
-
-        present(createTabAlert, animated: true, completion: nil)
+        pubSuggestionAlert.addAction(UIAlertAction(title: "No thanks", style: .cancel, handler:nil))
+        return pubSuggestionAlert
+    }
+    
+    func updatePubDetails(pub:PubHeader) {
+        self.pubName.text = pub.name
+        self.branch = pub.branch
+        self.id = pub.id
+        self.saveButton.isEnabled = self.shouldSaveButtonBeEnabled()
     }
 }
 

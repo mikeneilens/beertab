@@ -34,15 +34,36 @@ class HistoryTableViewControllerTests: XCTestCase {
         XCTAssertEqual(tab3, history.allTabs[2])
     }
 
-    func testNumberOfSectionsIsOne() throws {
+    func testNumberOfSectionsIsOneIfAllTabsHaveSameDate() throws {
         let viewController = HistoryTableViewController()
+        
+        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id", tabItems: [])
+        let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
+        let tab3 = Tab(name: "test tab3", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
+
+        history = History(allTabs: [tab1,tab2,tab3])
         XCTAssertEqual(1, viewController.numberOfSections(in: UITableView()) )
     }
-    
-    func testNumberOfRowsInFirstSectionIsSameAsNoOfTabsInHistory() throws {
+    func testNumberOfSectionsIsTwoIfTabsHaveTwoDates() throws {
         let viewController = HistoryTableViewController()
-        history = History(allTabs:[tab1,tab2,tab3])
-        XCTAssertEqual(4, viewController.tableView(UITableView(), numberOfRowsInSection: 0))
+        
+        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id", tabItems: [])
+        let tab2 = Tab(name: "test tab2", createTS: Date() - 86400, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
+        let tab3 = Tab(name: "test tab3", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
+
+        history = History(allTabs: [tab1,tab2,tab3])
+        XCTAssertEqual(2, viewController.numberOfSections(in: UITableView()) )
+    }
+
+    func testNumberOfRowsInSectionIsOneIfThereIsOnlyOneTabForADate() throws {
+        let viewController = HistoryTableViewController()
+        history = History(allTabs:[tab1])
+        XCTAssertEqual(1, viewController.tableView(UITableView(), numberOfRowsInSection: 0))
+    }
+    func testNumberOfRowsInSectionIsThreeIfThereIsTwoTabsForADate() throws {
+        let viewController = HistoryTableViewController()
+        history = History(allTabs:[tab1,tab2])
+        XCTAssertEqual(3, viewController.tableView(UITableView(), numberOfRowsInSection: 0))
     }
     
     func testCellForARowIsTabWithOneDescriptionIfTabHasOnlyANameOrOnlyAPub() {
