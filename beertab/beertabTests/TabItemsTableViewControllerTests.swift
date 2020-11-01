@@ -210,6 +210,14 @@ class TabItemsTableViewControllerTests: XCTestCase {
         UserDefaults.standard.removeObject(forKey: "TabItemHelp")
     }
     
+    func testSettingNavigationTitle() {
+        let viewController = TabItemsTableViewController()
+        let tabWithPubName = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "", tabItems: [tabItem1,tabItem2])
+        XCTAssertEqual("pub1", viewController.navigationTitle(for:tabWithPubName) )
+        let tabWithNoPubName = Tab(name: "tab1", createTS: Date(), pubName: "", branch: "", id: "", tabItems: [tabItem1,tabItem2])
+        XCTAssertEqual("tab1", viewController.navigationTitle(for:tabWithNoPubName) )
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {

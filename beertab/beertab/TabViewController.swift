@@ -58,8 +58,7 @@ class TabViewController: AbstractViewController, UITextFieldDelegate {
 
 extension TabViewController:ListOfPubsCreatorDelegate {
     func getPubs(location:Location) {
-        let listOfPubsCreator = ListOfPubsCreator(withDelegate: self)
-        listOfPubsCreator.createList(usingSearchString: "nearby", location: Location(lng:location.lng,lat:location.lat))
+        ListOfPubsCreator(withDelegate: self).createList(usingSearchString: "nearby", location: Location(lng:location.lng,lat:location.lat))
     }
     
     func finishedCreating(listOfPubHeaders: ListOfPubs) {
@@ -69,15 +68,15 @@ extension TabViewController:ListOfPubsCreatorDelegate {
     }
     
     func createSugegstionAlert(pubs: ListOfPubs) -> UIAlertController {
-        let pubSuggestionAlert = UIAlertController(title: "Pubs Found", message: "Would you like a tab for any of these premises?", preferredStyle: UIAlertController.Style.alert)
-
-        pubs.pubHeaders.prefixNoMoreThan(3).forEach{ pub in
-            pubSuggestionAlert.addAction(UIAlertAction(title: "\(pub.name)", style: .default, handler: { (action: UIAlertAction!) in
-                self.updatePubDetails(pub: pub)
-            }))
+        return UIAlertController(title: "Pubs Found", message: "Would you like a tab for any of these premises?", preferredStyle: .alert
+        ).apply{this in
+            pubs.pubHeaders.prefixNoMoreThan(3).forEach{ pub in
+                this.addAction(UIAlertAction(title: "\(pub.name)", style: .default, handler: { (action: UIAlertAction!) in
+                    self.updatePubDetails(pub: pub)
+                }))
+            }
+            this.addAction(UIAlertAction(title: "No thanks", style: .cancel, handler:nil))
         }
-        pubSuggestionAlert.addAction(UIAlertAction(title: "No thanks", style: .cancel, handler:nil))
-        return pubSuggestionAlert
     }
     
     func updatePubDetails(pub:PubHeader) {
@@ -88,10 +87,4 @@ extension TabViewController:ListOfPubsCreatorDelegate {
     }
 }
 
-extension Array {
-    func prefixNoMoreThan(_ quantity:Int) -> ArraySlice<Element> {
-        let maxQuantity = (quantity < count ? quantity : count )
-        return prefix(upTo:maxQuantity)
-    }
-}
 

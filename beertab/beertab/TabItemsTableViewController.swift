@@ -21,13 +21,8 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if !tab.pubName.isEmpty {
-            self.navigationItem.title = tab.pubName
-        } else {
-            self.navigationItem.title = tab.name
-        }
-        
-        if (tab.tabItems.count == 0) {
+        self.navigationItem.title = navigationTitle(for: tab)
+        if (tab.tabItems.isEmpty) {
             if !tab.branch.isEmpty && !tab.id.isEmpty  {
                 TabReader(delegate: self, errorDelegate: self).getLatest(id: tab.id, branch: tab.branch)
             } else {
@@ -36,6 +31,10 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
         }
     }
 
+    func navigationTitle(for tab:Tab) -> String {
+        return tab.pubName.isEmpty ? tab.name : tab.pubName
+    }
+    
     func instructionsShouldBePresented()-> Bool {
         if let _ = UserDefaults.standard.object(forKey: "TabItemHelp") {return false}
         else {return true}
@@ -80,26 +79,25 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
             tabItemCell.name.text = tab.tabItems[indexPath.row].name
             tabItemCell.size.text = "\(tab.tabItems[indexPath.row].size) £\(tab.tabItems[indexPath.row].priceGBP)"
             tabItemCell.quantity.text = String(tab.tabItems[indexPath.row].quantity)
-            //tabItemCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         }
     }
     
     func configureSummaryCell(_ cell: UITableViewCell) {
           if let tabTotalCell = cell as? TabTotalTableViewCell {
               tabTotalCell.totalValue.text = tab.totalValue
-              //tabTotalCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
           }
     }
       
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            if tab.tabItems.count > 0 {
-                return "Items"
-            } else {
+            if tab.tabItems.isEmpty {
                 return "You have no items on your tab"
+            } else {
+                return "Items"
             }
+        } else {
+            return "Your Total Bill"
         }
-        else {return "Your Total Bill"}
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -110,17 +108,17 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
     func deleteTabItem(indexPath:IndexPath) {
         let tabItem = tab.tabItems[indexPath.row]
-        
-        let deleteAlert = UIAlertController(title: "Are You Sure", message: "Do you want to delete \(tabItem.brewer) \(tabItem.name) (\(tabItem.size))", preferredStyle: UIAlertController.Style.alert)
-
-        deleteAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-            self.deleteTabItem(tabItem: tabItem)
-            self.tableView.reloadData()
-        }))
-
-        deleteAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler:nil))
-
-        present(deleteAlert, animated: true, completion: nil)
+        present(createDeleteAlert(tabItem: tabItem), animated: true, completion: nil)
+    }
+    
+    func createDeleteAlert(tabItem:TabItem) -> UIAlertController {
+        return UIAlertController(title: "Are You Sure", message: "Do you want to delete \(tabItem.brewer) \(tabItem.name) (\(tabItem.size))", preferredStyle: .alert).apply { this in
+                this.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+                    self.deleteTabItem(tabItem: tabItem)
+                    self.tableView.reloadData()
+                }))
+                this.addAction(UIAlertAction(title: "No", style: .cancel, handler:nil))
+        }
     }
         
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -207,16 +205,15 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
 
     func showInstructions() {
-        let alert = UIAlertController(title: "", message: "You don't seem to have added any items to the tab for this visit. To create a new item press the + button in the top right hand corner. ", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Don't show again", comment: "Default action"), style: .default, handler: disableInstructions(_:)))
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-        NSLog("The \"OK\" alert occured.")
-        }))
-        
-        self.navigationController?.present(alert, animated: true, completion: nil)
-
+        self.navigationController?.present(createInstructions(), animated: true, completion: nil)
+    }
+    
+    func createInstructions() -> UIAlertController {
+        return UIAlertController(title: "", message: "You don't seem to have added any items to the tab for this visit. To create a new item press the + button in the top right hand corner. ", preferredStyle: .alert
+        ).apply{ this in
+            this.addAction(UIAlertAction(title: NSLocalizedString("Don't show again", comment: "Default action"), style: .default, handler: disableInstructions(_:)))
+            this.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: nil))
+        }
     }
     
     func disableInstructions(_: UIAlertAction) {
@@ -235,15 +232,14 @@ extension TabItemsTableViewController:TabRepositoryDelegate {
     }
     
     func suggestTabItems(tabItems:Array<TabItem>) {
-        let createTabItemsAlert = UIAlertController(title: "Items Found for \(tab.pubName).", message: "Would you like to automatically add some items ?", preferredStyle: UIAlertController.Style.alert)
-
-        createTabItemsAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-            self.updateTab(tabItems: tabItems)
-        }))
-
-        createTabItemsAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler:{_ in self.showInsructionsIfRequired()}))
-
-        self.navigationController?.present(createTabItemsAlert, animated: true, completion: nil)
+        self.navigationController?.present(createTabItemsAlert(tabItems:tabItems), animated: true, completion: nil)
+    }
+    
+    func createTabItemsAlert(tabItems: Array<TabItem>) -> UIAlertController {
+        return UIAlertController(title: "Items Found for \(tab.pubName).", message: "Would you like to automatically add some items ?", preferredStyle: .alert).apply{ this in
+            this.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in self.updateTab(tabItems: tabItems)}))
+            this.addAction(UIAlertAction(title: "No", style: .cancel, handler:{_ in self.showInsructionsIfRequired()}))
+        }
     }
     
     func updateTab(tabItems:Array<TabItem>) {
@@ -252,7 +248,6 @@ extension TabItemsTableViewController:TabRepositoryDelegate {
     }
     
     func finishedPosting(tabItems: Array<TabItem>) {
-        print("tab items posted")
     }
 }
 

@@ -9,6 +9,9 @@ import XCTest
 @testable import beertab
 
 class HistoryTableViewControllerTests: XCTestCase {
+    let date20122019 = Date(timeIntervalSince1970: 1576800000)
+    let date21122019 = Date(timeIntervalSince1970: 1576886400)
+    
     let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id", tabItems: [])
     let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
     let tab3 = Tab(name: "test tab3", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id", tabItems: [])
@@ -155,6 +158,16 @@ class HistoryTableViewControllerTests: XCTestCase {
         XCTAssertNotNil(historyHelpDisabled)
         
         UserDefaults.standard.removeObject(forKey: "HistoryHelp")
+    }
+    
+    func testCreatingDeleteTabAlert() {
+        let viewController = HistoryTableViewController()
+        let tab = Tab(name: "test tab1", createTS: date20122019, pubName: "", branch: "test br", id: "test id", tabItems: [])
+        let alertController = viewController.deleteTabAlert(for: tab)
+        XCTAssertEqual(2, alertController.actions.count)
+        XCTAssertEqual("Do you want to delete test tab1  (20 Dec 2019)", alertController.message)
+        XCTAssertEqual("Yes", alertController.actions[0].title)
+        XCTAssertEqual("No", alertController.actions[1].title)
     }
     
     func testPerformanceExample() throws {

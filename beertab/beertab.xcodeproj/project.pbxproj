@@ -67,6 +67,8 @@
 		FB910C2425377652001DF227 /* drinking.png in Resources */ = {isa = PBXBuildFile; fileRef = FB910C2325377652001DF227 /* drinking.png */; };
 		FB910C29253778DD001DF227 /* receipt.png in Resources */ = {isa = PBXBuildFile; fileRef = FB910C28253778DD001DF227 /* receipt.png */; };
 		FB910C3625379192001DF227 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = FB910C3525379192001DF227 /* edit.png */; };
+		FB9E40E3254DCC2900B71384 /* ScopeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9E40E2254DCC2900B71384 /* ScopeFunctions.swift */; };
+		FB9E40EB254F35E800B71384 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9E40EA254F35E800B71384 /* Array.swift */; };
 		FBA9D60D253D9FB800D3A643 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA9D60C253D9FB800D3A643 /* Currency.swift */; };
 		FBF1E4DC25459A96002FC4D2 /* editDark.png in Resources */ = {isa = PBXBuildFile; fileRef = FBF1E4D925459A95002FC4D2 /* editDark.png */; };
 		FBF1E4DD25459A96002FC4D2 /* receiptDark.png in Resources */ = {isa = PBXBuildFile; fileRef = FBF1E4DA25459A95002FC4D2 /* receiptDark.png */; };
@@ -158,6 +160,8 @@
 		FB910C2325377652001DF227 /* drinking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drinking.png; sourceTree = "<group>"; };
 		FB910C28253778DD001DF227 /* receipt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = receipt.png; sourceTree = "<group>"; };
 		FB910C3525379192001DF227 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
+		FB9E40E2254DCC2900B71384 /* ScopeFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScopeFunctions.swift; sourceTree = "<group>"; };
+		FB9E40EA254F35E800B71384 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		FBA9D60C253D9FB800D3A643 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		FBF1E4D925459A95002FC4D2 /* editDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editDark.png; sourceTree = "<group>"; };
 		FBF1E4DA25459A95002FC4D2 /* receiptDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = receiptDark.png; sourceTree = "<group>"; };
@@ -275,6 +279,7 @@
 				FB778854252FA0C50088410B /* Model */,
 				FB1CC8F72531CFD3003AA02E /* WebService */,
 				FB1CC9152531D217003AA02E /* Constants.swift */,
+				FB9E40E1254DCBD200B71384 /* Extensions */,
 				FBA9D611253F2E7600D3A643 /* Utlity */,
 			);
 			path = beertab;
@@ -338,6 +343,15 @@
 				FB88271B253F867300F10FB2 /* Icon-App-20x20@2x.png */,
 			);
 			path = appicons;
+			sourceTree = "<group>";
+		};
+		FB9E40E1254DCBD200B71384 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FB9E40E2254DCC2900B71384 /* ScopeFunctions.swift */,
+				FB9E40EA254F35E800B71384 /* Array.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		FBA9D611253F2E7600D3A643 /* Utlity */ = {
@@ -503,9 +517,11 @@
 			files = (
 				FB1CC9202531D458003AA02E /* WebServiceDelegate.swift in Sources */,
 				FB1CC9162531D217003AA02E /* Constants.swift in Sources */,
+				FB9E40E3254DCC2900B71384 /* ScopeFunctions.swift in Sources */,
 				FB77879D2529FA900088410B /* AppDelegate.swift in Sources */,
 				FB7787F2252A32320088410B /* AbstractViewController.swift in Sources */,
 				FB778837252D0F520088410B /* HistoryArchive.swift in Sources */,
+				FB9E40EB254F35E800B71384 /* Array.swift in Sources */,
 				FB1CC9112531D1DA003AA02E /* Pub.swift in Sources */,
 				FBA9D60D253D9FB800D3A643 /* Currency.swift in Sources */,
 				FB778812252B949B0088410B /* TabItemAddViewController.swift in Sources */,
@@ -713,7 +729,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.02;
+				CURRENT_PROJECT_VERSION = 1.03;
 				DEVELOPMENT_TEAM = QK48V24G7M;
 				INFOPLIST_FILE = beertab/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -721,7 +737,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 1.03;
 				PRODUCT_BUNDLE_IDENTIFIER = com.neilens.beertab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -735,7 +751,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.02;
+				CURRENT_PROJECT_VERSION = 1.03;
 				DEVELOPMENT_TEAM = QK48V24G7M;
 				INFOPLIST_FILE = beertab/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -743,7 +759,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 1.03;
 				PRODUCT_BUNDLE_IDENTIFIER = com.neilens.beertab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

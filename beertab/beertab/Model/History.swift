@@ -15,7 +15,7 @@ struct History:Codable {
         return allTabs.sorted{$0.createTS > $1.createTS}
     }
     
-    func tabsByDate() -> Array<(date:String, tabs:Array<Tab>)> {
+    var tabsByDate:Array<(date:String, tabs:Array<Tab>)> {
         let dates = tabs.map{$0.dateString}.unique{$0 == $1}
         return dates.map{date in return (date, tabs.filter{$0.dateString == date})}
     }
@@ -36,14 +36,3 @@ struct History:Codable {
     }
 }
 
-extension Array {
-    func unique(selector:(Element,Element)->Bool) -> Array<Element> {
-        return reduce(Array<Element>()){
-            if let last = $0.last {
-                return selector(last,$1) ? $0 : $0 + [$1]
-            } else {
-                return [$1]
-            }
-        }
-    }
-}

@@ -9,7 +9,6 @@ import UIKit
 import CoreLocation
 
 var history = History(allTabs: [])
-var userId = UId()
 var archiveKey = "history"
 
 class HistoryTableViewController: AbstractTableViewController {
@@ -22,12 +21,11 @@ class HistoryTableViewController: AbstractTableViewController {
 
         checkLocationServicesPermissions()
         locationManager.delegate = self
-        userId.refreshUId()
         HistoryArchive(key:archiveKey).read(historyResponse: historyRead(newHistory:), errorResponse: errorReadingHistory(message:))
     }
     
     func tabFor(indexPath:IndexPath) -> Tab {
-        let tabByDate = history.tabsByDate()[indexPath.section]
+        let tabByDate = history.tabsByDate[indexPath.section]
         return tabByDate.tabs[indexPath.row]
     }
     
@@ -63,29 +61,28 @@ class HistoryTableViewController: AbstractTableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return history.tabsByDate().count
+        return history.tabsByDate.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if history.tabsByDate()[section].tabs.count > 1 {
-            return history.tabsByDate()[section].tabs.count + 1
+        if history.tabsByDate[section].tabs.count > 1 {
+            return history.tabsByDate[section].tabs.count + 1
         } else {
-            return history.tabsByDate()[section].tabs.count
+            return history.tabsByDate[section].tabs.count
         }
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return history.tabsByDate()[section].date
+        return history.tabsByDate[section].date
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row >= history.tabsByDate()[indexPath.section].tabs.count {
+        if indexPath.row >= history.tabsByDate[indexPath.section].tabs.count {
             return setupHistoryTotalCell(section:indexPath.section, cell:tableView.dequeueReusableCell(withIdentifier: "totalCell", for: indexPath))
         }
         let tab = tabFor(indexPath: indexPath)
         if tab.name.isEmpty || tab.pubName.isEmpty {
             return setupSingleLabelCell(tab: tab, cell:tableView.dequeueReusableCell(withIdentifier: "tab1Cell", for: indexPath))
-            
         } else {
             return setupTwoLabelCell(tab: tab, cell:tableView.dequeueReusableCell(withIdentifier: "tab2Cell", for: indexPath))
         }
@@ -93,11 +90,7 @@ class HistoryTableViewController: AbstractTableViewController {
     
     func setupSingleLabelCell(tab:Tab, cell:UITableViewCell) -> UITableViewCell {
         if let tabTableViewCell = cell as? Tab1TableViewCell {
-            if tab.name.isEmpty {
-                tabTableViewCell.name.text = tab.pubName
-            } else {
-                tabTableViewCell.name.text = tab.name
-            }
+            tabTableViewCell.name.text = tab.name.isEmpty ? tab.pubName : tab.name
             tabTableViewCell.total.text = tab.totalValue
         }
         cell.accessoryType = .disclosureIndicator
@@ -116,7 +109,7 @@ class HistoryTableViewController: AbstractTableViewController {
     
     func setupHistoryTotalCell(section:Int, cell:UITableViewCell) -> UITableViewCell {
         if let totalTableViewCell = cell as? HistoryTotalTableViewCell {
-            let total = history.tabsByDate()[section].tabs.map{$0.totalPence}.reduce(0){$0 + $1}.priceGBP
+            let total = history.tabsByDate[section].tabs.map{$0.totalPence}.reduce(0){$0 + $1}.priceGBP
             totalTableViewCell.totalLabel.text = "Total £\(total)"
         }
         return cell
@@ -143,17 +136,18 @@ class HistoryTableViewController: AbstractTableViewController {
     
     func deleteTab(indexPath:IndexPath) {
         let tab = tabFor(indexPath: indexPath)
-        
-        let deleteAlert = UIAlertController(title: "Are You Sure", message: "Do you want to delete \(tab.name) \(tab.pubName) (\(tab.dateString))", preferredStyle: UIAlertController.Style.alert)
-
-        deleteAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-            self.deleteTab(tab: tab)
-            self.tableView.reloadData()
-        }))
-
-        deleteAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler:nil))
-
-        present(deleteAlert, animated: true, completion: nil)
+        self.navigationController?.present(deleteTabAlert(for: tab), animated: true, completion: nil)
+    }
+    
+    func deleteTabAlert(for tab: Tab) -> UIAlertController {
+        return UIAlertController(title: "Are You Sure", message: "Do you want to delete \(tab.name) \(tab.pubName) (\(tab.dateString))", preferredStyle:.alert
+        ).apply{this in
+            this.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+                self.deleteTab(tab: tab)
+                self.tableView.reloadData()
+            }))
+            this.addAction(UIAlertAction(title: "No", style: .cancel, handler:nil))
+        }
     }
     
     func deleteTab(tab: Tab) {
@@ -166,17 +160,16 @@ class HistoryTableViewController: AbstractTableViewController {
     }
     
     func showInstructions() {
-        let alert = UIAlertController(title: "", message: "You don't seem to have created any visits. Press the + button in the top right hand corner to create a visit. If you have allowed this application to use your location the nearest bar will be automatically located.", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Don't show again", comment: "Default action"), style: .default, handler: disableInstructions
-        ))
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-        NSLog("The \"OK\" alert occured.")
-        }))
-        
+        let alert = createInstructionsAlert()
         self.navigationController?.present(alert, animated: true, completion: nil)
-
+    }
+    
+    func createInstructionsAlert() -> UIAlertController {
+        return UIAlertController(title: "", message: "You don't seem to have created any visits. Press the + button in the top right hand corner to create a visit. If you have allowed this application to use your location the nearest bar will be automatically located.", preferredStyle: .alert
+        ).apply{this in
+            this.addAction(UIAlertAction(title: NSLocalizedString("Don't show again", comment: "Default action"), style: .default, handler: disableInstructions))
+            this.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: nil))
+        }
     }
     
     func disableInstructions(_: UIAlertAction) {
@@ -194,7 +187,7 @@ extension HistoryTableViewController: CLLocationManagerDelegate { //delegat meth
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        let locValue = manager.location!.coordinate
         self.currentLocation = .Set(location:  Location(fromCoordinate:locValue))
     }
 }

@@ -118,6 +118,54 @@ class TabItemAddViewControllerTests: XCTestCase {
         XCTAssertEqual(0,mockUpdater.listOfTabItems[0].price)
     }
     
+    func testTabItemsWithAPrice() {
+        let viewController = TabItemAddViewController()
+        setUp(viewController:viewController)
+        viewController.brandTextField.text = "brand"
+        viewController.nameTextField.text = "name"
+        
+        viewController.pintPriceText.text = "1.5"
+        let tabItemsWithOnePrice = viewController.tabItemsWithAPrice()
+        XCTAssertEqual(1, tabItemsWithOnePrice.count)
+        XCTAssertEqual("brand", tabItemsWithOnePrice[0].brewer)
+        XCTAssertEqual("name", tabItemsWithOnePrice[0].name)
+        XCTAssertEqual("Pint", tabItemsWithOnePrice[0].size)
+        XCTAssertEqual(150, tabItemsWithOnePrice[0].price)
+        
+        viewController.halfPriceText.text = "2.5"
+        let tabItemsWithTwoPrices = viewController.tabItemsWithAPrice()
+        XCTAssertEqual(2, tabItemsWithTwoPrices.count)
+        XCTAssertEqual("brand", tabItemsWithTwoPrices[1].brewer)
+        XCTAssertEqual("name", tabItemsWithTwoPrices[1].name)
+        XCTAssertEqual("Half", tabItemsWithTwoPrices[1].size)
+        XCTAssertEqual(250, tabItemsWithTwoPrices[1].price)
+        
+        viewController.thirdPriceText.text = "3.5"
+        let tabItemsWithThreePrices = viewController.tabItemsWithAPrice()
+        XCTAssertEqual(3, tabItemsWithThreePrices.count)
+        XCTAssertEqual("brand", tabItemsWithThreePrices[2].brewer)
+        XCTAssertEqual("name", tabItemsWithThreePrices[2].name)
+        XCTAssertEqual("1/3", tabItemsWithThreePrices[2].size)
+        XCTAssertEqual(350, tabItemsWithThreePrices[2].price)
+        
+        viewController.twoThirdPriceText.text = "4.5"
+        let tabItemsWithFourPrices = viewController.tabItemsWithAPrice()
+        XCTAssertEqual(4, tabItemsWithFourPrices.count)
+        XCTAssertEqual("brand", tabItemsWithFourPrices[3].brewer)
+        XCTAssertEqual("name", tabItemsWithFourPrices[3].name)
+        XCTAssertEqual("2/3", tabItemsWithFourPrices[3].size)
+        XCTAssertEqual(450, tabItemsWithFourPrices[3].price)
+        
+        viewController.otherPrice.text = "5.5"
+        let tabItemsWithFivePrices = viewController.tabItemsWithAPrice()
+        XCTAssertEqual(5, tabItemsWithFivePrices.count)
+        XCTAssertEqual("brand", tabItemsWithFivePrices[4].brewer)
+        XCTAssertEqual("name", tabItemsWithFivePrices[4].name)
+        XCTAssertEqual("Other", tabItemsWithFivePrices[4].size)
+        XCTAssertEqual(550, tabItemsWithFivePrices[4].price)
+        
+    }
+    
     func testGettingStateForDoneButton() throws {
         let viewController = TabItemAddViewController()
         setUp(viewController:viewController)
