@@ -19,6 +19,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
     var historyRepository:HistoryArchiver = HistoryRepository()
     var userOptionsRepository:UserOptionsArchiver = UserOptionsRepository()
+    var tabRepository:TabArchiver = TabRepository()
     var tab = Tab(name: "", createTS: Date(), pubName: "", branch: "", id: "", tabItems: [])
     
     override func viewDidLoad() {
@@ -26,7 +27,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
         self.navigationItem.title = navigationTitle(for: tab)
         if (tab.tabItems.isEmpty) {
             if !tab.branch.isEmpty && !tab.id.isEmpty  {
-                TabReader(delegate: self, errorDelegate: self).getLatest(id: tab.id, branch: tab.branch)
+                tabRepository.readLatest(id: tab.id, branch: tab.branch, delegate:self)
             } else {
                 showInsructionsIfRequired() 
             }
@@ -164,7 +165,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
     func writeTabToRepository(tab:Tab) {
         if tab.branch != "" && tab.id != "" {
-            TabWriter(delegate: self, errorDelegate: self).post(tab: tab)
+            tabRepository.writeLatest(tab: tab, delegate: self)
         }
     }
     

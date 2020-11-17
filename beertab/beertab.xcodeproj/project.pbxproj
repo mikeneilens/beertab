@@ -22,6 +22,8 @@
 		FB1CC91B2531D2AB003AA02E /* ListOfPubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC91A2531D2AB003AA02E /* ListOfPubs.swift */; };
 		FB1CC9202531D458003AA02E /* WebServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC91F2531D458003AA02E /* WebServiceDelegate.swift */; };
 		FB1CC92525332727003AA02E /* ReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC92425332726003AA02E /* ReceiptViewController.swift */; };
+		FB5A5CAE256443350091AE34 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5CAD256443350091AE34 /* Int.swift */; };
+		FB5A5CB32564581C0091AE34 /* Curry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5CB22564581C0091AE34 /* Curry.swift */; };
 		FB65202825642848009C4384 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB65202725642848009C4384 /* TextField.swift */; };
 		FB77879D2529FA900088410B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77879C2529FA900088410B /* AppDelegate.swift */; };
 		FB77879F2529FA900088410B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77879E2529FA900088410B /* SceneDelegate.swift */; };
@@ -112,6 +114,8 @@
 		FB1CC91A2531D2AB003AA02E /* ListOfPubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfPubs.swift; sourceTree = "<group>"; };
 		FB1CC91F2531D458003AA02E /* WebServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceDelegate.swift; sourceTree = "<group>"; };
 		FB1CC92425332726003AA02E /* ReceiptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewController.swift; sourceTree = "<group>"; };
+		FB5A5CAD256443350091AE34 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
+		FB5A5CB22564581C0091AE34 /* Curry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curry.swift; sourceTree = "<group>"; };
 		FB65202725642848009C4384 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		FB7787992529FA900088410B /* beertab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = beertab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB77879C2529FA900088410B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -359,6 +363,7 @@
 				FB9E40E2254DCC2900B71384 /* ScopeFunctions.swift */,
 				FB9E40EA254F35E800B71384 /* Array.swift */,
 				FB65202725642848009C4384 /* TextField.swift */,
+				FB5A5CAD256443350091AE34 /* Int.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -367,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				FBA9D60C253D9FB800D3A643 /* Currency.swift */,
+				FB5A5CB22564581C0091AE34 /* Curry.swift */,
 			);
 			path = Utlity;
 			sourceTree = "<group>";
@@ -539,6 +545,7 @@
 				FB1CC9012531D026003AA02E /* Request.swift in Sources */,
 				FB7787ED252A314E0088410B /* AbstractTableViewController.swift in Sources */,
 				FB910C1E253630FF001DF227 /* TabRepository.swift in Sources */,
+				FB5A5CAE256443350091AE34 /* Int.swift in Sources */,
 				FB7787E4252A2C0A0088410B /* TabItem.swift in Sources */,
 				FB778832252CF4120088410B /* UId.swift in Sources */,
 				FB77883F252DDBCE0088410B /* TabItemUpdateViewController.swift in Sources */,
@@ -559,6 +566,7 @@
 				FB1CC92525332727003AA02E /* ReceiptViewController.swift in Sources */,
 				FB1CC91B2531D2AB003AA02E /* ListOfPubs.swift in Sources */,
 				FB7787DF252A2BF90088410B /* History.swift in Sources */,
+				FB5A5CB32564581C0091AE34 /* Curry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

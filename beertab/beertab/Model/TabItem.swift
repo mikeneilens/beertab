@@ -61,11 +61,3 @@ struct Transaction:Codable {
     var createTS = Date()
 }
 
-extension Int {
-    var priceGBP:String {
-        let pounds = self/100
-        let decimal = self % 100 / 10
-        let penny = self % 10
-        return "\(pounds).\(decimal)\(penny)"
-    }
-}
