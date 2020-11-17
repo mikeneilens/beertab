@@ -38,6 +38,7 @@ class TabViewControllerTests: XCTestCase {
     }
     func testCreatingTab() throws {
         let viewController = TabViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
         let nameTextField = UITextField()
         let pubNameTextField  = UITextField()
         viewController.name = nameTextField
@@ -46,7 +47,6 @@ class TabViewControllerTests: XCTestCase {
         viewController.name.text = "a name"
         viewController.pubName.text = "a pub"
         
-        archiveKey = "test"
         viewController.createTabAndAddToHistory()
         
         XCTAssertEqual("a name", history.allTabs.last?.name)

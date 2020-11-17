@@ -43,7 +43,7 @@ class TabItemUpdateViewController: UIViewController, UITextFieldDelegate {
     }
     
     func shouldDeleteButtonBeEnabled() -> Bool {
-        return (tabItem.quantity > 0)
+        (tabItem.quantity > 0)
     }
     
     @IBAction func buyPressed(_ sender: Any) {
@@ -101,7 +101,10 @@ class TabItemUpdateViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textHasChanged() -> Bool {
-        return tabItem.brewer != brandTextField.text || tabItem.name != nameTextField.text || tabItem.size != sizeTextField.text || tabItem.price.priceGBP != priceTextField.text
+        tabItem.brewer != brandTextField.text
+        || tabItem.name != nameTextField.text
+        || tabItem.size != sizeTextField.text
+        || tabItem.price.priceGBP != priceTextField.text
     }
     
     func replaceTabItem() {

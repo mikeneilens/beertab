@@ -8,22 +8,26 @@
 import Foundation
 
 protocol HistoryArchiver {
-    func write(history:History, errorResponse:(History,String)->())
-    func read(historyResponse: (History) -> (),  errorResponse: (String) -> ())
+    func write(_ history:History, errorResponse:Optional<(History,String)->()>)
+    func read(historyResponse: (History) -> (), errorResponse: Optional<(String) -> ()>)
 }
 
-struct HistoryArchive:HistoryArchiver {
+struct HistoryRepository:HistoryArchiver {
     let key:String
-    func write(history: History, errorResponse: (History, String) -> ()) {
+    init (key:String = "history") {
+        self.key = key
+    }
+    func write(_ history: History, errorResponse: Optional<(History, String) -> ()>) {
         let encoder = JSONEncoder()
         do {let encoded = try encoder.encode(history)
             let defaults = UserDefaults.standard
             defaults.set(encoded, forKey: key)
         } catch {
-            errorResponse(history,"error encoding History")
+            print("error encoding History")
+            if let errorResponse = errorResponse {errorResponse(history,"error encoding History")}
         }
     }
-    func read(historyResponse: (History) -> (),  errorResponse: (String) -> ())  {
+    func read(historyResponse: (History) -> (),  errorResponse: Optional<(String) -> ()>)  {
         let defaults = UserDefaults.standard
         
         if let savedHistory = defaults.object(forKey: key) as? Data {
@@ -31,7 +35,8 @@ struct HistoryArchive:HistoryArchiver {
             do { let history = try decoder.decode(History.self, from: savedHistory)
                 historyResponse(history)
             } catch {
-                errorResponse("error decoding History")
+                print("error decoding history")
+                if let errorResponse = errorResponse{errorResponse("error decoding History")}
             }
         } else {
             historyResponse(History(allTabs:[]))

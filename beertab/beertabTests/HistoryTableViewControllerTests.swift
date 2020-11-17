@@ -128,8 +128,9 @@ class HistoryTableViewControllerTests: XCTestCase {
     
     func testDeleteTab() {
         let viewController = HistoryTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
+        
         history = History(allTabs:[tab1,tab2,tab3])
-        archiveKey = "test"
         viewController.deleteTab(tab: tab2)
         
         XCTAssertEqual(2, history.allTabs.count)
@@ -138,7 +139,7 @@ class HistoryTableViewControllerTests: XCTestCase {
 
         func checkHistoryIsArchived(history:History) { XCTAssertEqual(2,history.allTabs.count) }
         func errorResponse(message:String) { XCTAssertTrue(false)}
-        HistoryArchive(key:archiveKey).read(historyResponse: checkHistoryIsArchived, errorResponse: errorResponse(message:) )
+        HistoryRepository(key:"test").read(historyResponse: checkHistoryIsArchived, errorResponse: errorResponse(message:) )
     }
     
     func testWhetherInstructionsShouldBePresented() {

@@ -14,10 +14,12 @@ struct TabItem:Codable {
     let price:Int
     let transactions:Array<Transaction>
     
-    var quantity:Int  {return transactions.filter{$0.transactionType == TransactionType.add}.count - transactions.filter{$0.transactionType == TransactionType.remove}.count}
+    var quantity:Int  {
+        transactions.filter{$0.transactionType == TransactionType.add}.count - transactions.filter{$0.transactionType == TransactionType.remove}.count
+    }
     
     var priceGBP:String {
-        return price.priceGBP
+        price.priceGBP
     }
     
     init(brewer:String, name:String, size:String, price:Int, transactions:Array<Transaction>) {
@@ -36,20 +38,17 @@ struct TabItem:Codable {
     }
     
     func addTransaction() -> TabItem {
-        return TabItem(brewer: brewer, name: name, size: size, price: price, transactions:transactions + [Transaction(transactionType: .add)])
+        TabItem(brewer: brewer, name: name, size: size, price: price, transactions:transactions + [Transaction(transactionType: .add)])
     }
     func removeTransaction() -> TabItem {
-        return TabItem(brewer: brewer, name: name, size: size, price: price, transactions:transactions + [Transaction(transactionType: .remove)])
+        TabItem(brewer: brewer, name: name, size: size, price: price, transactions:transactions + [Transaction(transactionType: .remove)])
     }
 }
 func == (lhs: TabItem, rhs: TabItem) -> Bool {
-        return
-            lhs.brewer == rhs.brewer &&
-            lhs.name == rhs.name &&
-            lhs.size == rhs.size
+    lhs.brewer == rhs.brewer && lhs.name == rhs.name && lhs.size == rhs.size
     }
 func != (lhs: TabItem, rhs: TabItem) -> Bool {
-    return !(lhs == rhs)
+     !(lhs == rhs)
 }
 
 enum TransactionType:String, Codable{

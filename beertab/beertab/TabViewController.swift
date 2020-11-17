@@ -13,6 +13,7 @@ class TabViewController: AbstractViewController, UITextFieldDelegate {
     @IBOutlet weak var pubName: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
+    var historyRepository:HistoryArchiver = HistoryRepository()
     var locationStatus = LocationStatus.NotSet
     var branch = ""
     var id = ""
@@ -37,7 +38,7 @@ class TabViewController: AbstractViewController, UITextFieldDelegate {
     }
     
     func shouldSaveButtonBeEnabled() -> Bool {
-        return (name.text != "" || pubName.text != "")
+        (name.text != "" || pubName.text != "")
     }
     
     @IBAction func savePressed(_ sender: Any) {
@@ -48,11 +49,7 @@ class TabViewController: AbstractViewController, UITextFieldDelegate {
     func createTabAndAddToHistory() {
         let tab = Tab(name: (name.text ?? "" ), createTS: Date(), pubName: (pubName.text ?? ""), branch:self.branch, id: self.id, tabItems: [])
         history = history.add(tab: tab)
-        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
-    }
-    
-    func errorWritingHistory(history:History, message:String) {
-        print("error writing history: \(message)")
+        historyRepository.write(history, errorResponse: nil)
     }
 }
 

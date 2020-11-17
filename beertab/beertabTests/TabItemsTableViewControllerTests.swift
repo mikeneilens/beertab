@@ -116,9 +116,9 @@ class TabItemsTableViewControllerTests: XCTestCase {
     
     func testAddingAnItem() throws {
         let viewController = TabItemsTableViewController()
+        viewController.historyRepository =  HistoryRepository(key:"test")
         let tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "", tabItems: [tabItem1,tabItem2])
         viewController.tab = tab
-        archiveKey = "test"
         history = History(allTabs: [tab])
         
         let newTabItem = TabItem(brewer: "brewer3", name: "name3", size: "other", price: 100)

@@ -33,7 +33,7 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
         brandTextField.delegate = self
         nameTextField.delegate = self
     
-        saveButton.isEnabled = shouldDoneButtonBeEnabled()
+        saveButton.isEnabled = doneButtonShouldBeEnabled()
     }
     
     @IBAction func savePressed(_ sender: Any) {
@@ -52,13 +52,13 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
     }
         
     func tabItemsWithAPrice() -> Array<TabItem> {
-        return [(size:"Pint", price:pintPriceText?.inPence() ?? 0 ),
-                      (size:"Half", price:halfPriceText?.inPence() ?? 0),
-                      (size:"1/3", price:thirdPriceText?.inPence() ?? 0),
-                      (size:"2/3", price:twoThirdPriceText?.inPence() ?? 0),
-                      (size:"Other", price:otherPrice?.inPence() ?? 0)]
-            .map{tabItemFromView(size:$0.size, price:($0.price))}
-            .filter{$0.price != 0}
+        [(size:"Pint", price:pintPriceText?.inPence() ?? 0 ),
+         (size:"Half", price:halfPriceText?.inPence() ?? 0),
+         (size:"1/3", price:thirdPriceText?.inPence() ?? 0),
+         (size:"2/3", price:twoThirdPriceText?.inPence() ?? 0),
+         (size:"Other", price:otherPrice?.inPence() ?? 0)]
+        .map{tabItemFromView(size:$0.size, price:($0.price))}
+        .filter{$0.price != 0}
     }
 
     func tabItemFromView(size:String, price:Int) -> TabItem {
@@ -67,35 +67,26 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
     }
     
     func deleteTabItem(tabItem:TabItem) {
-        let deleteAlert = UIAlertController(title: "Are You Sure", message: "Do you want to delete \(tabItem.brewer) \(tabItem.name) (\(tabItem.size))", preferredStyle: UIAlertController.Style.alert)
-
-        deleteAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-            self.tabUpdater?.deleteTabItem(tabItem:tabItem)
-            self.navigationController?.popViewController(animated:true)
-        }))
-
-        deleteAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler:nil))
-
+        let deleteAlert = createDeleteAlert(tabItem: tabItem)
         present(deleteAlert, animated: true, completion: nil)
     }
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        saveButton.isEnabled = shouldDoneButtonBeEnabled()
-    }
-        
-    func shouldDoneButtonBeEnabled() -> Bool {
-        return (brandTextField.text != "" || nameTextField.text != "")
-    }
-
-}
-
-extension UITextField {
-    func inPence() -> Int {
-        guard let text = self.text?
-                .split(separator:" ").joined()
-                .split(separator:"£").joined() else {return 0}
-        do { return try createCurrency(string: text).inPence()
-        } catch   {
-            return 0
+    func createDeleteAlert(tabItem:TabItem) -> UIAlertController {
+        UIAlertController(title: "Are You Sure", message: "Do you want to delete \(tabItem.brewer) \(tabItem.name) (\(tabItem.size))", preferredStyle: UIAlertController.Style.alert)
+        .apply{ this in
+            this.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+                self.tabUpdater?.deleteTabItem(tabItem:tabItem)
+                self.navigationController?.popViewController(animated:true)
+            }))
+            this.addAction(UIAlertAction(title: "No", style: .cancel, handler:nil))
         }
     }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        saveButton.isEnabled = doneButtonShouldBeEnabled()
+    }
+        
+    func doneButtonShouldBeEnabled() -> Bool {
+        (brandTextField.text != "" || nameTextField.text != "")
+    }
+
 }

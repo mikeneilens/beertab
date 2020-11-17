@@ -13,7 +13,6 @@ struct UKCoOrdinates {
     static let maxLat = 60.9
     static let minLng = -10.7
     static let maxLng = 1.9
-
 }
 
 enum LocationStatus:Equatable {
@@ -32,11 +31,7 @@ struct Location:Equatable {
         }
     }
     var isOutsideUK:Bool {
-        if ((self.lat < UKCoOrdinates.minLat ) || (self.lat > UKCoOrdinates.maxLat) || (self.lng < UKCoOrdinates.minLng) || (self.lng > UKCoOrdinates.maxLng) ) {
-            return true
-        } else {
-            return false
-        }
+        (self.lat < UKCoOrdinates.minLat ) || (self.lat > UKCoOrdinates.maxLat) || (self.lng < UKCoOrdinates.minLng) || (self.lng > UKCoOrdinates.maxLng)
     }
     init(lng:Double, lat:Double) {
         self.lng = lng
@@ -48,10 +43,6 @@ struct Location:Equatable {
     }
     
     static func == (lhs:Location, rhs:Location) -> Bool {
-        if (lhs.lat == rhs.lat) && (lhs.lng == rhs.lng) {
-            return true
-        } else {
-            return false
-        }
+        (lhs.lat == rhs.lat) && (lhs.lng == rhs.lng)
     }
 }

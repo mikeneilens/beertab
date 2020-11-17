@@ -9,10 +9,11 @@ import UIKit
 import CoreLocation
 
 var history = History(allTabs: [])
-var archiveKey = "history"
 
 class HistoryTableViewController: AbstractTableViewController {
     
+    var historyRepository:HistoryArchiver = HistoryRepository()
+    var userOptionsRepository:UserOptionsArchiver = UserOptionsRepository()
     let locationManager = CLLocationManager()
     var currentLocation = LocationStatus.NotSet
     
@@ -21,12 +22,11 @@ class HistoryTableViewController: AbstractTableViewController {
 
         checkLocationServicesPermissions()
         locationManager.delegate = self
-        HistoryArchive(key:archiveKey).read(historyResponse: historyRead(newHistory:), errorResponse: errorReadingHistory(message:))
+        historyRepository.read(historyResponse: historyRead(newHistory:), errorResponse: nil)
     }
     
     func tabFor(indexPath:IndexPath) -> Tab {
-        let tabByDate = history.tabsByDate[indexPath.section]
-        return tabByDate.tabs[indexPath.row]
+        history.tabsByDate[indexPath.section].tabs[indexPath.row]
     }
     
     func checkLocationServicesPermissions() {
@@ -47,21 +47,15 @@ class HistoryTableViewController: AbstractTableViewController {
     }
     
     func instructionsShouldBePresented()-> Bool {
-        if let _ = UserDefaults.standard.object(forKey: "HistoryHelp") {return false}
-        else {return true}
-    }
-    func errorReadingHistory(message:String) {
-        print("error reading history: \(message)")
+        !userOptionsRepository.isSet(for: "HistoryHelp" )
     }
 
     override func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
     }
-    // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return history.tabsByDate.count
+        history.tabsByDate.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -122,8 +116,10 @@ class HistoryTableViewController: AbstractTableViewController {
     
     func setPropertiesOf(_ destination: UIViewController, indexPath: IndexPath) {
         switch destination {
-            case let tabItemsTableViewController as TabItemsTableViewController: tabItemsTableViewController.tab = tabFor(indexPath: indexPath)
-            case let tabViewController as TabViewController: tabViewController.locationStatus = currentLocation
+            case let tabItemsTableViewController as TabItemsTableViewController:
+                tabItemsTableViewController.tab = tabFor(indexPath: indexPath)
+            case let tabViewController as TabViewController:
+                tabViewController.locationStatus = currentLocation
             default: break
         }
     }
@@ -140,9 +136,9 @@ class HistoryTableViewController: AbstractTableViewController {
     }
     
     func deleteTabAlert(for tab: Tab) -> UIAlertController {
-        return UIAlertController(title: "Are You Sure", message: "Do you want to delete \(tab.name) \(tab.pubName) (\(tab.dateString))", preferredStyle:.alert
+        UIAlertController(title: "Are You Sure", message: "Do you want to delete \(tab.name) \(tab.pubName) (\(tab.dateString))", preferredStyle:.alert
         ).apply{this in
-            this.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+            this.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_: UIAlertAction!) in
                 self.deleteTab(tab: tab)
                 self.tableView.reloadData()
             }))
@@ -152,11 +148,7 @@ class HistoryTableViewController: AbstractTableViewController {
     
     func deleteTab(tab: Tab) {
         history = history.remove(tab: tab)
-        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
-    }
-    
-    func errorWritingHistory(history:History, message:String) {
-        print("error writing history: \(message)")
+        historyRepository.write(history, errorResponse: nil)
     }
     
     func showInstructions() {
@@ -165,7 +157,7 @@ class HistoryTableViewController: AbstractTableViewController {
     }
     
     func createInstructionsAlert() -> UIAlertController {
-        return UIAlertController(title: "", message: "You don't seem to have created any visits. Press the + button in the top right hand corner to create a visit. If you have allowed this application to use your location the nearest bar will be automatically located.", preferredStyle: .alert
+        UIAlertController(title: "", message: "You don't seem to have created any visits. Press the + button in the top right hand corner to create a visit. If you have allowed this application to use your location the nearest bar will be automatically located.", preferredStyle: .alert
         ).apply{this in
             this.addAction(UIAlertAction(title: NSLocalizedString("Don't show again", comment: "Default action"), style: .default, handler: disableInstructions))
             this.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: nil))
@@ -173,7 +165,7 @@ class HistoryTableViewController: AbstractTableViewController {
     }
     
     func disableInstructions(_: UIAlertAction) {
-        UserDefaults.standard.set("No", forKey: "HistoryHelp")
+        userOptionsRepository.set("HistoryHelp", value: "No")
     }
 }
 

@@ -12,7 +12,7 @@ struct History:Codable {
     let allTabs:Array<Tab>
     
     var tabs:Array<Tab> {
-        return allTabs.sorted{$0.createTS > $1.createTS}
+        allTabs.sorted{$0.createTS > $1.createTS}
     }
     
     var tabsByDate:Array<(date:String, tabs:Array<Tab>)> {
@@ -21,7 +21,7 @@ struct History:Codable {
     }
     
     func add(tab:Tab) -> History {
-        return History(allTabs: allTabs + [tab])
+        History(allTabs: allTabs + [tab])
     }
     func remove(tab:Tab)->History {
         let filteredTabs = allTabs.filter{$0 != tab}
@@ -30,9 +30,6 @@ struct History:Codable {
     func update(tab:Tab) -> History {
         let newTabs:Array<Tab> =  allTabs.map{if $0.createTS == tab.createTS {return tab} else {return $0}}
         return History(allTabs:newTabs)
-    }
-    func save(key:String, errorResponse: (History,String) -> ()) {
-        HistoryArchive(key:key).write(history: self, errorResponse: errorResponse)
     }
 }
 

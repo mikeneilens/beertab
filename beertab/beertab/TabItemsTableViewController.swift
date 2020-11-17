@@ -17,6 +17,8 @@ protocol TabUpdater {
 
 class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
+    var historyRepository:HistoryArchiver = HistoryRepository()
+    var userOptionsRepository:UserOptionsArchiver = UserOptionsRepository()
     var tab = Tab(name: "", createTS: Date(), pubName: "", branch: "", id: "", tabItems: [])
     
     override func viewDidLoad() {
@@ -32,12 +34,11 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
 
     func navigationTitle(for tab:Tab) -> String {
-        return tab.pubName.isEmpty ? tab.name : tab.pubName
+        tab.pubName.isEmpty ? tab.name : tab.pubName
     }
     
     func instructionsShouldBePresented()-> Bool {
-        if let _ = UserDefaults.standard.object(forKey: "TabItemHelp") {return false}
-        else {return true}
+        !userOptionsRepository.isSet(for: "TabItemHelp")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -45,12 +46,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        if tab.tabItems.isEmpty {
-            return 1
-        } else {
-            return 2
-        }
+        tab.tabItems.isEmpty ? 1 : 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -162,7 +158,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
             tab = tab.add(tabItem: tabItem)
             history = history.update(tab: tab)
         }
-        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
+        historyRepository.write(history, errorResponse: nil)
         writeTabToRepository(tab: tab)
     }
     
@@ -175,23 +171,23 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     func buyTabItem(tabItem: TabItem) {
         tab = tab.addTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
         history = history.update(tab: tab)
-        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
+        historyRepository.write(history, errorResponse: nil)
     }
     
     func returnTabItem(tabItem: TabItem) {
         tab = tab.removeTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
         history = history.update(tab: tab)
-        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
+        historyRepository.write(history, errorResponse: nil)
     }
     func deleteTabItem(tabItem: TabItem) {
         tab = tab.remove(tabItem: tabItem)
         history = history.update(tab: tab)
-        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
+        historyRepository.write(history, errorResponse: nil)
     }
     func replaceTabItem(position:Int, newTabItem:TabItem) {
         tab = tab.replace(position: position, newTabItem: newTabItem)
         history = history.update(tab: tab)
-        history.save(key:archiveKey, errorResponse: errorWritingHistory(history:message:))
+        historyRepository.write(history, errorResponse: nil)
         writeTabToRepository(tab: tab)
     }
     func errorWritingHistory(history:History, message:String) {
@@ -209,7 +205,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
     
     func createInstructions() -> UIAlertController {
-        return UIAlertController(title: "", message: "You don't seem to have added any items to the tab for this visit. To create a new item press the + button in the top right hand corner. ", preferredStyle: .alert
+        UIAlertController(title: "", message: "You don't seem to have added any items to the tab for this visit. To create a new item press the + button in the top right hand corner. ", preferredStyle: .alert
         ).apply{ this in
             this.addAction(UIAlertAction(title: NSLocalizedString("Don't show again", comment: "Default action"), style: .default, handler: disableInstructions(_:)))
             this.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: nil))
@@ -217,7 +213,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
     
     func disableInstructions(_: UIAlertAction) {
-        UserDefaults.standard.set("No", forKey: "TabItemHelp")
+        userOptionsRepository.set("TabItemHelp", value: "No")
     }
 }
 
