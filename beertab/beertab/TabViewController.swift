@@ -14,6 +14,7 @@ class TabViewController: AbstractViewController, UITextFieldDelegate {
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     var historyRepository:HistoryArchiver = HistoryRepository()
+    var pubsRepository:PubsArchive = PubsRepository()
     var locationStatus = LocationStatus.NotSet
     var branch = ""
     var id = ""
@@ -53,9 +54,9 @@ class TabViewController: AbstractViewController, UITextFieldDelegate {
     }
 }
 
-extension TabViewController:ListOfPubsCreatorDelegate {
+extension TabViewController {
     func getPubs(location:Location) {
-        ListOfPubsCreator(withDelegate: self).createList(usingSearchString: "nearby", location: Location(lng:location.lng,lat:location.lat))
+        pubsRepository.readPubsNearBy(location: location, onCompletion: finishedCreating)
     }
     
     func finishedCreating(listOfPubHeaders: ListOfPubs) {

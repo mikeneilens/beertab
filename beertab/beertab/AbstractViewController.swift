@@ -89,10 +89,5 @@ class AbstractViewController: UIViewController {
         self.present(alert, animated: false, completion: nil)
     }
     
-    func requestFailed(error:JSONError, errorText:String, errorTitle:String)
-    {
-        self.stopActivityIndicator(withMessage: errorText, withTitle:errorTitle)
-    }
-    
 }
 

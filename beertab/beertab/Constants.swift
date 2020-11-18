@@ -10,6 +10,7 @@ import Foundation
 struct K {
     struct URL {
         static let pubListURL="https://pubcrawlapi.appspot.com/listofpubs/?"
+        static let tabURL="https://pubcrawlapi.appspot.com/tab/"
     }
     
     struct PubListJsonName {

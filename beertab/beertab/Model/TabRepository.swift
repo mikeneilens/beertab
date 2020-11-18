@@ -7,48 +7,43 @@
 
 import Foundation
 
-protocol TabRepositoryDelegate :WebServiceDelegate {
-    func finishedGetting(tabItems:Array<TabItem>)
-    func finishedPosting(tabItems:Array<TabItem>)
-}
-
 protocol TabArchiver {
-    func readLatest(id:String, branch:String, delegate:TabRepositoryDelegate)
-    func writeLatest(tab:Tab, delegate: TabRepositoryDelegate)
+    func readLatest(id:String, branch:String, onCompletion completion:@escaping(Array<TabItem>) -> ())
+    func writeLatest(tab:Tab, onCompletion completion:@escaping (Array<TabItem>) -> () )
 }
 
 struct TabRepository:TabArchiver {
-    let session = URLSession(configuration: URLSessionConfiguration.default)
+    var connector:HTTPConnector = Connector()
 
-    func readLatest(id:String, branch:String, delegate:TabRepositoryDelegate) {
-        guard let url = URL(string:"https://pubcrawlapi.appspot.com/tab/\(branch)/\(id)/") else { return }
+    func readLatest(id:String, branch:String, onCompletion completion:@escaping (Array<TabItem>) -> ()) {
+        guard let url = URL(string:"\(K.URL.tabURL)\(branch)/\(id)/") else { return }
         let urlRequest = URLRequest(url: url, requestMethod: .Get, httpHeaders: nil, httpBody: nil)
-        session.dataTask(with: urlRequest, completionHandler:curry(getCompletion, delegate)).resume()
+        connector.send(request: urlRequest, completionHandler:readCompletion <<== completion)
     }
     
-    func writeLatest(tab:Tab, delegate: TabRepositoryDelegate) {
+    func writeLatest(tab:Tab, onCompletion completion:@escaping (Array<TabItem>) -> () ) {
         if let encodedTab = encode(tab: tab) {
-            guard let url = URL(string:"https://pubcrawlapi.appspot.com/tab/\(tab.branch)/\(tab.id)/") else { return }
+            guard let url = URL(string:"\(K.URL.tabURL)\(tab.branch)/\(tab.id)/") else { return }
             let urlRequest = URLRequest(url: url, requestMethod: .Post, httpHeaders:["tab":encodedTab], httpBody: nil)
-            session.dataTask(with: urlRequest, completionHandler:curry(postCompletion, delegate)).resume()
+            connector.send(request: urlRequest, completionHandler:readCompletion <<== completion)
         }
     }
     
-    func getCompletion(data:Data?, response:URLResponse?, error:Error?, delegate:TabRepositoryDelegate) {
+    func readCompletion(data:Data?, response:URLResponse?, error:Error?, completion:@escaping (Array<TabItem>) -> ()) {
         if let error = error {print("Invalid response \(error)");return}
         guard let data = data else {print("No Data");return}
         let tabItems = decode(data: data)
         DispatchQueue.main.async {
-            delegate.finishedGetting(tabItems: tabItems)
+            completion(tabItems)
         }
     }
 
-    func postCompletion(data:Data?, response:URLResponse?, error:Error?, delegate:TabRepositoryDelegate) {
+    func writeCompletion(data:Data?, response:URLResponse?, error:Error?, completion:@escaping (Array<TabItem>) -> ()) {
         if let error = error {print("Invalid response \(error)");return}
         guard let data = data else {print("No Data");return}
         let tabItems = decode(data: data)
         DispatchQueue.main.async {
-            delegate.finishedPosting(tabItems: tabItems)
+            completion(tabItems)
         }
     }
 }

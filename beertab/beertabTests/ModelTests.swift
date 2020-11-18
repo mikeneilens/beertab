@@ -19,6 +19,7 @@ class ModelTests: XCTestCase {
     }
 
     func testTwoTabsWithSameBrewNameAndSizeAreEqual() {
+        
         let newTabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
         let newTabItem2 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 450)
         XCTAssertTrue(newTabItem1 == newTabItem2)

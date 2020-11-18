@@ -13,17 +13,18 @@
 		FB1CC8E525310905003AA02E /* TabItemsUpdateViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC8E425310905003AA02E /* TabItemsUpdateViewControllerTests.swift */; };
 		FB1CC8F02531CA21003AA02E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC8EF2531CA21003AA02E /* Location.swift */; };
 		FB1CC8F62531CF59003AA02E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1CC8F52531CF59003AA02E /* CoreLocation.framework */; };
-		FB1CC8F92531D003003AA02E /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC8F82531D003003AA02E /* WebService.swift */; };
-		FB1CC9012531D026003AA02E /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC9002531D026003AA02E /* Request.swift */; };
-		FB1CC9062531D052003AA02E /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC9052531D052003AA02E /* RequestMethod.swift */; };
-		FB1CC90B2531D06B003AA02E /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC90A2531D06B003AA02E /* JSONError.swift */; };
 		FB1CC9112531D1DA003AA02E /* Pub.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC9102531D1DA003AA02E /* Pub.swift */; };
 		FB1CC9162531D217003AA02E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC9152531D217003AA02E /* Constants.swift */; };
 		FB1CC91B2531D2AB003AA02E /* ListOfPubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC91A2531D2AB003AA02E /* ListOfPubs.swift */; };
-		FB1CC9202531D458003AA02E /* WebServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC91F2531D458003AA02E /* WebServiceDelegate.swift */; };
 		FB1CC92525332727003AA02E /* ReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CC92425332726003AA02E /* ReceiptViewController.swift */; };
 		FB5A5CAE256443350091AE34 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5CAD256443350091AE34 /* Int.swift */; };
 		FB5A5CB32564581C0091AE34 /* Curry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5CB22564581C0091AE34 /* Curry.swift */; };
+		FB5A5CB8256474860091AE34 /* PubsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5CB7256474860091AE34 /* PubsRepository.swift */; };
+		FB5A5CC0256478AD0091AE34 /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5CBF256478AD0091AE34 /* URLRequest.swift */; };
+		FB5A5CDF256571AB0091AE34 /* Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5CDE256571AB0091AE34 /* Connector.swift */; };
+		FB5A5CE4256574630091AE34 /* PubsRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5CE3256574630091AE34 /* PubsRepositoryTest.swift */; };
+		FB5A5CEF25659B990091AE34 /* TabRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5CEE25659B990091AE34 /* TabRepositoryTest.swift */; };
+		FB5A5CF425659BE60091AE34 /* MockConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5CF325659BE60091AE34 /* MockConnector.swift */; };
 		FB65202825642848009C4384 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB65202725642848009C4384 /* TextField.swift */; };
 		FB77879D2529FA900088410B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77879C2529FA900088410B /* AppDelegate.swift */; };
 		FB77879F2529FA900088410B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77879E2529FA900088410B /* SceneDelegate.swift */; };
@@ -74,7 +75,7 @@
 		FB9E40EB254F35E800B71384 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9E40EA254F35E800B71384 /* Array.swift */; };
 		FBA9D60D253D9FB800D3A643 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA9D60C253D9FB800D3A643 /* Currency.swift */; };
 		FBCF649225603B5E00336092 /* UserOptionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCF649125603B5E00336092 /* UserOptionsRepository.swift */; };
-		FBCF649725603D7000336092 /* UserOptionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCF649625603D7000336092 /* UserOptionRepository.swift */; };
+		FBCF649725603D7000336092 /* UserOptionRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCF649625603D7000336092 /* UserOptionRepositoryTest.swift */; };
 		FBF1E4DC25459A96002FC4D2 /* editDark.png in Resources */ = {isa = PBXBuildFile; fileRef = FBF1E4D925459A95002FC4D2 /* editDark.png */; };
 		FBF1E4DD25459A96002FC4D2 /* receiptDark.png in Resources */ = {isa = PBXBuildFile; fileRef = FBF1E4DA25459A95002FC4D2 /* receiptDark.png */; };
 		FBF1E4DE25459A96002FC4D2 /* drinkingDark.png in Resources */ = {isa = PBXBuildFile; fileRef = FBF1E4DB25459A95002FC4D2 /* drinkingDark.png */; };
@@ -105,17 +106,18 @@
 		FB1CC8E425310905003AA02E /* TabItemsUpdateViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItemsUpdateViewControllerTests.swift; sourceTree = "<group>"; };
 		FB1CC8EF2531CA21003AA02E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		FB1CC8F52531CF59003AA02E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		FB1CC8F82531D003003AA02E /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
-		FB1CC9002531D026003AA02E /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		FB1CC9052531D052003AA02E /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
-		FB1CC90A2531D06B003AA02E /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
 		FB1CC9102531D1DA003AA02E /* Pub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pub.swift; sourceTree = "<group>"; };
 		FB1CC9152531D217003AA02E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FB1CC91A2531D2AB003AA02E /* ListOfPubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfPubs.swift; sourceTree = "<group>"; };
-		FB1CC91F2531D458003AA02E /* WebServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceDelegate.swift; sourceTree = "<group>"; };
 		FB1CC92425332726003AA02E /* ReceiptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewController.swift; sourceTree = "<group>"; };
 		FB5A5CAD256443350091AE34 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		FB5A5CB22564581C0091AE34 /* Curry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curry.swift; sourceTree = "<group>"; };
+		FB5A5CB7256474860091AE34 /* PubsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubsRepository.swift; sourceTree = "<group>"; };
+		FB5A5CBF256478AD0091AE34 /* URLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
+		FB5A5CDE256571AB0091AE34 /* Connector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
+		FB5A5CE3256574630091AE34 /* PubsRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubsRepositoryTest.swift; sourceTree = "<group>"; };
+		FB5A5CEE25659B990091AE34 /* TabRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRepositoryTest.swift; sourceTree = "<group>"; };
+		FB5A5CF325659BE60091AE34 /* MockConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConnector.swift; sourceTree = "<group>"; };
 		FB65202725642848009C4384 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		FB7787992529FA900088410B /* beertab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = beertab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB77879C2529FA900088410B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -172,7 +174,7 @@
 		FB9E40EA254F35E800B71384 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		FBA9D60C253D9FB800D3A643 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		FBCF649125603B5E00336092 /* UserOptionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOptionsRepository.swift; sourceTree = "<group>"; };
-		FBCF649625603D7000336092 /* UserOptionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOptionRepository.swift; sourceTree = "<group>"; };
+		FBCF649625603D7000336092 /* UserOptionRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOptionRepositoryTest.swift; sourceTree = "<group>"; };
 		FBF1E4D925459A95002FC4D2 /* editDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editDark.png; sourceTree = "<group>"; };
 		FBF1E4DA25459A95002FC4D2 /* receiptDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = receiptDark.png; sourceTree = "<group>"; };
 		FBF1E4DB25459A95002FC4D2 /* drinkingDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drinkingDark.png; sourceTree = "<group>"; };
@@ -211,18 +213,6 @@
 				FB1CC8F52531CF59003AA02E /* CoreLocation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		FB1CC8F72531CFD3003AA02E /* WebService */ = {
-			isa = PBXGroup;
-			children = (
-				FB1CC8F82531D003003AA02E /* WebService.swift */,
-				FB1CC9002531D026003AA02E /* Request.swift */,
-				FB1CC9052531D052003AA02E /* RequestMethod.swift */,
-				FB1CC90A2531D06B003AA02E /* JSONError.swift */,
-				FB1CC91F2531D458003AA02E /* WebServiceDelegate.swift */,
-			);
-			path = WebService;
 			sourceTree = "<group>";
 		};
 		FB1CC90F2531D19E003AA02E /* PubInfo */ = {
@@ -286,7 +276,6 @@
 				FB7787A22529FA900088410B /* Main.storyboard */,
 				FB778831252CF4120088410B /* UId.swift */,
 				FB778854252FA0C50088410B /* Model */,
-				FB1CC8F72531CFD3003AA02E /* WebService */,
 				FB1CC9152531D217003AA02E /* Constants.swift */,
 				FB9E40E1254DCBD200B71384 /* Extensions */,
 				FBA9D611253F2E7600D3A643 /* Utlity */,
@@ -303,7 +292,10 @@
 				FB1CC8D42530DA5A003AA02E /* TabItemsTableViewControllerTests.swift */,
 				FB1CC8DC2530F180003AA02E /* TabItemAddViewControllerTests.swift */,
 				FB1CC8E425310905003AA02E /* TabItemsUpdateViewControllerTests.swift */,
-				FBCF649625603D7000336092 /* UserOptionRepository.swift */,
+				FBCF649625603D7000336092 /* UserOptionRepositoryTest.swift */,
+				FB5A5CE3256574630091AE34 /* PubsRepositoryTest.swift */,
+				FB5A5CEE25659B990091AE34 /* TabRepositoryTest.swift */,
+				FB5A5CF325659BE60091AE34 /* MockConnector.swift */,
 				FB7787B52529FA910088410B /* Info.plist */,
 			);
 			path = beertabTests;
@@ -327,8 +319,9 @@
 				FB7787E3252A2C0A0088410B /* TabItem.swift */,
 				FB1CC8EF2531CA21003AA02E /* Location.swift */,
 				FB778836252D0F520088410B /* HistoryRepository.swift */,
-				FB910C1D253630FF001DF227 /* TabRepository.swift */,
 				FBCF649125603B5E00336092 /* UserOptionsRepository.swift */,
+				FB910C1D253630FF001DF227 /* TabRepository.swift */,
+				FB5A5CB7256474860091AE34 /* PubsRepository.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -364,6 +357,7 @@
 				FB9E40EA254F35E800B71384 /* Array.swift */,
 				FB65202725642848009C4384 /* TextField.swift */,
 				FB5A5CAD256443350091AE34 /* Int.swift */,
+				FB5A5CBF256478AD0091AE34 /* URLRequest.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -373,6 +367,7 @@
 			children = (
 				FBA9D60C253D9FB800D3A643 /* Currency.swift */,
 				FB5A5CB22564581C0091AE34 /* Curry.swift */,
+				FB5A5CDE256571AB0091AE34 /* Connector.swift */,
 			);
 			path = Utlity;
 			sourceTree = "<group>";
@@ -530,7 +525,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB1CC9202531D458003AA02E /* WebServiceDelegate.swift in Sources */,
 				FB1CC9162531D217003AA02E /* Constants.swift in Sources */,
 				FB9E40E3254DCC2900B71384 /* ScopeFunctions.swift in Sources */,
 				FB65202825642848009C4384 /* TextField.swift in Sources */,
@@ -542,7 +536,6 @@
 				FB1CC9112531D1DA003AA02E /* Pub.swift in Sources */,
 				FBA9D60D253D9FB800D3A643 /* Currency.swift in Sources */,
 				FB778812252B949B0088410B /* TabItemAddViewController.swift in Sources */,
-				FB1CC9012531D026003AA02E /* Request.swift in Sources */,
 				FB7787ED252A314E0088410B /* AbstractTableViewController.swift in Sources */,
 				FB910C1E253630FF001DF227 /* TabRepository.swift in Sources */,
 				FB5A5CAE256443350091AE34 /* Int.swift in Sources */,
@@ -551,21 +544,21 @@
 				FB77883F252DDBCE0088410B /* TabItemUpdateViewController.swift in Sources */,
 				FB7787F7252A34990088410B /* HistoryTableViewController.swift in Sources */,
 				FB778822252CEB740088410B /* Tab2TableViewCell.swift in Sources */,
+				FB5A5CC0256478AD0091AE34 /* URLRequest.swift in Sources */,
 				FB77879F2529FA900088410B /* SceneDelegate.swift in Sources */,
 				FB7787D62529FB2F0088410B /* Tab.swift in Sources */,
-				FB1CC90B2531D06B003AA02E /* JSONError.swift in Sources */,
+				FB5A5CB8256474860091AE34 /* PubsRepository.swift in Sources */,
 				FB77884D252F80540088410B /* TabTotalTableViewCell.swift in Sources */,
 				FBF1E4E62545F66B002FC4D2 /* HistoryTotalTableViewCell.swift in Sources */,
 				FB77880A252A43B40088410B /* TabItemsTableViewController.swift in Sources */,
 				FB1CC8F02531CA21003AA02E /* Location.swift in Sources */,
-				FB1CC9062531D052003AA02E /* RequestMethod.swift in Sources */,
 				FB7787FF252A3F7E0088410B /* TabViewController.swift in Sources */,
 				FB77881A252BBFBC0088410B /* TabItemTableViewCell.swift in Sources */,
 				FB77882A252CEFFC0088410B /* Tab1TableViewCell.swift in Sources */,
-				FB1CC8F92531D003003AA02E /* WebService.swift in Sources */,
 				FB1CC92525332727003AA02E /* ReceiptViewController.swift in Sources */,
 				FB1CC91B2531D2AB003AA02E /* ListOfPubs.swift in Sources */,
 				FB7787DF252A2BF90088410B /* History.swift in Sources */,
+				FB5A5CDF256571AB0091AE34 /* Connector.swift in Sources */,
 				FB5A5CB32564581C0091AE34 /* Curry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -574,11 +567,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBCF649725603D7000336092 /* UserOptionRepository.swift in Sources */,
+				FBCF649725603D7000336092 /* UserOptionRepositoryTest.swift in Sources */,
 				FB1CC8E525310905003AA02E /* TabItemsUpdateViewControllerTests.swift in Sources */,
 				FB1CC8D52530DA5A003AA02E /* TabItemsTableViewControllerTests.swift in Sources */,
 				FB1CC8CD2530CF1E003AA02E /* TabViewControllerTests.swift in Sources */,
 				FB778856252FA1040088410B /* HistoryTableViewControllerTests.swift in Sources */,
+				FB5A5CF425659BE60091AE34 /* MockConnector.swift in Sources */,
+				FB5A5CEF25659B990091AE34 /* TabRepositoryTest.swift in Sources */,
+				FB5A5CE4256574630091AE34 /* PubsRepositoryTest.swift in Sources */,
 				FB7787B42529FA910088410B /* ModelTests.swift in Sources */,
 				FB1CC8DD2530F180003AA02E /* TabItemAddViewControllerTests.swift in Sources */,
 			);

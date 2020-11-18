@@ -27,7 +27,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
         self.navigationItem.title = navigationTitle(for: tab)
         if (tab.tabItems.isEmpty) {
             if !tab.branch.isEmpty && !tab.id.isEmpty  {
-                tabRepository.readLatest(id: tab.id, branch: tab.branch, delegate:self)
+                tabRepository.readLatest(id: tab.id, branch: tab.branch, onCompletion: finishedReading)
             } else {
                 showInsructionsIfRequired() 
             }
@@ -165,7 +165,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
     func writeTabToRepository(tab:Tab) {
         if tab.branch != "" && tab.id != "" {
-            tabRepository.writeLatest(tab: tab, delegate: self)
+            tabRepository.writeLatest(tab: tab, onCompletion: finishedWriting)
         }
     }
     
@@ -218,9 +218,9 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
 }
 
-extension TabItemsTableViewController:TabRepositoryDelegate {
+extension TabItemsTableViewController {
     
-    func finishedGetting(tabItems: Array<TabItem>) {
+    func finishedReading(tabItems: Array<TabItem>) {
         if tabItems.count > 0 {
             suggestTabItems(tabItems: tabItems)
         } else {
@@ -244,7 +244,7 @@ extension TabItemsTableViewController:TabRepositoryDelegate {
         self.tableView.reloadData()
     }
     
-    func finishedPosting(tabItems: Array<TabItem>) {
+    func finishedWriting(tabItems: Array<TabItem>) {
     }
 }
 
