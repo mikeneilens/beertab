@@ -248,6 +248,14 @@ class ModelTests: XCTestCase {
         
         XCTAssertEqual("£2.00", tab1.totalValue)
     }
+    func testCreateTabItemFromJsonDictionary() throws {
+        let tabItemDictionary:Dictionary<String, Any> = ["brewer":"Siren","name":"Broken Dream","size":"Pint","price":440]
+        let tabItem = TabItem(fromJson: tabItemDictionary)
+        XCTAssertEqual("Siren", tabItem.brewer)
+        XCTAssertEqual("Broken Dream", tabItem.name)
+        XCTAssertEqual("Pint", tabItem.size)
+        XCTAssertEqual(440, tabItem.price)
+    }
     
     func testCreatingAReceiptItemWithAnAddTransaction() throws {
         let tabItem = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)

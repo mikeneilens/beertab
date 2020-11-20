@@ -36,6 +36,13 @@ struct TabItem:Codable {
         self.price = price
         self.transactions = []
     }
+    init(fromJson json:[String : Any]) {
+        self.brewer = json["brewer"] as? String ?? ""
+        self.name = json["name"]  as? String ?? ""
+        self.size = json["size"] as? String ?? ""
+        self.price =  json["price"] as? Int ?? 0
+        self.transactions = []
+    }
     
     func addTransaction() -> TabItem {
         TabItem(brewer: brewer, name: name, size: size, price: price, transactions:transactions + [Transaction(transactionType: .add)])

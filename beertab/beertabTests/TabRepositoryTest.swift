@@ -68,31 +68,6 @@ class TabRepositoryTest: XCTestCase {
         XCTAssertEqual(215, tabItems[3].price)
     }
     
-    func testCreateTabItemFromJsonDictionary() throws {
-        let tabItemDictionary:Dictionary<String, Any> = ["brewer":"Siren","name":"Broken Dream","size":"Pint","price":440]
-        let tabItem = create(fromTabItemJson: tabItemDictionary)
-        XCTAssertEqual("Siren", tabItem.brewer)
-        XCTAssertEqual("Broken Dream", tabItem.name)
-        XCTAssertEqual("Pint", tabItem.size)
-        XCTAssertEqual(440, tabItem.price)
-    }
-    
-    func testEncodingATab() throws {
-        let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
-        let tabItem2 = TabItem(brewer: "brewer2", name: "name2", size: "half", price: 450)
-        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "testbr", id: "testid", tabItems: [tabItem1,tabItem2])
-        
-        let expectedResult = """
-        {"pubName":"test pub","createTS":627417605.82063198,"id":"testid","name":"test tab","branch":"testbr","tabItems":[{"size":"pint","brewer":"brewer1","name":"name1","price":440,"transactions":[]},{"size":"half","brewer":"brewer2","name":"name2","price":450,"transactions":[]}]}
-        """
-        
-        //the createTS is always different so remove it.
-        func removeCreateTs(_ s:String)->String {Array(s.map{$0}.enumerated().filter{$0.0 < 33 || $0.0 > 50}.map{String($0.1)}).joined()  }
-        
-        let jsonString = encode(tab: tab)
-        XCTAssertEqual(removeCreateTs(expectedResult), removeCreateTs(jsonString!))
-    }
-    
     func testReadCompletionDoesntCompleteIfError() {
         let expectation = self.expectation(description: "Should not execute completion")
         expectation.expectedFulfillmentCount = 1

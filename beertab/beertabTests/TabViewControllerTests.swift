@@ -80,6 +80,22 @@ class TabViewControllerTests: XCTestCase {
         XCTAssertEqual(.cancel, suggestionsAlert.actions[3].style)
     }
     
+    func testEncodingATab() throws {
+        let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
+        let tabItem2 = TabItem(brewer: "brewer2", name: "name2", size: "half", price: 450)
+        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "testbr", id: "testid", tabItems: [tabItem1,tabItem2])
+        
+        let expectedResult = """
+        {"pubName":"test pub","createTS":627417605.82063198,"id":"testid","name":"test tab","branch":"testbr","tabItems":[{"size":"pint","brewer":"brewer1","name":"name1","price":440,"transactions":[]},{"size":"half","brewer":"brewer2","name":"name2","price":450,"transactions":[]}]}
+        """
+        
+        //the createTS is always different so remove it.
+        func removeCreateTs(_ s:String)->String {Array(s.map{$0}.enumerated().filter{$0.0 < 33 || $0.0 > 50}.map{String($0.1)}).joined()  }
+        
+        let jsonString = tab.encode()
+        XCTAssertEqual(removeCreateTs(expectedResult), removeCreateTs(jsonString!))
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {

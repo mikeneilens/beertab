@@ -7,6 +7,8 @@
 
 import Foundation
 
+//Created this currying function as they've removed it from Swift3 https://github.com/apple/swift-evolution/blob/master/proposals/0002-remove-currying.md
+
 precedencegroup CurryPrecedence {
     associativity: left
     higherThan: MultiplicationPrecedence
