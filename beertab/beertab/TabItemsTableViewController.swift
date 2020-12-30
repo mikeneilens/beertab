@@ -60,9 +60,16 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "tabItemCell", for: indexPath)
-            configureTabItemCell(cell, indexPath)
-            return cell
+            if (tab.tabItems[indexPath.row].brewer.isEmpty || tab.tabItems[indexPath.row].name.isEmpty) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "tabItem2Cell", for: indexPath)
+                configureTabItem2Cell(cell, indexPath)
+                return cell
+
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "tabItemCell", for: indexPath)
+                configureTabItemCell(cell, indexPath)
+                return cell
+            }
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "tabTotalCell", for: indexPath)
             configureSummaryCell(cell)
@@ -71,20 +78,37 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
     
     func configureTabItemCell(_ cell: UITableViewCell, _ indexPath: IndexPath) {
-        if let tabItemCell = cell as? TabItemTableViewCell {
-            tabItemCell.brewer.text = tab.tabItems[indexPath.row].brewer
-            tabItemCell.name.text = tab.tabItems[indexPath.row].name
-            tabItemCell.size.text = "\(tab.tabItems[indexPath.row].size) £\(tab.tabItems[indexPath.row].priceGBP)"
-            tabItemCell.quantity.text = String(tab.tabItems[indexPath.row].quantity)
-        }
+        guard let tabItemCell = cell as? TabItemTableViewCell else {return}
+        tabItemCell.brewer.text = tab.tabItems[indexPath.row].brewer
+        tabItemCell.name.text = tab.tabItems[indexPath.row].name
+        tabItemCell.size.text = "\(tab.tabItems[indexPath.row].size) £\(tab.tabItems[indexPath.row].priceGBP)"
+        tabItemCell.quantity.text = String(tab.tabItems[indexPath.row].quantity)
     }
-    
+
+    func configureTabItem2Cell(_ cell: UITableViewCell, _ indexPath: IndexPath) {
+        guard let tabItemCell = cell as? TabItem2TableViewCell else {return}
+        if (!tab.tabItems[indexPath.row].brewer.isEmpty) {
+            tabItemCell.name.text = tab.tabItems[indexPath.row].brewer
+        } else {
+            tabItemCell.name.text = tab.tabItems[indexPath.row].name
+        }
+        tabItemCell.size.text = "\(tab.tabItems[indexPath.row].size) £\(tab.tabItems[indexPath.row].priceGBP)"
+        tabItemCell.quantity.text = String(tab.tabItems[indexPath.row].quantity)
+    }
+ 
     func configureSummaryCell(_ cell: UITableViewCell) {
           if let tabTotalCell = cell as? TabTotalTableViewCell {
               tabTotalCell.totalValue.text = tab.totalValue
           }
     }
       
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 60
+        } else {
+            return 44
+        }
+    }
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             if tab.tabItems.isEmpty {

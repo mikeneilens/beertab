@@ -28,6 +28,7 @@
 		FB5A5D022566817C0091AE34 /* CurryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5D012566817C0091AE34 /* CurryTest.swift */; };
 		FB5A5D0A256810260091AE34 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5D09256810260091AE34 /* Date.swift */; };
 		FB5A5D0F256810700091AE34 /* ReceiptItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5D0E256810700091AE34 /* ReceiptItem.swift */; };
+		FB5CB9FC259CF7ED00F77A7F /* TabItem2TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5CB9FB259CF7ED00F77A7F /* TabItem2TableViewCell.swift */; };
 		FB65202825642848009C4384 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB65202725642848009C4384 /* TextField.swift */; };
 		FB77879D2529FA900088410B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77879C2529FA900088410B /* AppDelegate.swift */; };
 		FB77879F2529FA900088410B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77879E2529FA900088410B /* SceneDelegate.swift */; };
@@ -124,6 +125,7 @@
 		FB5A5D012566817C0091AE34 /* CurryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurryTest.swift; sourceTree = "<group>"; };
 		FB5A5D09256810260091AE34 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		FB5A5D0E256810700091AE34 /* ReceiptItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptItem.swift; sourceTree = "<group>"; };
+		FB5CB9FB259CF7ED00F77A7F /* TabItem2TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem2TableViewCell.swift; sourceTree = "<group>"; };
 		FB65202725642848009C4384 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		FB7787992529FA900088410B /* beertab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = beertab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB77879C2529FA900088410B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				FB7787FE252A3F7E0088410B /* TabViewController.swift */,
 				FB778809252A43B40088410B /* TabItemsTableViewController.swift */,
 				FB778819252BBFBC0088410B /* TabItemTableViewCell.swift */,
+				FB5CB9FB259CF7ED00F77A7F /* TabItem2TableViewCell.swift */,
 				FB778811252B949B0088410B /* TabItemAddViewController.swift */,
 				FB77883E252DDBCE0088410B /* TabItemUpdateViewController.swift */,
 				FB77884C252F80540088410B /* TabTotalTableViewCell.swift */,
@@ -561,6 +564,7 @@
 				FB778832252CF4120088410B /* UId.swift in Sources */,
 				FB77883F252DDBCE0088410B /* TabItemUpdateViewController.swift in Sources */,
 				FB7787F7252A34990088410B /* HistoryTableViewController.swift in Sources */,
+				FB5CB9FC259CF7ED00F77A7F /* TabItem2TableViewCell.swift in Sources */,
 				FB778822252CEB740088410B /* Tab2TableViewCell.swift in Sources */,
 				FB5A5CC0256478AD0091AE34 /* URLRequest.swift in Sources */,
 				FB77879F2529FA900088410B /* SceneDelegate.swift in Sources */,
