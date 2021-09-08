@@ -30,6 +30,7 @@
 		FB5A5D0F256810700091AE34 /* ReceiptItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A5D0E256810700091AE34 /* ReceiptItem.swift */; };
 		FB5CB9FC259CF7ED00F77A7F /* TabItem2TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5CB9FB259CF7ED00F77A7F /* TabItem2TableViewCell.swift */; };
 		FB65202825642848009C4384 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB65202725642848009C4384 /* TextField.swift */; };
+		FB68F44F26E903BA00ADCE27 /* RandomKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB68F44E26E903BA00ADCE27 /* RandomKey.swift */; };
 		FB77879D2529FA900088410B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77879C2529FA900088410B /* AppDelegate.swift */; };
 		FB77879F2529FA900088410B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77879E2529FA900088410B /* SceneDelegate.swift */; };
 		FB7787A42529FA900088410B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB7787A22529FA900088410B /* Main.storyboard */; };
@@ -127,6 +128,7 @@
 		FB5A5D0E256810700091AE34 /* ReceiptItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptItem.swift; sourceTree = "<group>"; };
 		FB5CB9FB259CF7ED00F77A7F /* TabItem2TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem2TableViewCell.swift; sourceTree = "<group>"; };
 		FB65202725642848009C4384 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		FB68F44E26E903BA00ADCE27 /* RandomKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomKey.swift; sourceTree = "<group>"; };
 		FB7787992529FA900088410B /* beertab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = beertab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB77879C2529FA900088410B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB77879E2529FA900088410B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 				FB9E40E2254DCC2900B71384 /* ScopeFunctions.swift */,
 				FB5A5CB22564581C0091AE34 /* Curry.swift */,
 				FB5A5CDE256571AB0091AE34 /* Connector.swift */,
+				FB68F44E26E903BA00ADCE27 /* RandomKey.swift */,
 			);
 			path = Utlity;
 			sourceTree = "<group>";
@@ -568,6 +571,7 @@
 				FB778822252CEB740088410B /* Tab2TableViewCell.swift in Sources */,
 				FB5A5CC0256478AD0091AE34 /* URLRequest.swift in Sources */,
 				FB77879F2529FA900088410B /* SceneDelegate.swift in Sources */,
+				FB68F44F26E903BA00ADCE27 /* RandomKey.swift in Sources */,
 				FB7787D62529FB2F0088410B /* Tab.swift in Sources */,
 				FB5A5CB8256474860091AE34 /* PubsRepository.swift in Sources */,
 				FB77884D252F80540088410B /* TabTotalTableViewCell.swift in Sources */,
@@ -769,7 +773,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.04;
+				CURRENT_PROJECT_VERSION = 1.10;
 				DEVELOPMENT_TEAM = QK48V24G7M;
 				INFOPLIST_FILE = beertab/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -777,7 +781,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.04;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.neilens.beertab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -791,7 +795,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.04;
+				CURRENT_PROJECT_VERSION = 1.10;
 				DEVELOPMENT_TEAM = QK48V24G7M;
 				INFOPLIST_FILE = beertab/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -799,7 +803,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.04;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.neilens.beertab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -8,7 +8,7 @@
 import UIKit
 
 class ReceiptViewController: UIViewController {
-    var tab = Tab(name: "", createTS: Date(), pubName: "", branch: "", id: "", tabItems: [])
+    var tab = Tab(name: "", createTS: Date(), pubName: "", branch: "", id: "")
     
     @IBOutlet weak var receiptTextView: UITextView!
     override func viewDidLoad() {

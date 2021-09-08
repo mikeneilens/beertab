@@ -44,7 +44,7 @@ class TabRepositoryTest: XCTestCase {
         
         let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
         let tabItem2 = TabItem(brewer: "brewer2", name: "name2", size: "half", price: 450)
-        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "testbr", id: "testid", tabItems: [tabItem1,tabItem2])
+        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "testbr", id: "testid").replaceItemsWith([tabItem1,tabItem2])
         tabRepository.writeLatest(tab: tab, onCompletion:{tabItems in})
         
         let request = mockConnector.urlRequest
@@ -154,7 +154,7 @@ class TabRepositoryTest: XCTestCase {
         
         let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440)
         let tabItem2 = TabItem(brewer: "brewer2", name: "name2", size: "half", price: 450)
-        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "testbr", id: "testid", tabItems: [tabItem1,tabItem2])
+        let tab = Tab(name: "test tab", createTS: Date(), pubName: "test pub", branch: "testbr", id: "testid").replaceItemsWith([tabItem1,tabItem2])
         
         tabRepository.writeLatest(tab: tab, onCompletion: completion)
         

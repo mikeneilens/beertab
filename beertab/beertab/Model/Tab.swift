@@ -17,6 +17,7 @@ struct Tab:Codable, Equatable {
     let pubName:String
     let branch:String
     let id:String
+    let tabId:String?
     let tabItems:Array<TabItem>
     
     var dateString:String {
@@ -29,13 +30,38 @@ struct Tab:Codable, Equatable {
     var totalPence:Int {
         tabItems.map{$0.price * $0.quantity}.reduce(0){$0 + $1}
     }
+    
+    init(name:String, createTS:Date, pubName:String, branch:String, id:String) {
+        self.name = name
+        self.createTS = createTS
+        self.pubName = pubName
+        self.branch = branch
+        self.id = id
+        self.tabId = randomKey()
+        self.tabItems = []
+    }
+    
+    func replaceItemsWith(_ tabItems:Array<TabItem>) -> Tab {
+        return Tab(name:self.name, createTS: self.createTS, pubName: self.pubName, branch: self.branch, id:self.id, tabId: self.tabId, tabItems: tabItems)
+    }
+    
+    private init(name:String, createTS:Date, pubName:String, branch:String, id:String, tabId:String?, tabItems:Array<TabItem>) {
+        self.name = name
+        self.createTS = createTS
+        self.pubName = pubName
+        self.branch = branch
+        self.id = id
+        self.tabId = tabId
+        self.tabItems = tabItems
+    }
+    
     func add(tabItem:TabItem)->Tab {
-        Tab(name:name, createTS:createTS, pubName:pubName, branch:branch, id:id, tabItems:tabItems + [tabItem])
+        replaceItemsWith(tabItems + [tabItem])
     }
     
     func remove(tabItem:TabItem)->Tab {
         let filteredTabItems = tabItems.filter{$0 != tabItem}
-        return Tab(name:name, createTS:createTS, pubName:pubName, branch:branch, id:id, tabItems:filteredTabItems)
+        return replaceItemsWith(filteredTabItems)
     }
     
     func replace(position:Int, newTabItem:TabItem ) -> Tab {
@@ -48,18 +74,18 @@ struct Tab:Codable, Equatable {
                 newTabItems.append(tabItem)
             }
         }
-        return Tab(name:name, createTS:createTS, pubName:pubName, branch:branch, id:id, tabItems:newTabItems)
+        return replaceItemsWith(newTabItems)
     }
     
     func addTransaction(brewer:String, name:String, size:String) -> Tab {
         let tabItem = TabItem(brewer: brewer, name: name, size: size, price: 0)
         let newTabItems:Array<TabItem> = tabItems.map{if $0 == tabItem {return $0.addTransaction()} else {return $0}}
-        return Tab(name:self.name, createTS:self.createTS, pubName:self.pubName, branch:branch, id:id, tabItems:newTabItems)
+        return replaceItemsWith(newTabItems)
     }
     func removeTransaction(brewer:String, name:String, size:String) -> Tab {
         let tabItem = TabItem(brewer: brewer, name: name, size: size, price: 0)
         let newTabItems:Array<TabItem> = tabItems.map{if $0 == tabItem {return $0.removeTransaction()} else {return $0}}
-        return Tab(name:self.name, createTS:self.createTS, pubName:self.pubName, branch:branch, id:id, tabItems:newTabItems)
+        return replaceItemsWith(newTabItems)
     }
     
     func transactionsReport() -> String {

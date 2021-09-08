@@ -20,7 +20,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     var historyRepository:HistoryArchiver = HistoryRepository()
     var userOptionsRepository:UserOptionsArchiver = UserOptionsRepository()
     var tabRepository:TabArchiver = TabRepository()
-    var tab = Tab(name: "", createTS: Date(), pubName: "", branch: "", id: "", tabItems: [])
+    var tab = Tab(name: "", createTS: Date(), pubName: "", branch: "", id: "")
     
     override func viewDidLoad() {
         super.viewDidLoad()
