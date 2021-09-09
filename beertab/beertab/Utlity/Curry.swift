@@ -30,4 +30,8 @@ func <<==<A,B,C,Z>(_ f: @escaping (A, B, C) -> (Z), _ p:C) -> (A, B) -> (Z)  {
 func <<==<A,B,C,D,Z>(_ f: @escaping (A, B, C, D) -> (Z), _ p:D) -> (A, B, C) -> (Z)  {
     { (A, B, C) in f(A,B,C,p) }
 }
+//5 param
+func <<==<A,B,C,D,E,Z>(_ f: @escaping (A, B, C, D ,E) -> (Z), _ p:E) -> (A, B, C, D) -> (Z)  {
+    { (A, B, C, D) in f(A,B,C,D,p) }
+}
 

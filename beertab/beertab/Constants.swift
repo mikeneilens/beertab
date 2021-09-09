@@ -11,6 +11,7 @@ struct K {
     struct URL {
         static let pubListURL="https://pubcrawlapi.appspot.com/listofpubs/?"
         static let tabURL="https://pubcrawlapi.appspot.com/tab/"
+        static let billURL="https://pubcrawlapi.appspot.com/bill/"
     }
     
     struct PubListJsonName {

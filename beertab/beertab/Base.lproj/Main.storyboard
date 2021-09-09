@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pQp-g5-DvF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pQp-g5-DvF">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -35,7 +35,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="historyTableViewCell" id="REn-aa-ICs">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="REn-aa-ICs" id="Wtt-JV-dUV">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -43,7 +43,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tab2Cell" id="pgs-Q9-JEd" customClass="Tab2TableViewCell" customModule="beertab" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="71.5" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="68" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pgs-Q9-JEd" id="lOp-Gn-lS6">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -86,7 +86,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tab1Cell" id="M5Z-ud-UiR" customClass="Tab1TableViewCell" customModule="beertab" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="115" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="111.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="M5Z-ud-UiR" id="5mt-9k-Yf3">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -119,7 +119,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="totalCell" id="6Ss-ZA-tEp" customClass="HistoryTotalTableViewCell" customModule="beertab" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="158.5" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="155" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6Ss-ZA-tEp" id="aje-ss-h3V">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -236,7 +236,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tabItemCellOld" id="4OA-2v-yFL">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4OA-2v-yFL" id="LMo-87-P5d">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -244,7 +244,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tabItemCell" id="XMb-IG-QsR" customClass="TabItemTableViewCell" customModule="beertab" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="71.5" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="68" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XMb-IG-QsR" id="Mbc-pe-JuT">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -306,7 +306,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tabItem2Cell" id="UjE-dV-Mdq" customClass="TabItem2TableViewCell" customModule="beertab" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="115" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="111.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UjE-dV-Mdq" id="bEl-Sh-tv0">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -358,7 +358,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tabTotalCell" id="PbZ-Vk-I6g" customClass="TabTotalTableViewCell" customModule="beertab" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="158.5" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="155" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PbZ-Vk-I6g" id="v3A-bw-hJg">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -747,8 +747,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bill Id" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmM-PX-au7">
+                                <rect key="frame" x="10" y="98" width="50" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="cwT-FF-q0s"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ABCD" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="irT-mV-7nV">
+                                <rect key="frame" x="71" y="91.5" width="110" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="9br-c7-AqQ"/>
+                                    <constraint firstAttribute="width" constant="110" id="pIW-Ap-zEH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxa-Rw-bWn">
+                                <rect key="frame" x="369" y="96" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="NGQ-IE-AgU"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="Vs9-y3-dR6"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="eMW-1Q-VCR"/>
+                                    <constraint firstAttribute="height" constant="25" id="rGL-Cl-tOR"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="edit"/>
+                                <connections>
+                                    <action selector="editBrandButtonPressed:" destination="6g1-AD-kq1" eventType="touchUpInside" id="ZCZ-IR-DL2"/>
+                                </connections>
+                            </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="u7p-j9-CP4">
-                                <rect key="frame" x="10" y="98" width="394" height="754"/>
+                                <rect key="frame" x="10" y="129" width="394" height="723"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -762,14 +793,23 @@
                         <viewLayoutGuide key="safeArea" id="dYN-k5-REp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="u7p-j9-CP4" firstAttribute="top" secondItem="dYN-k5-REp" secondAttribute="top" constant="10" id="8lM-Rn-p9y"/>
+                            <constraint firstItem="irT-mV-7nV" firstAttribute="leading" secondItem="lmM-PX-au7" secondAttribute="trailing" constant="11" id="Eqz-m1-dhS"/>
+                            <constraint firstItem="dYN-k5-REp" firstAttribute="trailing" secondItem="qxa-Rw-bWn" secondAttribute="trailing" constant="20" id="JBj-O6-jj1"/>
                             <constraint firstItem="dYN-k5-REp" firstAttribute="trailing" secondItem="u7p-j9-CP4" secondAttribute="trailing" constant="10" id="R9m-RN-edB"/>
+                            <constraint firstItem="lmM-PX-au7" firstAttribute="leading" secondItem="dYN-k5-REp" secondAttribute="leading" constant="10" id="SOH-eo-HLm"/>
+                            <constraint firstItem="dYN-k5-REp" firstAttribute="trailing" secondItem="qxa-Rw-bWn" secondAttribute="trailing" constant="20" id="Tf6-tR-Udc"/>
                             <constraint firstItem="dYN-k5-REp" firstAttribute="bottom" secondItem="u7p-j9-CP4" secondAttribute="bottom" constant="10" id="XFT-Q5-1Jk"/>
+                            <constraint firstItem="u7p-j9-CP4" firstAttribute="top" secondItem="lmM-PX-au7" secondAttribute="bottom" constant="10" id="iQN-b3-x2u"/>
                             <constraint firstItem="u7p-j9-CP4" firstAttribute="leading" secondItem="dYN-k5-REp" secondAttribute="leading" constant="10" id="j78-AS-UJd"/>
+                            <constraint firstItem="u7p-j9-CP4" firstAttribute="top" secondItem="lmM-PX-au7" secondAttribute="bottom" constant="10" id="nqQ-4t-ed4"/>
+                            <constraint firstItem="lmM-PX-au7" firstAttribute="top" secondItem="dYN-k5-REp" secondAttribute="top" constant="10" id="pi0-dc-sGc"/>
+                            <constraint firstItem="irT-mV-7nV" firstAttribute="centerY" secondItem="lmM-PX-au7" secondAttribute="centerY" id="tIa-x1-mak"/>
+                            <constraint firstItem="qxa-Rw-bWn" firstAttribute="centerY" secondItem="irT-mV-7nV" secondAttribute="centerY" id="vT2-TT-Xdy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Your bill" id="Uof-de-JR7"/>
                     <connections>
+                        <outlet property="billIdText" destination="irT-mV-7nV" id="73G-Ll-oNf"/>
                         <outlet property="receiptTextView" destination="u7p-j9-CP4" id="KQ7-2T-zqw"/>
                     </connections>
                 </viewController>

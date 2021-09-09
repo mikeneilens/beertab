@@ -31,6 +31,10 @@
 		FB5CB9FC259CF7ED00F77A7F /* TabItem2TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5CB9FB259CF7ED00F77A7F /* TabItem2TableViewCell.swift */; };
 		FB65202825642848009C4384 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB65202725642848009C4384 /* TextField.swift */; };
 		FB68F44F26E903BA00ADCE27 /* RandomKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB68F44E26E903BA00ADCE27 /* RandomKey.swift */; };
+		FB68F45126E938BA00ADCE27 /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB68F45026E938BA00ADCE27 /* Bill.swift */; };
+		FB68F45326E94D8500ADCE27 /* ReceiptsViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB68F45226E94D8500ADCE27 /* ReceiptsViewControllerTest.swift */; };
+		FB68F45526E9570200ADCE27 /* BillRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB68F45426E9570200ADCE27 /* BillRepository.swift */; };
+		FB68F45726EA207300ADCE27 /* BillRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB68F45626EA207300ADCE27 /* BillRepositoryTests.swift */; };
 		FB77879D2529FA900088410B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77879C2529FA900088410B /* AppDelegate.swift */; };
 		FB77879F2529FA900088410B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB77879E2529FA900088410B /* SceneDelegate.swift */; };
 		FB7787A42529FA900088410B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB7787A22529FA900088410B /* Main.storyboard */; };
@@ -129,6 +133,10 @@
 		FB5CB9FB259CF7ED00F77A7F /* TabItem2TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem2TableViewCell.swift; sourceTree = "<group>"; };
 		FB65202725642848009C4384 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		FB68F44E26E903BA00ADCE27 /* RandomKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomKey.swift; sourceTree = "<group>"; };
+		FB68F45026E938BA00ADCE27 /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
+		FB68F45226E94D8500ADCE27 /* ReceiptsViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsViewControllerTest.swift; sourceTree = "<group>"; };
+		FB68F45426E9570200ADCE27 /* BillRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillRepository.swift; sourceTree = "<group>"; };
+		FB68F45626EA207300ADCE27 /* BillRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillRepositoryTests.swift; sourceTree = "<group>"; };
 		FB7787992529FA900088410B /* beertab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = beertab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB77879C2529FA900088410B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB77879E2529FA900088410B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -241,6 +249,7 @@
 				FBCF649125603B5E00336092 /* UserOptionsRepository.swift */,
 				FB910C1D253630FF001DF227 /* TabRepository.swift */,
 				FB5A5CB7256474860091AE34 /* PubsRepository.swift */,
+				FB68F45426E9570200ADCE27 /* BillRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -315,9 +324,11 @@
 				FB1CC8D42530DA5A003AA02E /* TabItemsTableViewControllerTests.swift */,
 				FB1CC8DC2530F180003AA02E /* TabItemAddViewControllerTests.swift */,
 				FB1CC8E425310905003AA02E /* TabItemsUpdateViewControllerTests.swift */,
+				FB68F45226E94D8500ADCE27 /* ReceiptsViewControllerTest.swift */,
 				FBCF649625603D7000336092 /* UserOptionRepositoryTest.swift */,
 				FB5A5CE3256574630091AE34 /* PubsRepositoryTest.swift */,
 				FB5A5CEE25659B990091AE34 /* TabRepositoryTest.swift */,
+				FB68F45626EA207300ADCE27 /* BillRepositoryTests.swift */,
 				FB5A5CF325659BE60091AE34 /* MockConnector.swift */,
 				FB5A5D012566817C0091AE34 /* CurryTest.swift */,
 				FB7787B52529FA910088410B /* Info.plist */,
@@ -343,6 +354,7 @@
 				FB7787E3252A2C0A0088410B /* TabItem.swift */,
 				FB5A5D0E256810700091AE34 /* ReceiptItem.swift */,
 				FB1CC8EF2531CA21003AA02E /* Location.swift */,
+				FB68F45026E938BA00ADCE27 /* Bill.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -562,8 +574,10 @@
 				FB778812252B949B0088410B /* TabItemAddViewController.swift in Sources */,
 				FB7787ED252A314E0088410B /* AbstractTableViewController.swift in Sources */,
 				FB910C1E253630FF001DF227 /* TabRepository.swift in Sources */,
+				FB68F45526E9570200ADCE27 /* BillRepository.swift in Sources */,
 				FB5A5CAE256443350091AE34 /* Int.swift in Sources */,
 				FB7787E4252A2C0A0088410B /* TabItem.swift in Sources */,
+				FB68F45126E938BA00ADCE27 /* Bill.swift in Sources */,
 				FB778832252CF4120088410B /* UId.swift in Sources */,
 				FB77883F252DDBCE0088410B /* TabItemUpdateViewController.swift in Sources */,
 				FB7787F7252A34990088410B /* HistoryTableViewController.swift in Sources */,
@@ -595,6 +609,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBCF649725603D7000336092 /* UserOptionRepositoryTest.swift in Sources */,
+				FB68F45726EA207300ADCE27 /* BillRepositoryTests.swift in Sources */,
 				FB1CC8E525310905003AA02E /* TabItemsUpdateViewControllerTests.swift in Sources */,
 				FB1CC8D52530DA5A003AA02E /* TabItemsTableViewControllerTests.swift in Sources */,
 				FB1CC8CD2530CF1E003AA02E /* TabViewControllerTests.swift in Sources */,
@@ -604,6 +619,7 @@
 				FB5A5CE4256574630091AE34 /* PubsRepositoryTest.swift in Sources */,
 				FB7787B42529FA910088410B /* ModelTests.swift in Sources */,
 				FB1CC8DD2530F180003AA02E /* TabItemAddViewControllerTests.swift in Sources */,
+				FB68F45326E94D8500ADCE27 /* ReceiptsViewControllerTest.swift in Sources */,
 				FB5A5D022566817C0091AE34 /* CurryTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

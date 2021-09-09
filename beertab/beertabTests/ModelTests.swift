@@ -432,6 +432,20 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(tab3.dateString, historyWithTwoTabsSameDateAndOneTabOlder.tabsByDate[1].date)
     }
     
+    func testFindingBillContainingATab() throws {
+        let tab1 = Tab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
+        let tab2 = Tab(name: "test tab2", createTS: Date(), pubName: "test_pub2", branch: "test_br2", id: "test_id2")
+        let tab3 = Tab(name: "test tab2", createTS: Date(), pubName: "test_pub3", branch: "test_br3", id: "test_id3")
+        
+        let bill1 = Bill(tab:tab1)
+        let bill2 = Bill(tab:tab2)
+        let bill3 = Bill(tab:tab3)
+        
+        let bills = [bill1,bill2,bill3]
+        
+        XCTAssertEqual(bills.billContaining(tab: tab2)?.billId, bill2.billId)
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {

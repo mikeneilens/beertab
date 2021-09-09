@@ -9,6 +9,7 @@ import UIKit
 import CoreLocation
 
 var history = History(allTabs: [])
+var bills:Array<Bill> = []
 
 class HistoryTableViewController: AbstractTableViewController {
     
