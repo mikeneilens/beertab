@@ -756,14 +756,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ABCD" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="irT-mV-7nV">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="irT-mV-7nV">
                                 <rect key="frame" x="71" y="91.5" width="110" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="9br-c7-AqQ"/>
                                     <constraint firstAttribute="width" constant="110" id="pIW-Ap-zEH"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxa-Rw-bWn">
                                 <rect key="frame" x="369" y="96" width="25" height="25"/>
@@ -775,7 +775,7 @@
                                 </constraints>
                                 <state key="normal" title="Button" image="edit"/>
                                 <connections>
-                                    <action selector="editBrandButtonPressed:" destination="6g1-AD-kq1" eventType="touchUpInside" id="ZCZ-IR-DL2"/>
+                                    <action selector="editBillIdButtonPressd:" destination="Ow8-XX-MrA" eventType="touchUpInside" id="zmk-g4-Q3M"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="u7p-j9-CP4">

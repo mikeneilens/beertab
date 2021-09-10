@@ -8,32 +8,36 @@
 import Foundation
 
 protocol BillArchiver {
-    func read(tab:Tab, onCompletion completion:@escaping(Array<Bill>) -> (), errorResponse: Optional<(String) -> ()>)
-    func write(tab:Tab,billId:String, onCompletion completion:@escaping (Array<Bill>) -> (), errorResponse: Optional<(String) -> ()> )
+    func createOrUpdateBill(tab:Tab, onCompletion completion:@escaping(Bill) -> (), errorResponse: Optional<(String) -> ()>)
+    func updateBill(tab:Tab,billId:String, onCompletion completion:@escaping (Bill) -> (), errorResponse: Optional<(String) -> ()> )
 }
 
 struct BillRepository:BillArchiver {
     
     var connector:HTTPConnector = Connector()
 
-    func read(tab:Tab, onCompletion completion:@escaping(Array<Bill>) -> (), errorResponse: Optional<(String) -> ()>) {
-        if let encodedTab = tab.encode() {
+    func createOrUpdateBill(tab:Tab, onCompletion completion:@escaping(Bill) -> (), errorResponse: Optional<(String) -> ()>) {
+        if let encodedTab = try? JSONEncoder().encode(tab) {
             guard let url = URL(string:"\(K.URL.billURL)?tabId=\(tab.tabId ?? "")") else { return }
-            let urlRequest = URLRequest(url: url, requestMethod: .Get, httpHeaders: ["tab":encodedTab], httpBody: nil)
-            connector.send(request: urlRequest, completionHandler:readCompletion <<== errorResponse <<== completion)
+            let urlRequest = URLRequest(url: url, requestMethod: .Post, httpHeaders: ["Content-Type":"text/plain; charset=utf-8"], httpBody: encodedTab)
+            connector.send(request: urlRequest, completionHandler:createCompletion <<== errorResponse <<== completion)
         }
     }
     
-    func write(tab:Tab, billId: String, onCompletion completion: @escaping (Array<Bill>) -> (), errorResponse: Optional<(String) -> ()>) {
-        if let encodedTab = tab.encode() {
+    func updateBill(tab:Tab, billId: String, onCompletion completion: @escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
+        if let encodedTab = try? JSONEncoder().encode(tab) {
             guard let url = URL(string:K.URL.billURL + "\(billId)/\(tab.tabId ?? "")/") else { return }
-            let urlRequest = URLRequest(url: url, requestMethod: .Post, httpHeaders:["tab":encodedTab], httpBody: nil)
-            connector.send(request: urlRequest, completionHandler:writeCompletion <<== errorResponse <<== completion )
+            let urlRequest = URLRequest(url: url, requestMethod: .Post, httpHeaders:["Content-Type":"text/plain; charset=utf-8"], httpBody: encodedTab)
+            connector.send(request: urlRequest, completionHandler:updateBillCompletion <<== errorResponse <<== completion )
         }
     }
     
-    func readCompletion(data:Data?, response:URLResponse?, error:Error?, completion:@escaping (Array<Bill>) -> (), errorResponse: Optional<(String) -> ()> ) {
-        let sendError = {if let errorResponse = errorResponse{ errorResponse("error obtaining Bill")} }
+    func createCompletion(data:Data?, response:URLResponse?, error:Error?, completion:@escaping (Bill) -> (), errorResponse: Optional<(String) -> ()> ) {
+        let sendError = {if let errorResponse = errorResponse{
+            DispatchQueue.main.async {
+                errorResponse("error obtaining Bill")}
+            }
+        }
         
         if let error = error {
             print("Invalid response \(error)")
@@ -47,9 +51,9 @@ struct BillRepository:BillArchiver {
             return
         }
         
-        do { let bills = try decodeBill(data: data)
+        do { let bill = try JSONDecoder().decode(Bill.self,from:data)
         DispatchQueue.main.async {
-            completion(bills)
+            completion(bill)
             }
         } catch {
             print("error decoding Bill")
@@ -57,8 +61,12 @@ struct BillRepository:BillArchiver {
         }
     }
 
-    func writeCompletion(data:Data?, response:URLResponse?, error:Error?, completion:@escaping (Array<Bill>) -> (), errorResponse: Optional<(String) -> ()>) {
-        let sendError = {if let errorResponse = errorResponse{ errorResponse("error creating Bill")} }
+    func updateBillCompletion(data:Data?, response:URLResponse?, error:Error?, completion:@escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
+        let sendError = {if let errorResponse = errorResponse{
+            DispatchQueue.main.async {
+                errorResponse("error creating Bill")}
+            }
+        }
         
         if let error = error {
             print("Invalid response \(error)")
@@ -72,9 +80,9 @@ struct BillRepository:BillArchiver {
             return
         }
                 
-        do { let bills = try decodeBill(data: data)
+        do { let bill = try JSONDecoder().decode(Bill.self, from: data)
             DispatchQueue.main.async {
-                completion(bills)
+                completion(bill)
             }
         } catch {
             print("error decoding Bill")

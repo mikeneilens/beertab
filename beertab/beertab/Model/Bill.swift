@@ -19,10 +19,16 @@ struct Bill:Equatable, Codable {
         self.billId = json["billId"] as? String ?? ""
         self.tabs = []
     }
-}
-
-extension Array where Element == Bill {
-    func billContaining(tab:Tab) -> Bill? {
-        first(where: {bill in bill.tabs.contains(where: {tabInBill in tabInBill.tabId == tab.tabId})})
+    
+    var totalValue:String {
+        "£" + totalPence.priceGBP
+    }
+    
+    var totalPence:Int {
+        tabs.map{$0.totalPence}.reduce(0){$0 + $1}
+    }
+    
+    func report(history:History) -> String {
+        return tabs.map{$0.transactionsReport(history: history)}.joined(separator: "\n--------------------------------\n\n") + "\n==============================\nTotal Bill: " + totalValue
     }
 }

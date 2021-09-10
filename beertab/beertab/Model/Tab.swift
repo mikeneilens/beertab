@@ -25,7 +25,7 @@ struct Tab:Codable, Equatable {
     }
     
     var totalValue:String {
-        "£" + tabItems.map{$0.price * $0.quantity}.reduce(0){$0 + $1}.priceGBP
+        "£" + totalPence.priceGBP
     }
     var totalPence:Int {
         tabItems.map{$0.price * $0.quantity}.reduce(0){$0 + $1}
@@ -88,9 +88,11 @@ struct Tab:Codable, Equatable {
         return replaceItemsWith(newTabItems)
     }
     
-    func transactionsReport() -> String {
+    func transactionsReport(history:History) -> String {
         let visit = (name.isEmpty) ? "" : "\(name) at "
-        return "Your bill for \(visit)\(pubName): \n\n" +
+        let billOwner = history.contains(tab:self) ? "Your":"Other"
+        
+        return "\(billOwner) bill for \(visit)\(pubName): \n\n" +
                 tabItems.flatMap{ tabItem in tabItem.transactions.map{transaction in ReceiptItem(tabItem, transaction) } }
                         .sortbyCreateTS()
                         .map{"\($0)"}

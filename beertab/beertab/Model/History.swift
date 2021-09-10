@@ -31,5 +31,8 @@ struct History:Codable {
         let newTabs:Array<Tab> =  allTabs.map{if $0.createTS == tab.createTS {return tab} else {return $0}}
         return History(allTabs:newTabs)
     }
+    func contains(tab:Tab) -> Bool{
+        allTabs.contains{historyTab in historyTab.tabId == tab.tabId}
+    }
 }
 

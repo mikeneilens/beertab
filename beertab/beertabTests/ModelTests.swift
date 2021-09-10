@@ -274,6 +274,22 @@ class ModelTests: XCTestCase {
         XCTAssertEqual("new id", newHistory.allTabs[1].id)
         XCTAssertEqual(1, newHistory.allTabs[1].tabItems.count)
     }
+    
+    func testHistoryContainsATab() {
+        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test pub", branch: "test br", id: "test id")
+        let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id")
+        let tab3 = Tab(name: "test tab3", createTS: Date(), pubName: "pub1", branch: "test br", id: "test id")
+        let history = History(allTabs:[tab1,tab2,tab3])
+        
+        let tab4 = Tab(name: "test tab4", createTS: Date(), pubName: "pub1", branch: "test br", id: "test id")
+        
+        XCTAssertTrue(history.contains(tab:tab1))
+        XCTAssertTrue(history.contains(tab:tab2))
+        XCTAssertTrue(history.contains(tab:tab3))
+        
+        XCTAssertFalse(history.contains(tab:tab4))
+    }
+    
     func testTotalValue() {
         let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440).addTransaction()
         let tabItem2 = TabItem(brewer: "brewer2", name: "name2", size: "half", price: 240).removeTransaction()
@@ -327,8 +343,9 @@ class ModelTests: XCTestCase {
         let tabItem2 = TabItem(brewer: "brewer2", name: "name2", size: "half", price: 240).removeTransaction()
        
         let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "test_pub", branch: "test_br", id: "test_id").replaceItemsWith([tabItem1, tabItem2])
+        let history = History(allTabs: [tab1])
         
-        let reportLines = tab1.transactionsReport().split(separator: "\n").map{String($0)}
+        let reportLines = tab1.transactionsReport(history:history).split(separator: "\n").map{String($0)}
         
         let reportLine1WithoutTime = reportLines[1].split(separator: " ").dropFirst().joined(separator: " ")
         let reportLine2WithoutTime = reportLines[2].split(separator: " ").dropFirst().joined(separator: " ")
@@ -430,20 +447,6 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(tab1.dateString, historyWithTwoTabsSameDateAndOneTabOlder.tabsByDate[0].date)
         XCTAssertEqual(tab3, historyWithTwoTabsSameDateAndOneTabOlder.tabsByDate[1].tabs[0])
         XCTAssertEqual(tab3.dateString, historyWithTwoTabsSameDateAndOneTabOlder.tabsByDate[1].date)
-    }
-    
-    func testFindingBillContainingATab() throws {
-        let tab1 = Tab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
-        let tab2 = Tab(name: "test tab2", createTS: Date(), pubName: "test_pub2", branch: "test_br2", id: "test_id2")
-        let tab3 = Tab(name: "test tab2", createTS: Date(), pubName: "test_pub3", branch: "test_br3", id: "test_id3")
-        
-        let bill1 = Bill(tab:tab1)
-        let bill2 = Bill(tab:tab2)
-        let bill3 = Bill(tab:tab3)
-        
-        let bills = [bill1,bill2,bill3]
-        
-        XCTAssertEqual(bills.billContaining(tab: tab2)?.billId, bill2.billId)
     }
     
     func testPerformanceExample() throws {

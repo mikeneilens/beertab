@@ -20,6 +20,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     var historyRepository:HistoryArchiver = HistoryRepository()
     var userOptionsRepository:UserOptionsArchiver = UserOptionsRepository()
     var tabRepository:TabArchiver = TabRepository()
+    var billRepository:BillArchiver = BillRepository()
     var tab = Tab(name: "", createTS: Date(), pubName: "", branch: "", id: "")
     
     override func viewDidLoad() {
@@ -197,23 +198,27 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
         tab = tab.addTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
         history = history.update(tab: tab)
         historyRepository.write(history, errorResponse: nil)
+        billRepository.createOrUpdateBill(tab: tab, onCompletion:{_ in}, errorResponse: nil)
     }
     
     func returnTabItem(tabItem: TabItem) {
         tab = tab.removeTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
         history = history.update(tab: tab)
         historyRepository.write(history, errorResponse: nil)
+        billRepository.createOrUpdateBill(tab: tab, onCompletion:{_ in}, errorResponse: nil)
     }
     func deleteTabItem(tabItem: TabItem) {
         tab = tab.remove(tabItem: tabItem)
         history = history.update(tab: tab)
         historyRepository.write(history, errorResponse: nil)
+        billRepository.createOrUpdateBill(tab: tab, onCompletion:{_ in}, errorResponse: nil)
     }
     func replaceTabItem(position:Int, newTabItem:TabItem) {
         tab = tab.replace(position: position, newTabItem: newTabItem)
         history = history.update(tab: tab)
         historyRepository.write(history, errorResponse: nil)
         writeTabToRepository(tab: tab)
+        billRepository.createOrUpdateBill(tab: tab, onCompletion:{_ in}, errorResponse: nil)
     }
     func errorWritingHistory(history:History, message:String) {
         print("error writing history: \(message)")
