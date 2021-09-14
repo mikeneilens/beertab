@@ -9,9 +9,9 @@ import UIKit
 
 class Tab2TableViewCell: UITableViewCell {
 
-    @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var pubName: UILabel!
-    @IBOutlet weak var total: UILabel!
+    @IBOutlet weak var name: UILabel?
+    @IBOutlet weak var pubName: UILabel?
+    @IBOutlet weak var total: UILabel?
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -20,4 +20,10 @@ class Tab2TableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    func setNameAndTotal(name:String, pubName:String, total:String) {
+        guard let nameLabel = self.name, let pubNameLabel = self.pubName, let totalLabel = self.total else {return}
+        nameLabel.text = name
+        pubNameLabel.text = pubName
+        totalLabel.text = total
+    }
 }

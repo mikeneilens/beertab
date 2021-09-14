@@ -84,22 +84,21 @@ class HistoryTableViewController: AbstractTableViewController {
     }
     
     func setupSingleLabelCell(tab:Tab, cell:UITableViewCell) -> UITableViewCell {
-        if let tabTableViewCell = cell as? Tab1TableViewCell {
-            tabTableViewCell.name.text = tab.name.isEmpty ? tab.pubName : tab.name
-            tabTableViewCell.total.text = tab.totalValue
+        guard let tabTableViewCell = cell as? Tab1TableViewCell else {return cell}
+        
+        return tabTableViewCell.apply{
+            $0.setNameAndTotal(name: tab.name, pubName: tab.pubName, total: tab.totalValue)
+            $0.accessoryType = .disclosureIndicator
         }
-        cell.accessoryType = .disclosureIndicator
-        return cell
     }
 
     func setupTwoLabelCell(tab:Tab, cell:UITableViewCell) -> UITableViewCell {
-        if let tabTableViewCell = cell as? Tab2TableViewCell {
-            tabTableViewCell.name.text = tab.name
-            tabTableViewCell.pubName.text = tab.pubName
-            tabTableViewCell.total.text = tab.totalValue
+        guard let tabTableViewCell = cell as? Tab2TableViewCell else {return cell}
+        
+        return tabTableViewCell.apply{
+            $0.setNameAndTotal(name: tab.name, pubName: tab.pubName, total: tab.totalValue)
+            $0.accessoryType = .disclosureIndicator
         }
-        cell.accessoryType = .disclosureIndicator
-        return cell
     }
     
     func setupHistoryTotalCell(section:Int, cell:UITableViewCell) -> UITableViewCell {
@@ -180,7 +179,8 @@ extension HistoryTableViewController: CLLocationManagerDelegate { //delegat meth
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue = manager.location!.coordinate
+        guard let coordinate = manager.location?.coordinate else {return}
+        let locValue = coordinate
         self.currentLocation = .Set(location:  Location(fromCoordinate:locValue))
     }
 }

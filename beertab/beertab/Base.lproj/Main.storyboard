@@ -106,7 +106,7 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="O6e-Lf-z6H" firstAttribute="centerY" secondItem="5mt-9k-Yf3" secondAttribute="centerY" id="9S9-DP-U7l"/>
+                                        <constraint firstItem="O6e-Lf-z6H" firstAttribute="centerY" secondItem="5mt-9k-Yf3" secondAttribute="centerY" id="Kmr-oj-3nF"/>
                                         <constraint firstItem="O6e-Lf-z6H" firstAttribute="leading" secondItem="5mt-9k-Yf3" secondAttribute="leading" constant="25" id="MXz-lL-AmI"/>
                                         <constraint firstItem="1Ys-xk-lBH" firstAttribute="centerY" secondItem="5mt-9k-Yf3" secondAttribute="centerY" id="gEG-qE-IGW"/>
                                         <constraint firstItem="1Ys-xk-lBH" firstAttribute="centerX" secondItem="5mt-9k-Yf3" secondAttribute="centerX" constant="92" id="rOS-P4-AB6"/>
@@ -313,7 +313,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pint" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qtf-O8-kWj">
-                                            <rect key="frame" x="232.5" y="11.5" width="29.5" height="21"/>
+                                            <rect key="frame" x="232.5" y="11.5" width="29" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -625,6 +625,9 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zhs-jz-B4g">
                                 <rect key="frame" x="30" y="338" width="69" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="69" id="BXs-Ff-1Wp"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <state key="normal" title="Buy One"/>
                                 <connections>
@@ -634,6 +637,9 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="48X-W6-HAc">
                                 <rect key="frame" x="294" y="338" width="90" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="Q0F-at-skS"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <state key="normal" title="Delete One"/>
                                 <connections>
