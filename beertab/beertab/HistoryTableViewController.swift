@@ -20,10 +20,18 @@ class HistoryTableViewController: AbstractTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         checkLocationServicesPermissions()
         locationManager.delegate = self
-        historyRepository.read(historyResponse: historyRead(newHistory:), errorResponse: nil)
+        DispatchQueue.main.async {
+            self.historyRepository.read(historyResponse: self.historyRead(newHistory:), errorResponse: nil)
+        }
+        retrieveHistory()
+    }
+    
+    func retrieveHistory() {
+        DispatchQueue.main.async {
+            self.historyRepository.read(historyResponse: self.historyRead(newHistory:), errorResponse: nil)
+        }
     }
     
     func tabFor(indexPath:IndexPath) -> Tab {
@@ -70,7 +78,7 @@ class HistoryTableViewController: AbstractTableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return history.tabsByDate[section].date
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row >= history.tabsByDate[indexPath.section].tabs.count {
             return setupHistoryTotalCell(section:indexPath.section, cell:tableView.dequeueReusableCell(withIdentifier: "totalCell", for: indexPath))
@@ -81,6 +89,10 @@ class HistoryTableViewController: AbstractTableViewController {
         } else {
             return setupTwoLabelCell(tab: tab, cell:tableView.dequeueReusableCell(withIdentifier: "tab2Cell", for: indexPath))
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        indexPath.row < history.tabsByDate[indexPath.section].tabs.count
     }
     
     func setupSingleLabelCell(tab:Tab, cell:UITableViewCell) -> UITableViewCell {

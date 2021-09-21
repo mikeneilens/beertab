@@ -52,13 +52,16 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
     }
         
     func tabItemsWithAPrice() -> Array<TabItem> {
+        allTabItems().filter{$0.price != 0}
+    }
+    
+    func allTabItems() -> Array<TabItem> {
         [(size:"Pint", price:pintPriceText?.inPence() ?? 0 ),
          (size:"Half", price:halfPriceText?.inPence() ?? 0),
          (size:"1/3", price:thirdPriceText?.inPence() ?? 0),
          (size:"2/3", price:twoThirdPriceText?.inPence() ?? 0),
          (size:"Other", price:otherPrice?.inPence() ?? 0)]
         .map{tabItemFromView(size:$0.size, price:($0.price))}
-        .filter{$0.price != 0}
     }
 
     func tabItemFromView(size:String, price:Int) -> TabItem {

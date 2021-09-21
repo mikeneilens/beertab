@@ -78,6 +78,10 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
         }
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        indexPath.section == 0
+    }
+    
     func configureTabItemCell(_ cell: UITableViewCell, _ indexPath: IndexPath) {
         guard let tabItemCell = cell as? TabItemTableViewCell else {return}
         tabItemCell.brewer.text = tab.tabItems[indexPath.row].brewer
