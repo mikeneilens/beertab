@@ -17,3 +17,9 @@ extension UITextField {
         }
     }
 }
+extension Optional where Wrapped ==  UITextField {
+    func inPence() -> Int {
+        guard let textField = self else {return 0}
+        return textField.inPence()
+    }
+}

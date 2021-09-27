@@ -44,7 +44,7 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
     }
     
     func createTabItems(_ tabUpdater: TabUpdater) {
-        if pintPriceText?.inPence() == 0 && halfPriceText?.inPence() == 0 && thirdPriceText?.inPence() == 0 && twoThirdPriceText?.inPence() == 0 && otherPrice?.inPence() == 0 {
+        if pintPriceText.inPence() == 0 && halfPriceText.inPence() == 0 && thirdPriceText.inPence() == 0 && twoThirdPriceText.inPence() == 0 && otherPrice.inPence() == 0 {
             tabUpdater.addTabItems(tabItems: [tabItemFromView(size:"Any", price:0)] )
         } else {
             tabUpdater.addTabItems(tabItems: tabItemsWithAPrice())
@@ -52,18 +52,17 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
     }
         
     func tabItemsWithAPrice() -> Array<TabItem> {
-        allTabItems().filter{$0.price != 0}
+            [(size:"Pint", price:pintPriceText.inPence() ),
+             (size:"Half", price:halfPriceText.inPence() ),
+             (size:"1/3", price:thirdPriceText.inPence() ),
+             (size:"2/3", price:twoThirdPriceText.inPence() ),
+             (size:"Other", price:otherPrice.inPence() )]
+            .compactMap(transformFieldToTabItem)
+    }
+    func transformFieldToTabItem(field:(size:String,price:Int) ) ->TabItem? {
+        field.price != 0 ? tabItemFromView(size:field.size, price:(field.price)) : nil
     }
     
-    func allTabItems() -> Array<TabItem> {
-        [(size:"Pint", price:pintPriceText?.inPence() ?? 0 ),
-         (size:"Half", price:halfPriceText?.inPence() ?? 0),
-         (size:"1/3", price:thirdPriceText?.inPence() ?? 0),
-         (size:"2/3", price:twoThirdPriceText?.inPence() ?? 0),
-         (size:"Other", price:otherPrice?.inPence() ?? 0)]
-        .map{tabItemFromView(size:$0.size, price:($0.price))}
-    }
-
     func tabItemFromView(size:String, price:Int) -> TabItem {
         guard let brewer = brandTextField.text, let name = nameTextField.text else {return TabItem(brewer: "", name: "", size: "", price: 0)}
         return TabItem(brewer: brewer, name: name, size: size, price: price)

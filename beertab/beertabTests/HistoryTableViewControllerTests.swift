@@ -15,7 +15,6 @@ class HistoryTableViewControllerTests: XCTestCase {
     let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id")
     let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id")
     let tab3 = Tab(name: "test tab3", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id")
-    
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -26,10 +25,9 @@ class HistoryTableViewControllerTests: XCTestCase {
     }
 
     func testHistoryReadUpdatesHistory() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
         let history = History(allTabs:[tab1,tab2,tab3])
         let viewController = HistoryTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
         viewController.historyRead(newHistory: history)
         
         XCTAssertEqual(tab1, history.allTabs[0])
@@ -39,6 +37,7 @@ class HistoryTableViewControllerTests: XCTestCase {
 
     func testNumberOfSectionsIsOneIfAllTabsHaveSameDate() throws {
         let viewController = HistoryTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
         
         let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id")
         let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id")
@@ -49,6 +48,7 @@ class HistoryTableViewControllerTests: XCTestCase {
     }
     func testNumberOfSectionsIsTwoIfTabsHaveTwoDates() throws {
         let viewController = HistoryTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
         
         let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id")
         let tab2 = Tab(name: "test tab2", createTS: Date() - 86400, pubName: "test pub", branch: "test br", id: "test id")
@@ -60,17 +60,22 @@ class HistoryTableViewControllerTests: XCTestCase {
 
     func testNumberOfRowsInSectionIsOneIfThereIsOnlyOneTabForADate() throws {
         let viewController = HistoryTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
+
         history = History(allTabs:[tab1])
         XCTAssertEqual(1, viewController.tableView(UITableView(), numberOfRowsInSection: 0))
     }
     func testNumberOfRowsInSectionIsThreeIfThereIsTwoTabsForADate() throws {
         let viewController = HistoryTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
+
         history = History(allTabs:[tab1,tab2])
         XCTAssertEqual(3, viewController.tableView(UITableView(), numberOfRowsInSection: 0))
     }
     
     func testCellForARowIsTabWithOneDescriptionIfTabHasOnlyANameOrOnlyAPub() {
         let viewController = HistoryTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
        
         let bareCell = Tab1TableViewCell()
         let nameLabel = UILabel()
@@ -94,6 +99,7 @@ class HistoryTableViewControllerTests: XCTestCase {
     
     func testCellForARowIsTabWithTwoDescriptionIfTabHasNameAndPubName() {
         let viewController = HistoryTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
         
         let bareCell = Tab2TableViewCell()
         let nameLabel = UILabel()
@@ -111,6 +117,8 @@ class HistoryTableViewControllerTests: XCTestCase {
 
     func testPropertiesOfTabItemsTVCAreSetCorrectly() {
         let viewController = HistoryTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
+
         let destination = TabItemsTableViewController()
         history = History(allTabs:[tab1,tab2,tab3])
         viewController.setPropertiesOf(destination,indexPath:IndexPath(row: 0, section: 0))
@@ -119,6 +127,8 @@ class HistoryTableViewControllerTests: XCTestCase {
     
     func testPropertiesOfTabVCAreSetCorrectly() {
         let viewController = HistoryTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
+
         viewController.currentLocation = .Set(location: Location(lng:1,lat:2))
         let destination = TabViewController()
         viewController.setPropertiesOf(destination,indexPath:IndexPath(row: 0, section: 0))

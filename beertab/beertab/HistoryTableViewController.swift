@@ -18,20 +18,15 @@ class HistoryTableViewController: AbstractTableViewController {
     let locationManager = CLLocationManager()
     var currentLocation = LocationStatus.NotSet
     
-    override func viewDidLoad() {
+    override func viewDidLoad()  {
         super.viewDidLoad()
         checkLocationServicesPermissions()
         locationManager.delegate = self
-        DispatchQueue.main.async {
-            self.historyRepository.read(historyResponse: self.historyRead(newHistory:), errorResponse: nil)
-        }
         retrieveHistory()
     }
     
     func retrieveHistory() {
-        DispatchQueue.main.async {
-            self.historyRepository.read(historyResponse: self.historyRead(newHistory:), errorResponse: nil)
-        }
+        self.historyRepository.read(historyResponse: self.historyRead(newHistory:), errorResponse: nil)
     }
     
     func tabFor(indexPath:IndexPath) -> Tab {
@@ -120,7 +115,7 @@ class HistoryTableViewController: AbstractTableViewController {
         }
         return cell
     }
-        
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let indexPath = tableView.indexPathForSelectedRow ?? IndexPath(row: 0, section: 0)
         setPropertiesOf(segue.destination, indexPath: indexPath)

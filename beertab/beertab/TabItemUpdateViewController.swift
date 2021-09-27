@@ -113,8 +113,8 @@ class TabItemUpdateViewController: UIViewController, UITextFieldDelegate {
     }
     
     func tabItemFromView() -> TabItem {
-        guard let brewer = brandTextField?.text, let name = nameTextField?.text, let size = sizeTextField?.text, let price = priceTextField?.inPence() else {return TabItem(brewer: "", name: "", size: "", price: 0)}
-        return TabItem(brewer: brewer, name: name, size: size, price: price, transactions: tabItem.transactions)
+        guard let brewer = brandTextField?.text, let name = nameTextField?.text, let size = sizeTextField?.text else {return TabItem(brewer: "", name: "", size: "", price: 0)}
+        return TabItem(brewer: brewer, name: name, size: size, price: priceTextField.inPence(), transactions: tabItem.transactions)
     }
     
 }

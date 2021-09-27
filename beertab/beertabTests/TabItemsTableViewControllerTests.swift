@@ -41,6 +41,7 @@ class TabItemsTableViewControllerTests: XCTestCase {
                          (tab:tabWithSomeItems, section:1, expectedResult:1),
         ]
         let viewController = TabItemsTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
         
         testData.forEach{ (tab, section, expectedResult) in
             viewController.tab = tab
@@ -136,6 +137,7 @@ class TabItemsTableViewControllerTests: XCTestCase {
     }
     func testDeletinggAnItem() throws {
         let viewController = TabItemsTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
         let tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2,tabItem3])
         viewController.tab = tab
         history = History(allTabs: [tab])
@@ -160,6 +162,7 @@ class TabItemsTableViewControllerTests: XCTestCase {
     
     func testBuyingAnItem() throws {
         let viewController = TabItemsTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
         let tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
         viewController.tab = tab
         history = History(allTabs: [tab])
@@ -179,6 +182,7 @@ class TabItemsTableViewControllerTests: XCTestCase {
     }
     func testReturningAnItem() throws {
         let viewController = TabItemsTableViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
         let tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
         viewController.tab = tab
         history = History(allTabs: [tab])

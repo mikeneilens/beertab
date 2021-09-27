@@ -25,6 +25,7 @@ class TabViewControllerTests: XCTestCase {
         ]
         
         let viewController = TabViewController()
+        viewController.historyRepository = HistoryRepository(key:"test")
         let nameTextField = UITextField()
         let pubNameTextField  = UITextField()
         viewController.name = nameTextField
@@ -66,6 +67,7 @@ class TabViewControllerTests: XCTestCase {
     
     func testCreatingSuggestedPubAlert() throws {
         let viewController = TabViewController()
+        
         let pubs = ListOfPubs(fromJson:[K.PubListJsonName.pubs:[
                     [K.PubListJsonName.name:"Pub1",K.PubListJsonName.id:"id1",K.PubListJsonName.branch:"branch1"],
                     [K.PubListJsonName.name:"Pub2",K.PubListJsonName.id:"id2",K.PubListJsonName.branch:"branch3"],
