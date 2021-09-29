@@ -9,8 +9,8 @@ import UIKit
 
 class Tab1TableViewCell: UITableViewCell {
 
-    @IBOutlet weak var name: UILabel?
-    @IBOutlet weak var total: UILabel?
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var total: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

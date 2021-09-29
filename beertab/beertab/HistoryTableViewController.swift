@@ -73,7 +73,7 @@ class HistoryTableViewController: AbstractTableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return history.tabsByDate[section].date
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row >= history.tabsByDate[indexPath.section].tabs.count {
             return setupHistoryTotalCell(section:indexPath.section, cell:tableView.dequeueReusableCell(withIdentifier: "totalCell", for: indexPath))

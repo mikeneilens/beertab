@@ -11,14 +11,14 @@ struct History:Codable {
     
     let allTabs:Array<Tab>
     
-    var tabs:Array<Tab> {
+    lazy var tabs:Array<Tab> = {
         allTabs.sorted{$0.createTS > $1.createTS}
-    }
+    }()
     
-    var tabsByDate:Array<(date:String, tabs:Array<Tab>)> {
+    lazy var tabsByDate:Array<(date:String, tabs:Array<Tab>)> = {
         let dates = tabs.map{$0.dateString}.unique{$0 == $1}
         return dates.map{date in return (date, tabs.filter{$0.dateString == date})}
-    }
+    }()
     
     func add(tab:Tab) -> History {
         History(allTabs: allTabs + [tab])

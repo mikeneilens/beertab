@@ -85,14 +85,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tab1Cell" id="M5Z-ud-UiR" customClass="Tab1TableViewCell" customModule="beertab" customModuleProvider="target">
-                                <rect key="frame" x="20" y="136.5" width="374" height="43.5"/>
+                                <rect key="frame" x="20" y="136.5" width="374" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="M5Z-ud-UiR" id="5mt-9k-Yf3">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tab Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6e-Lf-z6H">
-                                            <rect key="frame" x="25" y="11.5" width="77" height="21"/>
+                                            <rect key="frame" x="25" y="11.5" width="77" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -105,9 +105,10 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="O6e-Lf-z6H" firstAttribute="centerY" secondItem="5mt-9k-Yf3" secondAttribute="centerY" id="Kmr-oj-3nF"/>
+                                        <constraint firstItem="O6e-Lf-z6H" firstAttribute="bottom" secondItem="5mt-9k-Yf3" secondAttribute="bottomMargin" id="KaD-Un-S4C"/>
                                         <constraint firstItem="O6e-Lf-z6H" firstAttribute="leading" secondItem="5mt-9k-Yf3" secondAttribute="leading" constant="25" id="MXz-lL-AmI"/>
                                         <constraint firstItem="1Ys-xk-lBH" firstAttribute="centerY" secondItem="5mt-9k-Yf3" secondAttribute="centerY" id="gEG-qE-IGW"/>
+                                        <constraint firstItem="O6e-Lf-z6H" firstAttribute="top" secondItem="5mt-9k-Yf3" secondAttribute="topMargin" constant="0.5" id="q3H-i8-KGt"/>
                                         <constraint firstItem="1Ys-xk-lBH" firstAttribute="centerX" secondItem="5mt-9k-Yf3" secondAttribute="centerX" constant="92" id="rOS-P4-AB6"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -118,21 +119,22 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="totalCell" id="6Ss-ZA-tEp" customClass="HistoryTotalTableViewCell" customModule="beertab" customModuleProvider="target">
-                                <rect key="frame" x="20" y="180" width="374" height="43.5"/>
+                                <rect key="frame" x="20" y="180.5" width="374" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6Ss-ZA-tEp" id="aje-ss-h3V">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ml6-UD-aAs">
-                                            <rect key="frame" x="166" y="11.5" width="42" height="21"/>
+                                            <rect key="frame" x="166" y="11.5" width="42" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ml6-UD-aAs" firstAttribute="centerY" secondItem="aje-ss-h3V" secondAttribute="centerY" id="gPr-4O-tJl"/>
+                                        <constraint firstItem="ml6-UD-aAs" firstAttribute="top" secondItem="aje-ss-h3V" secondAttribute="topMargin" constant="0.5" id="7HZ-bU-5Rw"/>
+                                        <constraint firstItem="ml6-UD-aAs" firstAttribute="bottom" secondItem="aje-ss-h3V" secondAttribute="bottomMargin" id="QY7-GY-hQN"/>
                                         <constraint firstItem="ml6-UD-aAs" firstAttribute="centerX" secondItem="aje-ss-h3V" secondAttribute="centerX" id="qty-If-Y0w"/>
                                     </constraints>
                                 </tableViewCellContentView>
