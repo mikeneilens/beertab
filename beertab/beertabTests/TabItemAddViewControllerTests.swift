@@ -210,6 +210,32 @@ class TabItemAddViewControllerTests: XCTestCase {
         XCTAssertEqual(-460, textField.inPence())
     }
     
+    func testUpdatingHalfFieldWhenPintChange() throws {
+        let viewController = TabItemAddViewController()
+        setUp(viewController:viewController)
+        viewController.pintPriceText.text = "2.50"
+        viewController.halfPriceText.text = ""
+        viewController.textFieldDidEndEditing(viewController.pintPriceText)
+        XCTAssertEqual("1.35", halfPriceText.text)
+        
+        viewController.pintPriceText.text = "3.50"
+        viewController.textFieldDidEndEditing(viewController.pintPriceText)
+        XCTAssertEqual("1.35", halfPriceText.text)
+    }
+    
+    func testUpdatingPintFieldWhenHalfChange() throws {
+        let viewController = TabItemAddViewController()
+        setUp(viewController:viewController)
+        viewController.pintPriceText.text = ""
+        viewController.halfPriceText.text = "2.50"
+        viewController.textFieldDidEndEditing(viewController.halfPriceText)
+        XCTAssertEqual("4.80", pintPriceText.text)
+        
+        viewController.halfPriceText.text = "3.50"
+        viewController.textFieldDidEndEditing(viewController.halfPriceText)
+        XCTAssertEqual("4.80", pintPriceText.text)
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {

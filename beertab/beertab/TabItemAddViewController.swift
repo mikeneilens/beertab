@@ -32,7 +32,8 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
         super.viewDidLoad()
         brandTextField.delegate = self
         nameTextField.delegate = self
-    
+        pintPriceText.delegate = self
+        halfPriceText.delegate = self
         saveButton.isEnabled = doneButtonShouldBeEnabled()
     }
     
@@ -86,7 +87,26 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         saveButton.isEnabled = doneButtonShouldBeEnabled()
     }
-        
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == pintPriceText { updateHalfField() }
+        if textField == halfPriceText { updatePintField() }
+    }
+    
+    func updateHalfField() {
+        if pintPriceText.inPence() != 0 && halfPriceText.inPence() == 0 {
+            let halfPintPrice = pintPriceText.inPence() / 2 + 10
+            halfPriceText.text = halfPintPrice.priceGBP
+        }
+    }
+
+    func updatePintField() {
+        if halfPriceText.inPence() != 0 && pintPriceText.inPence() == 0 {
+            let pintPintPrice = halfPriceText.inPence() * 2 - 20
+            pintPriceText.text = pintPintPrice.priceGBP
+        }
+    }
+
     func doneButtonShouldBeEnabled() -> Bool {
         (brandTextField.text != "" || nameTextField.text != "")
     }
