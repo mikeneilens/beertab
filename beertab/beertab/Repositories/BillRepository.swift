@@ -33,13 +33,13 @@ struct BillRepository:BillArchiver {
     }
     
     func createCompletion(data:Data?, response:URLResponse?, error:Error?, completion:@escaping (Bill) -> (), errorResponse: Optional<(String) -> ()> ) {
-        let sendError = {if let errorResponse = errorResponse{
+        let sendError = {if let errorResponse {
             DispatchQueue.main.async {
                 errorResponse("error obtaining Bill")}
             }
         }
         
-        if let error = error {
+        if let error {
             print("Invalid response \(error)")
             sendError()
             return
@@ -62,13 +62,13 @@ struct BillRepository:BillArchiver {
     }
 
     func updateBillCompletion(data:Data?, response:URLResponse?, error:Error?, completion:@escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
-        let sendError = {if let errorResponse = errorResponse{
+        let sendError = {if let errorResponse{
             DispatchQueue.main.async {
                 errorResponse("error creating Bill")}
             }
         }
         
-        if let error = error {
+        if let error {
             print("Invalid response \(error)")
             sendError()
             return

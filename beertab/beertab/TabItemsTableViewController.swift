@@ -166,7 +166,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
     
     func prepare(_ tabItemUpdateViewController:TabItemUpdateViewController, row:Int?) {
-        tabItemUpdateViewController.tabItem = selectTabItem(row:row)
+        tabItemUpdateViewController.tabItem = selectTabItem(selectedRow:row)
         tabItemUpdateViewController.position = (row ?? 0)
         tabItemUpdateViewController.tabUpdater = self
     }
@@ -174,8 +174,8 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     func prepare(_ receiptViewController:ReceiptViewController) {
         receiptViewController.tab = tab
     }
-    func selectTabItem(row:Int?) -> TabItem {
-        if let selectedRow = row {
+    func selectTabItem(selectedRow:Int?) -> TabItem {
+        if let selectedRow {
             return tab.tabItems[selectedRow]
         }
         else {

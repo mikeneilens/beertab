@@ -7,7 +7,7 @@ import UIKit
 class AbstractTableViewController: UITableViewController {
 
     private var activities = 0
-    private var rightButtonState=false
+    private var rightButtonState = false
     private var activityView = UIActivityIndicatorView()
     
     override func viewDidLoad() {
@@ -75,9 +75,7 @@ class AbstractTableViewController: UITableViewController {
     }
     private func enableView() {
         self.view.isUserInteractionEnabled = true
-        if let navController=self.navigationController {
-            navController.navigationBar.isUserInteractionEnabled=true
-        }
+        self.navigationController?.navigationBar.isUserInteractionEnabled=true
     }
     private func removeRightButton() {
         if let rightButton = self.navigationItem.rightBarButtonItem {

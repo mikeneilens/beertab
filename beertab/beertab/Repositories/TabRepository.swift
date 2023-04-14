@@ -30,7 +30,7 @@ struct TabRepository:TabArchiver {
     }
     
     func readCompletion(data:Data?, response:URLResponse?, error:Error?, completion:@escaping (Array<TabItem>) -> ()) {
-        if let error = error {print("Invalid response \(error)");return}
+        if let error {print("Invalid response \(error)");return}
         guard let data = data else {print("No Data");return}
         let tabItems = decode(data: data)
         DispatchQueue.main.async {
@@ -39,7 +39,7 @@ struct TabRepository:TabArchiver {
     }
 
     func writeCompletion(data:Data?, response:URLResponse?, error:Error?, completion:@escaping (Array<TabItem>) -> ()) {
-        if let error = error {print("Invalid response \(error)");return}
+        if let error {print("Invalid response \(error)");return}
         guard let data = data else {print("No Data");return}
         let tabItems = decode(data: data)
         DispatchQueue.main.async {

@@ -38,7 +38,7 @@ class TabItemAddViewController: AbstractViewController, UITextFieldDelegate {
     }
     
     @IBAction func savePressed(_ sender: Any) {
-        if let tabUpdater = tabUpdater {
+        if let tabUpdater {
             createTabItems(tabUpdater)
             navigationController?.popViewController(animated:true)
         }

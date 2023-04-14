@@ -29,9 +29,7 @@ class AbstractViewController: UIViewController {
         activities+=1;
         
         self.view.isUserInteractionEnabled = false
-        if let navController=self.navigationController{
-            navController.navigationBar.isUserInteractionEnabled=false
-        }
+        self.navigationController?.navigationBar.isUserInteractionEnabled=false
         
         if let rightButton = self.navigationItem.rightBarButtonItem {
             rightButtonState = rightButton.isEnabled
@@ -70,9 +68,7 @@ class AbstractViewController: UIViewController {
         
         if (activities==0) {
             self.view.isUserInteractionEnabled = true
-            if let navController=self.navigationController{
-                navController.navigationBar.isUserInteractionEnabled=true
-            }
+            self.navigationController?.navigationBar.isUserInteractionEnabled=true
             
             activityView.stopAnimating()
             

@@ -71,7 +71,7 @@ class ReceiptViewController: AbstractViewController, UITextFieldDelegate  {
 
 extension UITextField {
     func containsValidBillId() -> Bool {
-        if let text = text {
+        if let text {
             return text.count >= 4
         } else {
             return false
