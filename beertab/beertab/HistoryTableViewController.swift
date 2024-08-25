@@ -187,7 +187,6 @@ extension HistoryTableViewController: CLLocationManagerDelegate { //delegat meth
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let coordinate = manager.location?.coordinate else {return}
-        let locValue = coordinate
-        self.currentLocation = .Set(location:  Location(fromCoordinate:locValue))
+        self.currentLocation = .Set(location:  Location(fromCoordinate:coordinate))
     }
 }

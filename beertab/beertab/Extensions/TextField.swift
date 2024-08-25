@@ -11,10 +11,7 @@ extension UITextField {
         guard let text = self.text?
                 .split(separator:" ").joined()
                 .split(separator:"£").joined() else {return 0}
-        do { return try createCurrency(string: text).inPence()
-        } catch   {
-            return 0
-        }
+        return Currency(text).inPence
     }
 }
 extension Optional where Wrapped ==  UITextField {

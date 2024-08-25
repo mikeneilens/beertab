@@ -359,52 +359,37 @@ class ModelTests: XCTestCase {
     }
     
     func testCurrencyParsing() throws {
-        let empty = try createCurrency(string: "").inPence()
+        let empty = Currency("").inPence
         XCTAssertEqual(0, empty)
-        let integerNoSign = try createCurrency(string: "123").inPence()
+        let integerNoSign = Currency("123").inPence
         XCTAssertEqual(12300, integerNoSign)
-        let integerPositiveSign = try createCurrency(string: "+1234").inPence()
+        let integerPositiveSign = Currency("+1234").inPence
         XCTAssertEqual(123400, integerPositiveSign)
-        let integerNegativeSign = try createCurrency(string: "-123").inPence()
+        let integerNegativeSign = Currency("-123").inPence
         XCTAssertEqual(-12300, integerNegativeSign)
-        let valueWithOneDecimalPlace = try createCurrency(string: "123.4").inPence()
+        let valueWithOneDecimalPlace = Currency("123.4").inPence
         XCTAssertEqual(12340, valueWithOneDecimalPlace)
-        let valueWithTwoDecimalPlace = try createCurrency(string: "123.45").inPence()
+        let valueWithTwoDecimalPlace = Currency("123.45").inPence
         XCTAssertEqual(12345, valueWithTwoDecimalPlace)
-        let valueWithThreeDecimalPlaceRoundDown = try createCurrency(string: "123.454").inPence()
+        let valueWithThreeDecimalPlaceRoundDown = Currency("123.454").inPence
         XCTAssertEqual(12345, valueWithThreeDecimalPlaceRoundDown)
-        let valueWithThreeDecimalPlaceRoundUp = try createCurrency(string: "123.455").inPence()
-        XCTAssertEqual(12346, valueWithThreeDecimalPlaceRoundUp)
-        do {let _ = try createCurrency(string: "+").inPence()
-            XCTAssertFalse(true,"should throw if sign is not followed by something")
-        } catch ParseError.badData(let char) {XCTAssertEqual(nil,char) }
-        do {let _ = try createCurrency(string: "+£").inPence()
-            XCTAssertFalse(true,"should throw if sign is not followed by a numerical digit")
-        } catch ParseError.badData(let char) {XCTAssertEqual("£",char) }
-        do {let _ = try createCurrency(string: "1.").inPence()
-            XCTAssertFalse(true,"should throw if decimal is not followed by something")
-        } catch ParseError.badData(let char) {XCTAssertEqual(nil,char) }
-        do {let _ = try createCurrency(string: "1.x").inPence()
-            XCTAssertFalse(true,"should throw if decimal is not followed by a numerical digit")
-        } catch ParseError.badData(let char) {XCTAssertEqual("x",char) }
-        do {let _ = try createCurrency(string: "x").inPence()
-            XCTAssertFalse(true,"should throw if first character is not a sign or a digit")
-        } catch ParseError.badData(let char) {XCTAssertEqual("x",char) }
-        do {let _ = try createCurrency(string: "1z").inPence()
-            XCTAssertFalse(true,"should throw if digit is not followed by a digit or decimal")
-        } catch ParseError.badData(let char) {XCTAssertEqual("z",char) }
-        do {let _ = try createCurrency(string: "1.3y").inPence()
-            XCTAssertFalse(true,"should throw if a lower digit is not followed by a lower digit")
-        } catch ParseError.badData(let char) {XCTAssertEqual("y",char) }
+        let valueWithThreeDecimalPlaceRoundUp = Currency("123.455").inPence
+        XCTAssertEqual(12345, valueWithThreeDecimalPlaceRoundUp)
+        let valueWithOnlyASign = Currency("+").inPence
+        XCTAssertEqual(0, valueWithOnlyASign)
+        let valueWithOnlySignAndCurrency = Currency("+£").inPence
+        XCTAssertEqual(0, valueWithOnlySignAndCurrency)
+        let valueWithTrailingDecimal = Currency("1.").inPence
+        XCTAssertEqual(100, valueWithTrailingDecimal)
+        let valueWithInvalidPence = Currency("1.x").inPence
+        XCTAssertEqual(100, valueWithInvalidPence)
+        let valueWithInvalidPounds = Currency("x.1").inPence
+        XCTAssertEqual(10, valueWithInvalidPounds)
+        let valueForStringContainingInvalidCharacter = Currency("x").inPence
+        XCTAssertEqual(0, valueForStringContainingInvalidCharacter)
+        let valueForStringContainingValidAndInvalidCharacter = Currency("x").inPence
+        XCTAssertEqual(0, valueForStringContainingValidAndInvalidCharacter)
     }
-    func testCurrencyValidation() throws {
-        XCTAssertTrue(isValidCurrency(string: "1.23"))
-        XCTAssertTrue(isValidCurrency(string: "-1.23"))
-        XCTAssertTrue(isValidCurrency(string: ""))
-        XCTAssertFalse(isValidCurrency(string: "+"))
-        XCTAssertFalse(isValidCurrency(string: "1."))
-    }
-    
     
     func testEncodedTab() throws {
         let tabItem1 = TabItem(brewer: "brewer1", name: "name1", size: "pint", price: 440).addTransaction()
