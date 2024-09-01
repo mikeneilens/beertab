@@ -20,9 +20,14 @@ class HistoryTableViewController: AbstractTableViewController {
     
     override func viewDidLoad()  {
         super.viewDidLoad()
-        checkLocationServicesPermissions()
-        locationManager.delegate = self
         retrieveHistory()
+        startLocationServices()
+    }
+    
+    func startLocationServices() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 100000), execute: startUpdatingLocation)
     }
     
     func retrieveHistory() {
@@ -32,7 +37,20 @@ class HistoryTableViewController: AbstractTableViewController {
     func tabFor(indexPath:IndexPath) -> Tab {
         history.tabsByDate[indexPath.section].tabs[indexPath.row]
     }
-    
+
+    /*
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status:CLAuthorizationStatus) {
+        if (status == .authorizedAlways || status == .authorizedWhenInUse) {
+            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
+                if CLLocationManager.isRangingAvailable() {
+                    locationManager.startUpdatingLocation()
+                }
+            }
+        }
+    }
+     */
+
+/*
     func checkLocationServicesPermissions() {
         if CLLocationManager.locationServicesEnabled() {
             let authorisationStatus = CLLocationManager.authorizationStatus()
@@ -43,6 +61,7 @@ class HistoryTableViewController: AbstractTableViewController {
             }
         }
     }
+ */
     func historyRead(newHistory:History) {
         history = newHistory
         if history.allTabs.isEmpty && instructionsShouldBePresented() {
@@ -178,15 +197,24 @@ class HistoryTableViewController: AbstractTableViewController {
 
 extension HistoryTableViewController: CLLocationManagerDelegate { //delegat methods for CLLoctaionManager
     
-    func locationManager(_ manager:CLLocationManager, didChangeAuthorization status:CLAuthorizationStatus) {
-        if ((status == .authorizedAlways) || (status == .authorizedWhenInUse)) {
-            self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            self.locationManager.startUpdatingLocation()
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        
+        if (manager.authorizationStatus == .authorizedAlways || manager.authorizationStatus == .authorizedWhenInUse) {
+            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
+                if CLLocationManager.isRangingAvailable() {
+                    startUpdatingLocation()
+                }
+            }
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let coordinate = manager.location?.coordinate else {return}
         self.currentLocation = .Set(location:  Location(fromCoordinate:coordinate))
+    }
+    
+    func startUpdatingLocation(){
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.startUpdatingLocation()
     }
 }
