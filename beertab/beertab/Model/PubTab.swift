@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Tab:Codable, Equatable {
-    static func == (lhs: Tab, rhs: Tab) -> Bool {
+struct PubTab:Codable, Equatable {
+    static func == (lhs: PubTab, rhs: PubTab) -> Bool {
         return lhs.name == rhs.name && lhs.pubName == rhs.pubName && lhs.createTS == rhs.createTS
     }
     
@@ -41,8 +41,8 @@ struct Tab:Codable, Equatable {
         self.tabItems = []
     }
     
-    func replaceItemsWith(_ tabItems:Array<TabItem>) -> Tab {
-        return Tab(name:self.name, createTS: self.createTS, pubName: self.pubName, branch: self.branch, id:self.id, tabId: self.tabId, tabItems: tabItems)
+    func replaceItemsWith(_ tabItems:Array<TabItem>) -> PubTab {
+        return PubTab(name:self.name, createTS: self.createTS, pubName: self.pubName, branch: self.branch, id:self.id, tabId: self.tabId, tabItems: tabItems)
     }
     
     private init(name:String, createTS:Date, pubName:String, branch:String, id:String, tabId:String?, tabItems:Array<TabItem>) {
@@ -55,16 +55,16 @@ struct Tab:Codable, Equatable {
         self.tabItems = tabItems
     }
     
-    func add(tabItem:TabItem)->Tab {
+    func add(tabItem:TabItem)->PubTab {
         replaceItemsWith(tabItems + [tabItem])
     }
     
-    func remove(tabItem:TabItem)->Tab {
+    func remove(tabItem:TabItem)->PubTab {
         let filteredTabItems = tabItems.filter{$0 != tabItem}
         return replaceItemsWith(filteredTabItems)
     }
     
-    func replace(position:Int, newTabItem:TabItem ) -> Tab {
+    func replace(position:Int, newTabItem:TabItem ) -> PubTab {
         var  newTabItems:Array<TabItem> = []
         for (index,tabItem) in tabItems.enumerated() {
             if index == position {
@@ -77,12 +77,12 @@ struct Tab:Codable, Equatable {
         return replaceItemsWith(newTabItems)
     }
     
-    func addTransaction(brewer:String, name:String, size:String) -> Tab {
+    func addTransaction(brewer:String, name:String, size:String) -> PubTab {
         let tabItem = TabItem(brewer: brewer, name: name, size: size, price: 0)
         let newTabItems:Array<TabItem> = tabItems.map{if $0 == tabItem {return $0.addTransaction()} else {return $0}}
         return replaceItemsWith(newTabItems)
     }
-    func removeTransaction(brewer:String, name:String, size:String) -> Tab {
+    func removeTransaction(brewer:String, name:String, size:String) -> PubTab {
         let tabItem = TabItem(brewer: brewer, name: name, size: size, price: 0)
         let newTabItems:Array<TabItem> = tabItems.map{if $0 == tabItem {return $0.removeTransaction()} else {return $0}}
         return replaceItemsWith(newTabItems)

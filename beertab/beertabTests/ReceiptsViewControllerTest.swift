@@ -21,7 +21,7 @@ class ReceiptsViewControllerTests: XCTestCase {
 
     func testProcessBill() {
         let viewController = ReceiptViewController()
-        let tab1 = Tab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
+        let tab1 = PubTab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
         
         let bill = Bill(tab:tab1)
         viewController.billIdText = billIdText
@@ -38,22 +38,22 @@ class ReceiptsViewControllerTests: XCTestCase {
     }
     
     func testTextFieldShouldReturnGivesTrueIfBilIDLength4orMore() {
-        let tab1 = Tab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
+        let tab1 = PubTab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
 
         struct MockBillRepository:BillArchiver {
-            let testTab:Tab
-            func createOrUpdateBill(tab: Tab, onCompletion completion: @escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
+            let testTab:PubTab
+            func createOrUpdateBill(tab: PubTab, onCompletion completion: @escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
                 XCTAssertFalse(true)
             }
             
-            func updateBill(tab: Tab, billId: String, onCompletion completion: @escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
+            func updateBill(tab: PubTab, billId: String, onCompletion completion: @escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
                 XCTAssertEqual(tab,testTab)
                 XCTAssertEqual(billId, "ABCD")
             }
         }
         
         let viewController = ReceiptViewController()
-        viewController.tab = tab1
+        viewController.pubTab = tab1
         viewController.billRepository = MockBillRepository(testTab:tab1)
         viewController.billIdText = billIdText
         viewController.billIdText.text = "ABCD"
@@ -61,24 +61,24 @@ class ReceiptsViewControllerTests: XCTestCase {
     }
     
     func testViewDidLoadSetsUpTheReceipt() {
-        let tab1 = Tab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
+        let tab1 = PubTab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
 
         struct MockBillRepository:BillArchiver {
-            let testTab:Tab
+            let testTab:PubTab
             
-            func createOrUpdateBill(tab: Tab, onCompletion completion: @escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
+            func createOrUpdateBill(tab: PubTab, onCompletion completion: @escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
                 XCTAssertEqual(tab,testTab)
                 completion(Bill(tab: testTab))
             }
             
-            func updateBill(tab: Tab, billId: String, onCompletion completion: @escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
+            func updateBill(tab: PubTab, billId: String, onCompletion completion: @escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
                 XCTAssertFalse(true)
                 XCTAssertEqual(tab,testTab)
             }
         }
         
         let viewController = ReceiptViewController()
-        viewController.tab = tab1
+        viewController.pubTab = tab1
         viewController.billRepository = MockBillRepository(testTab:tab1)
         viewController.billIdText = billIdText
         viewController.receiptTextView = receiptTextView

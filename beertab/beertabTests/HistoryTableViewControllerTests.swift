@@ -12,9 +12,9 @@ class HistoryTableViewControllerTests: XCTestCase {
     let date20122019 = Date(timeIntervalSince1970: 1576800000)
     let date21122019 = Date(timeIntervalSince1970: 1576886400)
     
-    let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id")
-    let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id")
-    let tab3 = Tab(name: "test tab3", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id")
+    let tab1 = PubTab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id")
+    let tab2 = PubTab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id")
+    let tab3 = PubTab(name: "test tab3", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id")
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -39,9 +39,9 @@ class HistoryTableViewControllerTests: XCTestCase {
         let viewController = HistoryTableViewController()
         viewController.historyRepository = HistoryRepository(key:"test")
         
-        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id")
-        let tab2 = Tab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id")
-        let tab3 = Tab(name: "test tab3", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id")
+        let tab1 = PubTab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id")
+        let tab2 = PubTab(name: "test tab2", createTS: Date() - 2, pubName: "test pub", branch: "test br", id: "test id")
+        let tab3 = PubTab(name: "test tab3", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id")
 
         history = History(allTabs: [tab1,tab2,tab3])
         XCTAssertEqual(1, viewController.numberOfSections(in: UITableView()) )
@@ -50,9 +50,9 @@ class HistoryTableViewControllerTests: XCTestCase {
         let viewController = HistoryTableViewController()
         viewController.historyRepository = HistoryRepository(key:"test")
         
-        let tab1 = Tab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id")
-        let tab2 = Tab(name: "test tab2", createTS: Date() - 86400, pubName: "test pub", branch: "test br", id: "test id")
-        let tab3 = Tab(name: "test tab3", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id")
+        let tab1 = PubTab(name: "test tab1", createTS: Date() - 1, pubName: "", branch: "test br", id: "test id")
+        let tab2 = PubTab(name: "test tab2", createTS: Date() - 86400, pubName: "test pub", branch: "test br", id: "test id")
+        let tab3 = PubTab(name: "test tab3", createTS: Date(), pubName: "test pub", branch: "test br", id: "test id")
 
         history = History(allTabs: [tab1,tab2,tab3])
         XCTAssertEqual(2, viewController.numberOfSections(in: UITableView()) )
@@ -86,12 +86,12 @@ class HistoryTableViewControllerTests: XCTestCase {
         let october_10_2020 = Date(timeIntervalSinceReferenceDate: 624056329.985)
         let october_11_2020 = Date(timeIntervalSinceReferenceDate: 624142723.985)
         
-        let tabNoPub = Tab(name: "test tab1", createTS: october_11_2020, pubName: "", branch: "test br", id: "test id")
+        let tabNoPub = PubTab(name: "test tab1", createTS: october_11_2020, pubName: "", branch: "test br", id: "test id")
         let _ = viewController.setupSingleLabelCell(tab: tabNoPub, cell: bareCell)
         XCTAssertEqual(Optional("test tab1"), nameLabel.text)
         XCTAssertEqual(Optional("£0.00"), dateLabel.text)
         
-        let tabNoName = Tab(name: "", createTS: october_10_2020, pubName: "test pub", branch: "test br", id: "test id")
+        let tabNoName = PubTab(name: "", createTS: october_10_2020, pubName: "test pub", branch: "test br", id: "test id")
         let _ = viewController.setupSingleLabelCell(tab: tabNoName, cell: bareCell)
         XCTAssertEqual(Optional("test pub"), nameLabel.text)
         XCTAssertEqual(Optional("£0.00"), dateLabel.text)
@@ -122,7 +122,7 @@ class HistoryTableViewControllerTests: XCTestCase {
         let destination = TabItemsTableViewController()
         history = History(allTabs:[tab1,tab2,tab3])
         viewController.setPropertiesOf(destination,indexPath:IndexPath(row: 0, section: 0))
-        XCTAssertEqual(history.tabs[0], destination.tab)
+        XCTAssertEqual(history.tabs[0], destination.pubTab)
     }
     
     func testPropertiesOfTabVCAreSetCorrectly() {
@@ -173,7 +173,7 @@ class HistoryTableViewControllerTests: XCTestCase {
     
     func testCreatingDeleteTabAlert() {
         let viewController = HistoryTableViewController()
-        let tab = Tab(name: "test tab1", createTS: date20122019, pubName: "", branch: "test br", id: "test id")
+        let tab = PubTab(name: "test tab1", createTS: date20122019, pubName: "", branch: "test br", id: "test id")
         let alertController = viewController.deleteTabAlert(for: tab)
         XCTAssertEqual(2, alertController.actions.count)
         XCTAssertEqual("Do you want to delete test tab1  (20 Dec 2019)", alertController.message)

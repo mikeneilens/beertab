@@ -9,9 +9,9 @@ import Foundation
 
 struct Bill:Equatable, Codable {
     let billId:String
-    let tabs:Array<Tab>
+    let tabs:Array<PubTab>
     
-    init(tab:Tab) {
+    init(tab:PubTab) {
         billId = randomKey(4)
         tabs = [tab]
     }

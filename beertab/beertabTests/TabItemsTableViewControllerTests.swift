@@ -24,17 +24,17 @@ class TabItemsTableViewControllerTests: XCTestCase {
 
     func testNoOfSectionsIsOneWhenThereAreNoTabItems() throws {
         let viewController = TabItemsTableViewController()
-        viewController.tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "")
+        viewController.pubTab = PubTab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "")
         XCTAssertEqual(1, viewController.numberOfSections(in:UITableView()) )
     }
     func testNoOfSectionsIsOneWhenThereAreMoreThanAoneTabItems() throws {
         let viewController = TabItemsTableViewController()
-        viewController.tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
+        viewController.pubTab = PubTab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
         XCTAssertEqual(2, viewController.numberOfSections(in:UITableView()) )
     }
     func testNoOfRowsInSection() throws {
-        let tabWithNoItems   = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "")
-        let tabWithSomeItems = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
+        let tabWithNoItems   = PubTab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "")
+        let tabWithSomeItems = PubTab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
         
         let testData = [ (tab:tabWithNoItems,   section:0, expectedResult:0),
                          (tab:tabWithSomeItems, section:0, expectedResult:2),
@@ -44,14 +44,14 @@ class TabItemsTableViewControllerTests: XCTestCase {
         viewController.historyRepository = HistoryRepository(key:"test")
         
         testData.forEach{ (tab, section, expectedResult) in
-            viewController.tab = tab
+            viewController.pubTab = tab
             XCTAssertEqual(expectedResult, viewController.tableView(UITableView(), numberOfRowsInSection: section) )
         }
     }
     func testConfiguringTabItemCell() throws {
         let viewController = TabItemsTableViewController()
-        let tabWithSomeItems = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
-        viewController.tab = tabWithSomeItems
+        let tabWithSomeItems = PubTab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
+        viewController.pubTab = tabWithSomeItems
                                 .addTransaction(brewer: "brewer1", name: "name1", size: "pint")
                                 .addTransaction(brewer: "brewer1", name: "name2", size: "half")
                                 .addTransaction(brewer: "brewer1", name: "name1", size: "pint")
@@ -84,7 +84,7 @@ class TabItemsTableViewControllerTests: XCTestCase {
         XCTAssertEqual("You have no items on your tab", viewController.tableView(UITableView(), titleForHeaderInSection: 0))
         XCTAssertEqual("Your Total Bill", viewController.tableView(UITableView(), titleForHeaderInSection: 1))
         
-        viewController.tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
+        viewController.pubTab = PubTab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
         XCTAssertEqual("Items", viewController.tableView(UITableView(), titleForHeaderInSection: 0))
     }
 
@@ -97,7 +97,7 @@ class TabItemsTableViewControllerTests: XCTestCase {
     }
     func testPreparingWhenDestinationIsUpdateTabItem() throws {
         let viewController = TabItemsTableViewController()
-        viewController.tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
+        viewController.pubTab = PubTab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
         
         let destination = TabItemUpdateViewController()
         let brewerTextField = UITextField()
@@ -118,17 +118,17 @@ class TabItemsTableViewControllerTests: XCTestCase {
     func testAddingAnItem() throws {
         let viewController = TabItemsTableViewController()
         viewController.historyRepository =  HistoryRepository(key:"test")
-        let tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
-        viewController.tab = tab
+        let tab = PubTab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
+        viewController.pubTab = tab
         history = History(allTabs: [tab])
         
         let newTabItem = TabItem(brewer: "brewer3", name: "name3", size: "other", price: 100)
         viewController.addTabItems(tabItems: [newTabItem])
         
-        XCTAssertEqual("brewer3", viewController.tab.tabItems.last?.brewer )
-        XCTAssertEqual("name3", viewController.tab.tabItems.last?.name )
-        XCTAssertEqual("other", viewController.tab.tabItems.last?.size )
-        XCTAssertEqual(100, viewController.tab.tabItems.last?.price )
+        XCTAssertEqual("brewer3", viewController.pubTab.tabItems.last?.brewer )
+        XCTAssertEqual("name3", viewController.pubTab.tabItems.last?.name )
+        XCTAssertEqual("other", viewController.pubTab.tabItems.last?.size )
+        XCTAssertEqual(100, viewController.pubTab.tabItems.last?.price )
         
         XCTAssertEqual("brewer3", history.allTabs[0].tabItems.last?.brewer )
         XCTAssertEqual("name3", history.allTabs[0].tabItems.last?.name )
@@ -138,21 +138,21 @@ class TabItemsTableViewControllerTests: XCTestCase {
     func testDeletinggAnItem() throws {
         let viewController = TabItemsTableViewController()
         viewController.historyRepository = HistoryRepository(key:"test")
-        let tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2,tabItem3])
-        viewController.tab = tab
+        let tab = PubTab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2,tabItem3])
+        viewController.pubTab = tab
         history = History(allTabs: [tab])
         
         viewController.deleteTabItem(tabItem: tabItem2)
         
-        XCTAssertEqual("brewer1", viewController.tab.tabItems[0].brewer )
-        XCTAssertEqual("name1", viewController.tab.tabItems[0].name )
-        XCTAssertEqual("pint", viewController.tab.tabItems[0].size )
-        XCTAssertEqual(440, viewController.tab.tabItems[0].price )
+        XCTAssertEqual("brewer1", viewController.pubTab.tabItems[0].brewer )
+        XCTAssertEqual("name1", viewController.pubTab.tabItems[0].name )
+        XCTAssertEqual("pint", viewController.pubTab.tabItems[0].size )
+        XCTAssertEqual(440, viewController.pubTab.tabItems[0].price )
         
-        XCTAssertEqual("brewer3", viewController.tab.tabItems[1].brewer )
-        XCTAssertEqual("name3", viewController.tab.tabItems[1].name )
-        XCTAssertEqual("third", viewController.tab.tabItems[1].size )
-        XCTAssertEqual(330, viewController.tab.tabItems[1].price )
+        XCTAssertEqual("brewer3", viewController.pubTab.tabItems[1].brewer )
+        XCTAssertEqual("name3", viewController.pubTab.tabItems[1].name )
+        XCTAssertEqual("third", viewController.pubTab.tabItems[1].size )
+        XCTAssertEqual(330, viewController.pubTab.tabItems[1].price )
         
         XCTAssertEqual("brewer3", history.allTabs[0].tabItems[1].brewer )
         XCTAssertEqual("name3", history.allTabs[0].tabItems[1].name )
@@ -163,35 +163,35 @@ class TabItemsTableViewControllerTests: XCTestCase {
     func testBuyingAnItem() throws {
         let viewController = TabItemsTableViewController()
         viewController.historyRepository = HistoryRepository(key:"test")
-        let tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
-        viewController.tab = tab
+        let tab = PubTab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
+        viewController.pubTab = tab
         history = History(allTabs: [tab])
         
         viewController.buyTabItem(tabItem: tabItem1)
         
-        XCTAssertEqual(1, viewController.tab.tabItems[0].quantity )
+        XCTAssertEqual(1, viewController.pubTab.tabItems[0].quantity )
         XCTAssertEqual(1, history.allTabs[0].tabItems[0].quantity )
         
         viewController.buyTabItem(tabItem: tabItem2)
         viewController.buyTabItem(tabItem: tabItem2)
 
-        XCTAssertEqual(1, viewController.tab.tabItems[0].quantity )
+        XCTAssertEqual(1, viewController.pubTab.tabItems[0].quantity )
         XCTAssertEqual(1, history.allTabs[0].tabItems[0].quantity )
-        XCTAssertEqual(2, viewController.tab.tabItems[1].quantity )
+        XCTAssertEqual(2, viewController.pubTab.tabItems[1].quantity )
         XCTAssertEqual(2, history.allTabs[0].tabItems[1].quantity )
     }
     func testReturningAnItem() throws {
         let viewController = TabItemsTableViewController()
         viewController.historyRepository = HistoryRepository(key:"test")
-        let tab = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
-        viewController.tab = tab
+        let tab = PubTab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
+        viewController.pubTab = tab
         history = History(allTabs: [tab])
         
         viewController.buyTabItem(tabItem: tabItem2)
         viewController.buyTabItem(tabItem: tabItem2)
         viewController.returnTabItem(tabItem: tabItem2)
 
-        XCTAssertEqual(1, viewController.tab.tabItems[1].quantity )
+        XCTAssertEqual(1, viewController.pubTab.tabItems[1].quantity )
         XCTAssertEqual(1, history.allTabs[0].tabItems[1].quantity )
     }
     
@@ -216,9 +216,9 @@ class TabItemsTableViewControllerTests: XCTestCase {
     
     func testSettingNavigationTitle() {
         let viewController = TabItemsTableViewController()
-        let tabWithPubName = Tab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
+        let tabWithPubName = PubTab(name: "tab1", createTS: Date(), pubName: "pub1", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
         XCTAssertEqual("pub1", viewController.navigationTitle(for:tabWithPubName) )
-        let tabWithNoPubName = Tab(name: "tab1", createTS: Date(), pubName: "", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
+        let tabWithNoPubName = PubTab(name: "tab1", createTS: Date(), pubName: "", branch: "", id: "").replaceItemsWith([tabItem1,tabItem2])
         XCTAssertEqual("tab1", viewController.navigationTitle(for:tabWithNoPubName) )
     }
     

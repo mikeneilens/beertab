@@ -9,29 +9,29 @@ import Foundation
 
 struct History:Codable {
     
-    let allTabs:Array<Tab>
+    let allTabs:Array<PubTab>
     
-    lazy var tabs:Array<Tab> = {
+    lazy var tabs:Array<PubTab> = {
         allTabs.sorted{$0.createTS > $1.createTS}
     }()
     
-    lazy var tabsByDate:Array<(date:String, tabs:Array<Tab>)> = {
+    lazy var tabsByDate:Array<(date:String, tabs:Array<PubTab>)> = {
         let dates = tabs.map{$0.dateString}.unique{$0 == $1}
         return dates.map{date in return (date, tabs.filter{$0.dateString == date})}
     }()
     
-    func add(tab:Tab) -> History {
+    func add(tab:PubTab) -> History {
         History(allTabs: allTabs + [tab])
     }
-    func remove(tab:Tab)->History {
+    func remove(tab:PubTab)->History {
         let filteredTabs = allTabs.filter{$0 != tab}
         return History(allTabs: filteredTabs)
     }
-    func update(tab:Tab) -> History {
-        let newTabs:Array<Tab> =  allTabs.map{if $0.createTS == tab.createTS {return tab} else {return $0}}
+    func update(tab:PubTab) -> History {
+        let newTabs:Array<PubTab> =  allTabs.map{if $0.createTS == tab.createTS {return tab} else {return $0}}
         return History(allTabs:newTabs)
     }
-    func contains(tab:Tab) -> Bool{
+    func contains(tab:PubTab) -> Bool{
         allTabs.contains{historyTab in historyTab.tabId == tab.tabId}
     }
 }

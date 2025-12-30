@@ -9,7 +9,7 @@ import Foundation
 
 protocol TabArchiver {
     func readLatest(id:String, branch:String, onCompletion completion:@escaping(Array<TabItem>) -> ())
-    func writeLatest(tab:Tab, onCompletion completion:@escaping (Array<TabItem>) -> () )
+    func writeLatest(tab:PubTab, onCompletion completion:@escaping (Array<TabItem>) -> () )
 }
 
 struct TabRepository:TabArchiver {
@@ -21,7 +21,7 @@ struct TabRepository:TabArchiver {
         connector.send(request: urlRequest, completionHandler:readCompletion <<== completion)
     }
     
-    func writeLatest(tab:Tab, onCompletion completion:@escaping (Array<TabItem>) -> () ) {
+    func writeLatest(tab:PubTab, onCompletion completion:@escaping (Array<TabItem>) -> () ) {
         if let encodedTab = tab.encode() {
             guard let url = URL(string:"\(K.URL.tabURL)\(tab.branch)/\(tab.id)/") else { return }
             let urlRequest = URLRequest(url: url, requestMethod: .Post, httpHeaders:["tab":encodedTab], httpBody: nil)

@@ -8,15 +8,15 @@
 import Foundation
 
 protocol BillArchiver {
-    func createOrUpdateBill(tab:Tab, onCompletion completion:@escaping(Bill) -> (), errorResponse: Optional<(String) -> ()>)
-    func updateBill(tab:Tab,billId:String, onCompletion completion:@escaping (Bill) -> (), errorResponse: Optional<(String) -> ()> )
+    func createOrUpdateBill(tab:PubTab, onCompletion completion:@escaping(Bill) -> (), errorResponse: Optional<(String) -> ()>)
+    func updateBill(tab:PubTab,billId:String, onCompletion completion:@escaping (Bill) -> (), errorResponse: Optional<(String) -> ()> )
 }
 
 struct BillRepository:BillArchiver {
     
     var connector:HTTPConnector = Connector()
 
-    func createOrUpdateBill(tab:Tab, onCompletion completion:@escaping(Bill) -> (), errorResponse: Optional<(String) -> ()>) {
+    func createOrUpdateBill(tab:PubTab, onCompletion completion:@escaping(Bill) -> (), errorResponse: Optional<(String) -> ()>) {
         if let encodedTab = try? JSONEncoder().encode(tab) {
             guard let url = URL(string:"\(K.URL.billURL)?tabId=\(tab.tabId ?? "")") else { return }
             let urlRequest = URLRequest(url: url, requestMethod: .Post, httpHeaders: ["Content-Type":"text/plain; charset=utf-8"], httpBody: encodedTab)
@@ -24,7 +24,7 @@ struct BillRepository:BillArchiver {
         }
     }
     
-    func updateBill(tab:Tab, billId: String, onCompletion completion: @escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
+    func updateBill(tab:PubTab, billId: String, onCompletion completion: @escaping (Bill) -> (), errorResponse: Optional<(String) -> ()>) {
         if let encodedTab = try? JSONEncoder().encode(tab) {
             guard let url = URL(string:K.URL.billURL + "\(billId)/\(tab.tabId ?? "")/") else { return }
             let urlRequest = URLRequest(url: url, requestMethod: .Post, httpHeaders:["Content-Type":"text/plain; charset=utf-8"], httpBody: encodedTab)

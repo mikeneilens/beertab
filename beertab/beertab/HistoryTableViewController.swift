@@ -34,7 +34,7 @@ class HistoryTableViewController: AbstractTableViewController {
         self.historyRepository.read(historyResponse: self.historyRead(newHistory:), errorResponse: nil)
     }
     
-    func tabFor(indexPath:IndexPath) -> Tab {
+    func tabFor(indexPath:IndexPath) -> PubTab {
         history.tabsByDate[indexPath.section].tabs[indexPath.row]
     }
 
@@ -109,7 +109,7 @@ class HistoryTableViewController: AbstractTableViewController {
         indexPath.row < history.tabsByDate[indexPath.section].tabs.count
     }
     
-    func setupSingleLabelCell(tab:Tab, cell:UITableViewCell) -> UITableViewCell {
+    func setupSingleLabelCell(tab:PubTab, cell:UITableViewCell) -> UITableViewCell {
         guard let tabTableViewCell = cell as? Tab1TableViewCell else {return cell}
         
         return tabTableViewCell.apply{
@@ -118,7 +118,7 @@ class HistoryTableViewController: AbstractTableViewController {
         }
     }
 
-    func setupTwoLabelCell(tab:Tab, cell:UITableViewCell) -> UITableViewCell {
+    func setupTwoLabelCell(tab:PubTab, cell:UITableViewCell) -> UITableViewCell {
         guard let tabTableViewCell = cell as? Tab2TableViewCell else {return cell}
         
         return tabTableViewCell.apply{
@@ -143,7 +143,7 @@ class HistoryTableViewController: AbstractTableViewController {
     func setPropertiesOf(_ destination: UIViewController, indexPath: IndexPath) {
         switch destination {
             case let tabItemsTableViewController as TabItemsTableViewController:
-                tabItemsTableViewController.tab = tabFor(indexPath: indexPath)
+                tabItemsTableViewController.pubTab = tabFor(indexPath: indexPath)
             case let tabViewController as TabViewController:
                 tabViewController.locationStatus = currentLocation
             default: break
@@ -161,7 +161,7 @@ class HistoryTableViewController: AbstractTableViewController {
         self.navigationController?.present(deleteTabAlert(for: tab), animated: true, completion: nil)
     }
     
-    func deleteTabAlert(for tab: Tab) -> UIAlertController {
+    func deleteTabAlert(for tab: PubTab) -> UIAlertController {
         UIAlertController(title: "Are You Sure", message: "Do you want to delete \(tab.name) \(tab.pubName) (\(tab.dateString))", preferredStyle:.alert
         ).apply{this in
             this.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_: UIAlertAction!) in
@@ -172,7 +172,7 @@ class HistoryTableViewController: AbstractTableViewController {
         }
     }
     
-    func deleteTab(tab: Tab) {
+    func deleteTab(tab: PubTab) {
         history = history.remove(tab: tab)
         historyRepository.write(history, errorResponse: nil)
     }

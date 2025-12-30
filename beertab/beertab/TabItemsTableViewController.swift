@@ -21,21 +21,21 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     var userOptionsRepository:UserOptionsArchiver = UserOptionsRepository()
     var tabRepository:TabArchiver = TabRepository()
     var billRepository:BillArchiver = BillRepository()
-    var tab = Tab(name: "", createTS: Date(), pubName: "", branch: "", id: "")
+    var pubTab = PubTab(name: "", createTS: Date(), pubName: "", branch: "", id: "")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = navigationTitle(for: tab)
-        if (tab.tabItems.isEmpty) {
-            if !tab.branch.isEmpty && !tab.id.isEmpty  {
-                tabRepository.readLatest(id: tab.id, branch: tab.branch, onCompletion: finishedReading)
+        self.navigationItem.title = navigationTitle(for: pubTab)
+        if (pubTab.tabItems.isEmpty) {
+            if !pubTab.branch.isEmpty && !pubTab.id.isEmpty  {
+                tabRepository.readLatest(id: pubTab.id, branch: pubTab.branch, onCompletion: finishedReading)
             } else {
                 showInsructionsIfRequired() 
             }
         }
     }
 
-    func navigationTitle(for tab:Tab) -> String {
+    func navigationTitle(for tab:PubTab) -> String {
         tab.pubName.isEmpty ? tab.name : tab.pubName
     }
     
@@ -48,20 +48,20 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        tab.tabItems.isEmpty ? 1 : 2
+        pubTab.tabItems.isEmpty ? 1 : 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tab.tabItems.isEmpty {
+        if pubTab.tabItems.isEmpty {
             return 0
         } else {
-            if section == 0 { return tab.tabItems.count } else {return 1}
+            if section == 0 { return pubTab.tabItems.count } else {return 1}
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            if (tab.tabItems[indexPath.row].brewer.isEmpty || tab.tabItems[indexPath.row].name.isEmpty) {
+            if (pubTab.tabItems[indexPath.row].brewer.isEmpty || pubTab.tabItems[indexPath.row].name.isEmpty) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "tabItem2Cell", for: indexPath)
                 configureTabItem2Cell(cell, indexPath)
                 return cell
@@ -84,26 +84,26 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
     func configureTabItemCell(_ cell: UITableViewCell, _ indexPath: IndexPath) {
         guard let tabItemCell = cell as? TabItemTableViewCell else {return}
-        tabItemCell.brewer.text = tab.tabItems[indexPath.row].brewer
-        tabItemCell.name.text = tab.tabItems[indexPath.row].name
-        tabItemCell.size.text = "\(tab.tabItems[indexPath.row].size) £\(tab.tabItems[indexPath.row].priceGBP)"
-        tabItemCell.quantity.text = String(tab.tabItems[indexPath.row].quantity)
+        tabItemCell.brewer.text = pubTab.tabItems[indexPath.row].brewer
+        tabItemCell.name.text = pubTab.tabItems[indexPath.row].name
+        tabItemCell.size.text = "\(pubTab.tabItems[indexPath.row].size) £\(pubTab.tabItems[indexPath.row].priceGBP)"
+        tabItemCell.quantity.text = String(pubTab.tabItems[indexPath.row].quantity)
     }
 
     func configureTabItem2Cell(_ cell: UITableViewCell, _ indexPath: IndexPath) {
         guard let tabItemCell = cell as? TabItem2TableViewCell else {return}
-        if (!tab.tabItems[indexPath.row].brewer.isEmpty) {
-            tabItemCell.name.text = tab.tabItems[indexPath.row].brewer
+        if (!pubTab.tabItems[indexPath.row].brewer.isEmpty) {
+            tabItemCell.name.text = pubTab.tabItems[indexPath.row].brewer
         } else {
-            tabItemCell.name.text = tab.tabItems[indexPath.row].name
+            tabItemCell.name.text = pubTab.tabItems[indexPath.row].name
         }
-        tabItemCell.size.text = "\(tab.tabItems[indexPath.row].size) £\(tab.tabItems[indexPath.row].priceGBP)"
-        tabItemCell.quantity.text = String(tab.tabItems[indexPath.row].quantity)
+        tabItemCell.size.text = "\(pubTab.tabItems[indexPath.row].size) £\(pubTab.tabItems[indexPath.row].priceGBP)"
+        tabItemCell.quantity.text = String(pubTab.tabItems[indexPath.row].quantity)
     }
  
     func configureSummaryCell(_ cell: UITableViewCell) {
           if let tabTotalCell = cell as? TabTotalTableViewCell {
-              tabTotalCell.totalValue.text = tab.totalValue
+              tabTotalCell.totalValue.text = pubTab.totalValue
           }
     }
       
@@ -116,7 +116,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            if tab.tabItems.isEmpty {
+            if pubTab.tabItems.isEmpty {
                 return "You have no items on your tab"
             } else {
                 return "Items"
@@ -133,7 +133,7 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
     
     func deleteTabItem(indexPath:IndexPath) {
-        let tabItem = tab.tabItems[indexPath.row]
+        let tabItem = pubTab.tabItems[indexPath.row]
         present(createDeleteAlert(tabItem: tabItem), animated: true, completion: nil)
     }
     
@@ -172,11 +172,11 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     }
     
     func prepare(_ receiptViewController:ReceiptViewController) {
-        receiptViewController.tab = tab
+        receiptViewController.pubTab = pubTab
     }
     func selectTabItem(selectedRow:Int?) -> TabItem {
         if let selectedRow {
-            return tab.tabItems[selectedRow]
+            return pubTab.tabItems[selectedRow]
         }
         else {
             return TabItem(brewer: "", name: "", size: "", price: 0)
@@ -185,44 +185,44 @@ class TabItemsTableViewController: AbstractTableViewController, TabUpdater {
     
     func addTabItems(tabItems:Array<TabItem>)  {
         tabItems.forEach{ tabItem in
-            tab = tab.add(tabItem: tabItem)
-            history = history.update(tab: tab)
+            pubTab = pubTab.add(tabItem: tabItem)
+            history = history.update(tab: pubTab)
         }
         historyRepository.write(history, errorResponse: nil)
-        writeTabToRepository(tab: tab)
+        writeTabToRepository(tab: pubTab)
     }
     
-    func writeTabToRepository(tab:Tab) {
+    func writeTabToRepository(tab:PubTab) {
         if tab.branch != "" && tab.id != "" {
             tabRepository.writeLatest(tab: tab, onCompletion: finishedWriting)
         }
     }
     
     func buyTabItem(tabItem: TabItem) {
-        tab = tab.addTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
-        history = history.update(tab: tab)
+        pubTab = pubTab.addTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
+        history = history.update(tab: pubTab)
         historyRepository.write(history, errorResponse: nil)
-        billRepository.createOrUpdateBill(tab: tab, onCompletion:{_ in}, errorResponse: nil)
+        billRepository.createOrUpdateBill(tab: pubTab, onCompletion:{_ in}, errorResponse: nil)
     }
     
     func returnTabItem(tabItem: TabItem) {
-        tab = tab.removeTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
-        history = history.update(tab: tab)
+        pubTab = pubTab.removeTransaction(brewer: tabItem.brewer, name: tabItem.name, size: tabItem.size)
+        history = history.update(tab: pubTab)
         historyRepository.write(history, errorResponse: nil)
-        billRepository.createOrUpdateBill(tab: tab, onCompletion:{_ in}, errorResponse: nil)
+        billRepository.createOrUpdateBill(tab: pubTab, onCompletion:{_ in}, errorResponse: nil)
     }
     func deleteTabItem(tabItem: TabItem) {
-        tab = tab.remove(tabItem: tabItem)
-        history = history.update(tab: tab)
+        pubTab = pubTab.remove(tabItem: tabItem)
+        history = history.update(tab: pubTab)
         historyRepository.write(history, errorResponse: nil)
-        billRepository.createOrUpdateBill(tab: tab, onCompletion:{_ in}, errorResponse: nil)
+        billRepository.createOrUpdateBill(tab: pubTab, onCompletion:{_ in}, errorResponse: nil)
     }
     func replaceTabItem(position:Int, newTabItem:TabItem) {
-        tab = tab.replace(position: position, newTabItem: newTabItem)
-        history = history.update(tab: tab)
+        pubTab = pubTab.replace(position: position, newTabItem: newTabItem)
+        history = history.update(tab: pubTab)
         historyRepository.write(history, errorResponse: nil)
-        writeTabToRepository(tab: tab)
-        billRepository.createOrUpdateBill(tab: tab, onCompletion:{_ in}, errorResponse: nil)
+        writeTabToRepository(tab: pubTab)
+        billRepository.createOrUpdateBill(tab: pubTab, onCompletion:{_ in}, errorResponse: nil)
     }
     func errorWritingHistory(history:History, message:String) {
         print("error writing history: \(message)")
@@ -266,7 +266,7 @@ extension TabItemsTableViewController {
     }
     
     func createTabItemsAlert(tabItems: Array<TabItem>) -> UIAlertController {
-        return UIAlertController(title: "Items Found for \(tab.pubName).", message: "Would you like to automatically add some items ?", preferredStyle: .alert).apply{ this in
+        return UIAlertController(title: "Items Found for \(pubTab.pubName).", message: "Would you like to automatically add some items ?", preferredStyle: .alert).apply{ this in
             this.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in self.updateTab(tabItems: tabItems)}))
             this.addAction(UIAlertAction(title: "No", style: .cancel, handler:{_ in self.showInsructionsIfRequired()}))
         }

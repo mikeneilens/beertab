@@ -8,7 +8,7 @@
 import UIKit
 
 class ReceiptViewController: AbstractViewController, UITextFieldDelegate  {
-    var tab = Tab(name: "", createTS: Date(), pubName: "", branch: "", id: "")
+    var pubTab = PubTab(name: "", createTS: Date(), pubName: "", branch: "", id: "")
     var billRepository:BillArchiver = BillRepository()
     
     @IBOutlet weak var receiptTextView: UITextView!
@@ -16,7 +16,7 @@ class ReceiptViewController: AbstractViewController, UITextFieldDelegate  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        billRepository.createOrUpdateBill(tab: tab, onCompletion: processBill(bill:), errorResponse: errorGettingBill(errorMessage:))
+        billRepository.createOrUpdateBill(tab: pubTab, onCompletion: processBill(bill:), errorResponse: errorGettingBill(errorMessage:))
     }
     
     func processBill(bill:Bill) {
@@ -38,7 +38,7 @@ class ReceiptViewController: AbstractViewController, UITextFieldDelegate  {
             self.navigationController?.present(alert, animated: true, completion: nil)
             return false
         }
-        billRepository.updateBill(tab: tab, billId: textField.text ?? "", onCompletion: processBill(bill:), errorResponse: errorGettingBill(errorMessage:))
+        billRepository.updateBill(tab: pubTab, billId: textField.text ?? "", onCompletion: processBill(bill:), errorResponse: errorGettingBill(errorMessage:))
         setTextFieldToNotEdit(textField:textField)
         return true
     }

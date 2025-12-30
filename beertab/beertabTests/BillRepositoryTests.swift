@@ -119,7 +119,7 @@ class BillRepositoryTest: XCTestCase {
         let mockConnector = MockConnector(data: nil, response: nil, error: nil)
         billRepository.connector = mockConnector
         
-        let tab1 = Tab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
+        let tab1 = PubTab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
         func completion(bill:Bill){}
         func errorResponse(error:String) { }
 
@@ -137,7 +137,7 @@ class BillRepositoryTest: XCTestCase {
         let mockConnector = MockConnector(data: nil, response: nil, error: nil)
         billRepository.connector = mockConnector
         
-        let tab1 = Tab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
+        let tab1 = PubTab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
         let bill1 = Bill(tab:tab1)
         func completion(bill:Bill){}
         func errorResponse(error:String) { }
@@ -162,7 +162,7 @@ class BillRepositoryTest: XCTestCase {
         let mockConnector = MockConnector(data: billJsonData, response: nil, error: nil)
         billRepository.connector = mockConnector
         
-        let tab1 = Tab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
+        let tab1 = PubTab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
         
         func completion(bill:Bill) {
             XCTAssertEqual("BDLT", bill.billId)
@@ -184,7 +184,7 @@ class BillRepositoryTest: XCTestCase {
         let mockConnector = MockConnector(data: billJsonData, response: nil, error: nil)
         billRepository.connector = mockConnector
         
-        let tab1 = Tab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
+        let tab1 = PubTab(name: "test tab1", createTS: Date(), pubName: "test_pub", branch: "test_br", id: "test_id")
         
         func completion(bill:Bill) {
             XCTAssertEqual("BDLT", bill.billId)
